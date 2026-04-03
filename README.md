@@ -19,8 +19,7 @@ Variant -> JavaScript
 ## 브랜치 설명
 main        # 배포  
 develop     # 개발 통합  
-feature/... # 기능 개발 -> ex) feature/login  
-                              feature/signup  
+feature/... # 기능 개발 -> ex) feature/login    ex)feature/signup  
 
 ## comit 메세지 규칙
 {추가 및 수정 카테고리}: {커밋 관련 내용 작성}  
