@@ -1,0 +1,72 @@
+/*
+ * BEM 네이밍(block__element--modifier)으로 클래스 충돌 방지.
+ * 팀 규칙에 CSS Modules가 없으므로, 컴포넌트별 prefix를 붙여 안전하게 격리.
+ */
+
+.notice-carousel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.notice-carousel__heading {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-h);
+    text-align: left;
+}
+
+.notice-carousel__slide {
+    flex: 1;
+    min-height: 200px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 슬라이드 전환 시 부드러운 색상 보간 */
+    transition: background-color 0.3s ease;
+}
+
+.notice-carousel__slide-text {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
+    padding: 0 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.notice-carousel__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.notice-carousel__button {
+    padding: 8px 16px;
+    background-color: #ffffff;
+    color: #000;               /* 텍스트색을 검정으로 명시 (상속 끊기) */
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.notice-carousel__button:hover {
+    background-color: #f3f4f6;
+}
+
+.notice-carousel__button:active {
+    background-color: #e5e7eb;
+}
+
+.notice-carousel__indicator {
+    font-size: 14px;
+    color: var(--text);
+    /* 숫자가 흔들리지 않게 고정폭 숫자 사용 */
+    font-variant-numeric: tabular-nums;
+}

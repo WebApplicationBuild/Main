@@ -1,0 +1,97 @@
+/*
+ * MainPage 전용 레이아웃 스타일.
+ * CSS Grid의 grid-template-areas로 영역을 이름으로 배치 → 가독성 우수.
+ */
+
+.main-page {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 24px 32px;
+    box-sizing: border-box;
+    text-align: left;
+}
+
+/* 헤더: 로고 | 제목 | 빈공간 (3분할로 제목을 가운데 정렬) */
+.main-page__header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    margin-bottom: 32px;
+}
+
+.main-page__logo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #475569;
+    justify-self: start;
+}
+
+.main-page__title {
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    /* index.css의 h1 기본 margin을 덮어쓰기 */
+}
+
+.main-page__header-spacer {
+    /* 그리드 균형용 빈 컬럼 */
+}
+
+/*
+ * 그리드 영역 배치
+ *   notice  profile
+ *   recent  my
+ *
+ * 컬럼 비율 2:1 → 왼쪽이 더 넓다.
+ * grid-template-areas로 레이아웃이 코드만 봐도 보인다.
+ */
+.main-page__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "notice profile"
+        "recent my";
+    gap: 24px;
+}
+
+.main-page__cell--notice  { grid-area: notice; }
+.main-page__cell--profile { grid-area: profile; }
+.main-page__cell--recent  { grid-area: recent; }
+.main-page__cell--my      { grid-area: my; }
+
+.main-page__cell {
+    background-color: #e5e7eb;
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+/* 내 프로젝트 카드만 강조 테두리 (UI 시안과 동일) */
+.main-page__cell--my {
+    border: 2px solid #3b82f6;
+}
+
+/* 좁은 화면: 1열로 전환 */
+@media (max-width: 768px) {
+    .main-page__grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "notice"
+            "profile"
+            "recent"
+            "my";
+    }
+
+    .main-page__title {
+        font-size: 28px;
+    }
+}
