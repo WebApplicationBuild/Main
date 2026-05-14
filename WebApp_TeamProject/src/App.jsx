@@ -22,6 +22,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route path="/matching" element={<MatchingPage />} />
           <Route path="/projectManage/:projectId" element={<ProjectManagePage />} />
         </Routes>
