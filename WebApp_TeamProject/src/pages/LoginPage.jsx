@@ -1,41 +1,32 @@
-import { Link } from "react-router-dom";
 import InputField from "../components/InputField";
 import ErrorMsg from "../components/ErrorMsg";
+import LoginButton from "../components/LoginButton";
+import SignupButton from "../components/SignupButton";
 
-export default function SignupPage() {
+function LoginPage() {
     return (
-        <div className="auth-page">
-        <div className="auth-card">
-            <h1>회원가입</h1>
+        <div className="login-page">
+        <form className="login-box">
+            <h1>로그인</h1>
+
+            <InputField
+            type="email"
+            placeholder="이메일을 입력하세요"
+            />
+
+            <InputField
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            />
 
             <ErrorMsg message="" />
 
-            <form className="auth-form">
-            <InputField
-                type="email"
-                placeholder="이메일"
-            />
+            <LoginButton />
 
-            <InputField
-                type="password"
-                placeholder="비밀번호"
-            />
-
-            <InputField
-                type="password"
-                placeholder="비밀번호 확인"
-            />
-
-            <button type="button">
-                회원가입
-            </button>
-            </form>
-
-            <p className="auth-link">
-            이미 계정이 있나요?{" "}
-            <Link to="/login">로그인</Link>
-            </p>
-        </div>
+            <SignupButton />
+        </form>
         </div>
     );
 }
+
+export default LoginPage;
