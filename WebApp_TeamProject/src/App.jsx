@@ -1,6 +1,7 @@
 import './App.css'
 import MainPage from './pages/MainPage'
 import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage';
 import MatchingPage from './pages/MatchingPage';
 import ProjectManagePage from './pages/ProjectManagePage';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
