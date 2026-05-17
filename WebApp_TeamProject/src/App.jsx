@@ -9,14 +9,13 @@ import { AuthProvider } from "./store/AuthProvider";
 
 /*
     라우트:
-                                → MainPage
-      login                     → LoginPage
-      matching                  → MatchingPage
+      /                          → MainPage
+      /login                     → LoginPage
+      /matching                  → MatchingPage
       ★ projectId를 기반으로 실제 프로젝트 관리 페이지로 연결
       projectManage/:projectId  → ProjectPage
-
   ex) /projectManage/201 → useParams()로 projectId 꺼내서 사용
- */
+*/
 export default function App() {
   return (
     <BrowserRouter>
