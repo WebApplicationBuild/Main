@@ -1,0 +1,95 @@
+/* 게시판 테이블 레이아웃 */
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  table-layout: fixed;
+}
+
+/* 테이블 공통 셀 스타일 */
+.board-table th,
+.board-table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+  word-break: break-all;
+  vertical-align: middle;
+}
+
+.board-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+  border-top: 2px solid #333;
+  color: #333;
+}
+
+/* 제목 셀 한정 스타일 (말줄임표 및 정렬) */
+.board-table td.title-cell {
+  text-align: left;
+  padding-left: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.board-table td.title-cell:hover {
+  text-decoration: underline;
+  color: #03c75a;
+}
+
+.board-table tbody tr:hover {
+  background-color: #fbfbfc;
+}
+
+/* --- 상세보기 영역 (아코디언 UI) --- */
+
+.board-table tbody tr.detail-row,
+.board-table tbody tr.detail-row:hover {
+  background-color: #fdfdfd;
+}
+
+/* 본문 컨테이너 박스 */
+.detail-container {
+  text-align: left;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+/* 본문 텍스트 (줄바꿈 유지) */
+.detail-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #495057;
+  white-space: pre-wrap; /* 줄바꿈(\n) 유지 */
+  margin-bottom: 12px;
+}
+
+.detail-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-sm {
+  padding: 4px 12px !important;
+  font-size: 0.85rem !important;
+}
+
+/* --- 매칭 버튼 스타일 --- */
+.btn-matching {
+  background-color: #4dabf7;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-matching:hover {
+  background-color: #339af0;
+}
