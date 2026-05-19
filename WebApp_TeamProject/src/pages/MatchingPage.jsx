@@ -7,7 +7,6 @@ import '../styles/Matching.css';
 
 function Matching() {
   const navigate = useNavigate();
-
   
   const [isWritingMode, setIsWritingMode] = useState(false);//현재 화면이 글쓰기 모드인지 여부 (true=글쓰기 화면, false=목록 화면)
   const [selectedPost, setSelectedPost] = useState(null);//현재 상세보기(아코디언)가 열린 게시글 객체 (없으면 null)
