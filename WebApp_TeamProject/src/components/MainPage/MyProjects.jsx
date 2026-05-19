@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { myProjects } from "../api/mockData";
-import "../styles/MyProjects.css";
+import { useAuth } from "../../hooks/useAuth";
+import { myProjects } from "../../api/mockData";
+import "../../styles/MyProjects.css";
 
 /*
    내가 진행중인 프로젝트
@@ -15,7 +15,13 @@ export default function MyProjects() {
 
     return (
         <div className="my-projects">
-            <h2 className="my-projects__heading">내가 진행중인 프로젝트</h2>
+            <div className="my-projects__header">
+                <h2 className="my-projects__heading">내가 진행중인 프로젝트</h2>
+                <button
+                className="my-projects__view-all"
+                onClick={() => navigate("/projectManage")}
+                >전체보기 →</button>
+            </div>
 
             {!user ? (                                  /* 로그인이 되어있는지 확인 */
                 <div className="my-projects__empty">

@@ -1,7 +1,7 @@
-import InputField from "../components/InputField";
-import ErrorMsg from "../components/ErrorMsg";
-import LoginButton from "../components/LoginButton";
-import SignupButton from "../components/SignupButton";
+import InputField from "../components/LoginPage/InputField";
+import ErrorMsg from "../components/LoginPage/ErrorMsg";
+import LoginButton from "../components/LoginPage/LoginButton";
+import SignupButton from "../components/LoginPage/SignupButton";
 
 function LoginPage() {
     return (

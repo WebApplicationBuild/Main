@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { recentProjects } from "../api/mockData";
-import "../styles/RecentProjects.css";
+import { recentProjects } from "../../api/mockData";
+import "../../styles/RecentProjects.css";
 
 /*
    최신 프로젝트 목록.

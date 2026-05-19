@@ -4,14 +4,6 @@
     height: 100%;
 }
 
-.my-projects__heading {
-    margin: 0 0 12px 0;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-h);
-    text-align: left;
-}
-
 .my-projects__empty {
     flex: 1;
     display: flex;
@@ -71,4 +63,34 @@
 .my-projects__members {
     font-size: 11px;
     color: var(--text);
+}
+
+.my-projects__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+/* heading의 기존 margin-bottom은 header로 이동했으니 제거 */
+.my-projects__heading {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-h);
+    text-align: left;
+}
+
+.my-projects__view-all {
+    font-size: 12px;
+    color: var(--accent);
+    font-weight: 500;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.my-projects__view-all:hover {
+    color: var(--text-h);
 }

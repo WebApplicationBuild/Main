@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import InputField from "../components/InputField";
-import ErrorMsg from "../components/ErrorMsg";
+import InputField from "../components/LoginPage/InputField";
+import ErrorMsg from "../components/LoginPage/ErrorMsg";
 
 export default function SignupPage() {
     return (

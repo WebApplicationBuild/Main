@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Category from '../components/Category';
-import Writing from '../components/Writing';
-import Board from '../components/Board';
+import Category from '../components/MatchingPage/Category';
+import Writing from '../components/MatchingPage/Writing';
+import Board from '../components/MatchingPage/Board';
 import '../styles/Matching.css';
 
 function Matching() {

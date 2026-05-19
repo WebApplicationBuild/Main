@@ -1,6 +1,6 @@
-import { useAuth } from "../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import ProfileButton from "./ProfileButton";
-import "../styles/Profile.css";
+import "../../styles/Profile.css";
 
 /*
    로그인 상태에 따라 두 가지 다른 UI를 보여줌

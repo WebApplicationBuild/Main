@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Board.css';
+import '../../styles/Board.css';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick }) {

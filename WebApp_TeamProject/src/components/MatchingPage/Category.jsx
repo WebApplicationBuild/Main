@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Category.css';
+import '../../styles/Category.css';
 
 // ✨ 수정: 부모로부터 activeCategories 배열을 받아옵니다.
 function Category({ activeCategories, onCategoryClick }) {

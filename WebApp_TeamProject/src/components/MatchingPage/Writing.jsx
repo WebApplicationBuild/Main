@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../styles/Writing.css';
+import '../../styles/Writing.css';
 
 // 새 게시글 작성 폼 컴포넌트
 function Writing({ onSave, onCancel }) {
