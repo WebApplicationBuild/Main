@@ -4,7 +4,7 @@ import '../../styles/Board.css';
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick }) {
   
-  // 매칭 신청 버튼 핸들러
+  // '매칭' 버튼 클릭 시 실행될 핸들러 함수
   const handleMatchClick = (e, post) => {
     // 이벤트 버블링 방지: 제목 클릭 이벤트(상세보기 토글)가 트리거되는 것을 막음
     e.stopPropagation(); 
@@ -24,6 +24,7 @@ function Board({ posts, selectedPost, onPostClick }) {
         </tr>
       </thead>
       <tbody>
+        {/* posts 배열이 비어 있으면 안내 문구를 표시하고, 아니면 게시글 목록을 렌더링 */}
         {posts.length === 0 ? (
           <tr>
             <td colSpan="6" style={{ padding: '50px 0', color: '#999', textAlign: 'center' }}>
@@ -58,6 +59,7 @@ function Board({ posts, selectedPost, onPostClick }) {
                         {post.content}
                       </div>
                       <div className="detail-footer">
+                        {/* 닫기 버튼: 클릭 시 onPostClick을 다시 호출하여 상세보기를 토글(닫기) */}
                         <button className="btn-sub btn-sm" onClick={() => onPostClick(post)}>
                           닫기
                         </button>

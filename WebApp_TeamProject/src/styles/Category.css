@@ -1,36 +1,40 @@
+/* =============================================
+   Category.css — 카테고리 필터 버튼 스타일
+   ============================================= */
+
 /* 카테고리 리스트 컨테이너 */
 .category-list {
-  display: flex;
-  gap: 10px;
+  display: flex;          /* 자식 버튼들을 가로 방향으로 나란히 배치하기 위해 flexbox 사용 */
+  gap: 10px;              /* 각 카테고리 버튼 사이에 10px 간격을 일정하게 유지 */
 }
 
 /* 기본 카테고리 버튼 스타일 (캡슐 형태) */
 .category-item {
-  padding: 8px 16px;
-  background-color: #f1f3f5;
-  border-radius: 20px;
-  border: none;
-  font-size: 0.9rem;
-  color: #495057;
-  cursor: pointer;
-  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
-  transition: all 0.2s ease;
+  padding: 8px 16px;          /* 상하 8px, 좌우 16px 내부 여백으로 버튼 크기와 클릭 영역 확보 */
+  background-color: #f1f3f5;  /* 연한 회색 배경으로 비활성 상태의 기본 버튼 색상 표현 */
+  border-radius: 20px;        /* 모서리를 크게 둥글게(20px) 처리해 캡슐(pill) 형태 구현 */
+  border: none;               /* 버튼 기본 테두리를 제거해 배경색만 보이는 깔끔한 형태 유지 */
+  font-size: 0.9rem;          /* 글자 크기를 기본의 90%(약 14.4px)로 설정해 카테고리 텍스트에 적합한 크기 조절 */
+  color: #495057;             /* 중간 회색 글자색으로 배경과 적절한 대비를 유지하면서 눈에 편안하게 표시 */
+  cursor: pointer;            /* 마우스를 올렸을 때 커서를 손가락 모양으로 바꿔 클릭 가능함을 안내 */
+  white-space: nowrap;        /* 카테고리 이름이 길어도 줄바꿈 없이 한 줄로 유지해 버튼 레이아웃 보호 */
+  transition: all 0.2s ease;  /* 배경색·글자색·굵기 등 모든 속성 변화를 0.2초 ease 곡선으로 부드럽게 전환 */
 }
 
 /* 호버 시 포인트 컬러 적용 */
 .category-item:hover {
-  background-color: #e9ecef;
-  color: #03c75a;
-  font-weight: bold;
+  background-color: #e9ecef;  /* 호버 시 배경색을 약간 더 진한 회색으로 바꿔 반응성 피드백 제공 */
+  color: #03c75a;             /* 호버 시 글자색을 브랜드 녹색으로 변경해 선택 가능함을 시각적으로 강조 */
+  font-weight: bold;          /* 호버 시 글자를 굵게 처리해 강조 효과와 함께 텍스트를 더 또렷하게 표시 */
 }
 
 /* 활성화된(선택된) 카테고리 스타일 */
 .category-item.active {
-  background-color: #03c75a;
-  color: white;
-  font-weight: bold;
+  background-color: #03c75a;  /* 선택된 카테고리의 배경을 브랜드 녹색으로 채워 현재 필터 상태를 명확히 표시 */
+  color: white;               /* 녹색 배경 위에서 흰색 글자로 충분한 명도 대비를 확보해 가독성 유지 */
+  font-weight: bold;          /* 활성 버튼의 글자를 굵게 처리해 선택 상태를 한눈에 파악 가능하게 강조 */
 }
 
 .category-item.active:hover {
-  background-color: #02b351;
+  background-color: #02b351;  /* 활성 버튼에 호버 시 배경색을 약간 더 어두운 녹색으로 바꿔 클릭 피드백 제공 */
 }

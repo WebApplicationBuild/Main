@@ -1,103 +1,109 @@
+/* =============================================
+   Writing.css — 글쓰기 폼 레이아웃 및 커스텀 체크박스 스타일
+   ============================================= */
+
 /* 글쓰기 폼 레이아웃 */
 .writing-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: flex;          /* 폼 내부 요소들을 flexbox로 배치 */
+  flex-direction: column; /* 제목·입력 필드·버튼 등을 위에서 아래로 수직 나열 */
+  gap: 20px;              /* 각 폼 섹션(.form-group 등) 사이에 20px 균일 간격 적용 */
 }
 
 .writing-title {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
+  font-size: 1.2rem;      /* 글쓰기 섹션 제목을 기본 폰트의 1.2배(약 19.2px) 크기로 설정 */
+  font-weight: bold;      /* 굵은 글씨로 섹션 제목을 강조 */
+  margin-bottom: 10px;    /* 제목 하단에 10px 여백을 줘 아래 입력 필드와 간격 확보 */
+  color: #333;            /* 진한 회색 글자색으로 배경과 높은 대비를 유지하면서 시인성 확보 */
 }
 
 /* 입력 필드 묶음 (라벨 + 입력창) */
 .form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  display: flex;          /* 라벨과 입력창을 flexbox로 배치 */
+  flex-direction: column; /* 라벨이 위, 입력창이 아래로 수직 정렬 */
+  gap: 8px;               /* 라벨과 입력창 사이에 8px 간격으로 연관 요소임을 시각적으로 표현 */
 }
 
 .form-group label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #495057;
+  font-weight: 600;       /* 폰트 굵기 600(semi-bold)으로 라벨 텍스트를 입력값보다 강조 */
+  font-size: 0.9rem;      /* 라벨 크기를 기본의 90%(약 14.4px)로 설정해 입력값보다 약간 작게 */
+  color: #495057;         /* 중간 회색 글자색으로 순수 검정보다 부드러운 시각 경험 제공 */
 }
 
 /* 인풋 요소 공통 스타일 */
 .form-input {
-  padding: 10px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  font-size: 1rem;
+  padding: 10px;              /* 입력창 내부 사방 10px 여백으로 타이핑 시 텍스트가 테두리에 붙지 않도록 */
+  border: 1px solid #dee2e6;  /* 연한 회색 테두리 1px로 입력창 경계를 명확하게 표시 */
+  border-radius: 4px;         /* 모서리를 4px 둥글게 처리해 부드러운 입력창 형태 */
+  font-size: 1rem;            /* 입력 텍스트 크기를 기본(16px)으로 설정해 가독성 확보 */
 }
 
 /* 카테고리 체크박스 레이아웃 */
 .checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 10px 0;
+  display: flex;      /* 여러 체크박스 항목을 가로로 나란히 배치 */
+  flex-wrap: wrap;    /* 항목이 많아 가로 공간이 부족하면 자동으로 다음 줄로 줄바꿈 */
+  gap: 15px;          /* 각 체크박스 항목 사이에 15px 간격으로 답답하지 않게 배치 */
+  padding: 10px 0;    /* 상하 10px 여백으로 체크박스 그룹을 위아래 요소와 시각적으로 분리 */
 }
 
 .checkbox-item {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 0.9rem;
-  cursor: pointer;
+  display: flex;      /* 체크박스 박스와 라벨 텍스트를 가로로 나란히 배치 */
+  align-items: center; /* 체크박스와 텍스트를 세로 기준 가운데 정렬해 시각적으로 균형 유지 */
+  gap: 5px;           /* 체크박스 박스와 라벨 텍스트 사이에 5px 간격 확보 */
+  font-size: 0.9rem;  /* 라벨 텍스트 크기를 기본의 90%로 설정해 폼 라벨과 통일 */
+  cursor: pointer;    /* 항목 전체 영역에서 클릭 가능 커서를 표시해 사용성 향상 */
 }
 
 /* 본문 텍스트 에어리어 */
 .form-textarea {
-  padding: 10px;
-  border: 1px solid #dee2e6;
-  border-radius: 4px;
-  min-height: 200px;
-  font-size: 1rem;
-  resize: vertical; /* 세로로만 크기 조절 허용 */
+  padding: 10px;              /* 텍스트 에어리어 내부 사방 10px 여백으로 입력 텍스트와 테두리 사이 공간 확보 */
+  border: 1px solid #dee2e6;  /* 연한 회색 테두리 1px로 .form-input과 동일한 시각적 통일성 유지 */
+  border-radius: 4px;         /* 모서리 4px 둥글게 처리해 입력 필드들과 일관된 디자인 적용 */
+  min-height: 200px;          /* 최소 높이 200px로 본문 작성 영역이 너무 작아지지 않도록 보장 */
+  font-size: 1rem;            /* 입력 텍스트 크기를 기본(16px)으로 유지해 가독성 확보 */
+  resize: vertical;           /* 사용자가 에어리어 높이만 조절 가능하도록 가로 크기 변경은 막음 */
 }
+
 /* 전역 CSS 오버라이드 방지용 */
 .writing-input,
 .writing-textarea {
-  background-color: white !important;
-  color: #333 !important;
-  text-align: left !important;
+  background-color: white !important; /* 전역 또는 외부 스타일에서 배경색을 바꾸더라도 흰색으로 강제 유지 */
+  color: #333 !important;             /* 글자색이 외부 스타일에 의해 변경되어도 진한 회색으로 강제 유지 */
+  text-align: left !important;        /* 텍스트 정렬이 외부에서 변경되어도 항상 좌측 정렬로 강제 적용 */
 }
 
 .writing-group label {
-  text-align: left !important;
+  text-align: left !important;        /* 라벨 텍스트 정렬이 외부 스타일에 덮여도 좌측 정렬로 강제 적용 */
 }
 
+/* 커스텀 체크박스 — 브라우저 기본 스타일 제거 및 재디자인 */
 .writing-checkbox-item input[type="checkbox"] {
-  appearance: none !important;
-  -webkit-appearance: none !important;
-  width: 16px !important;
-  height: 16px !important;
-  background-color: white !important;
-  border: 1.5px solid #adb5bd !important;
-  border-radius: 3px !important;
-  cursor: pointer !important;
-  position: relative !important;
-  flex-shrink: 0 !important;
-  transition: border-color 0.15s ease !important;
+  appearance: none !important;              /* 브라우저 기본 체크박스 외형을 완전히 제거해 커스텀 디자인 적용 가능하게 */
+  -webkit-appearance: none !important;      /* Safari 등 WebKit 기반 브라우저에도 동일하게 기본 외형 제거 */
+  width: 16px !important;                   /* 체크박스 너비를 16px로 고정해 크기 일관성 유지 */
+  height: 16px !important;                  /* 체크박스 높이를 16px로 고정해 정사각형 형태 유지 */
+  background-color: white !important;       /* 체크박스 내부 배경을 흰색으로 설정해 깔끔한 빈 상태 표현 */
+  border: 1.5px solid #adb5bd !important;   /* 중간 회색 테두리 1.5px로 체크박스 경계를 명확하게 표시 */
+  border-radius: 3px !important;            /* 모서리를 3px 약간 둥글게 처리해 딱딱하지 않은 형태 부여 */
+  cursor: pointer !important;               /* 체크박스에 손가락 커서를 표시해 클릭 가능함을 안내 */
+  position: relative !important;            /* ::after 가상 요소(체크 표시)를 절대 위치로 배치하기 위한 기준점 설정 */
+  flex-shrink: 0 !important;                /* flex 컨테이너 안에서 체크박스가 좁아지지 않도록 크기 고정 */
+  transition: border-color 0.15s ease !important; /* 테두리 색상 변화를 0.15초 ease로 부드럽게 전환 */
 }
 
 .writing-checkbox-item input[type="checkbox"]:checked {
-  background-color: white !important;
-  border-color: #03c75a !important;
+  background-color: white !important;       /* 체크 상태에서도 배경은 흰색 유지 (체크 표시는 ::after 가상 요소로 표현) */
+  border-color: #03c75a !important;         /* 체크 상태에서 테두리 색상을 브랜드 녹색으로 변경해 선택됨을 강조 */
 }
 
 .writing-checkbox-item input[type="checkbox"]:checked::after {
-  content: '' !important;
-  position: absolute !important;
-  left: 4px !important;
-  top: 1px !important;
-  width: 5px !important;
-  height: 9px !important;
-  border: 2px solid #03c75a !important;
-  border-top: none !important;
-  border-left: none !important;
-  transform: rotate(45deg) !important;
+  content: '' !important;           /* 가상 요소 내용을 빈 문자열로 설정하고 CSS만으로 체크 모양을 그림 */
+  position: absolute !important;    /* 부모(체크박스)의 position: relative를 기준으로 정확한 위치에 배치 */
+  left: 4px !important;             /* 체크 표시를 박스 좌측에서 4px 안쪽에 배치 */
+  top: 1px !important;              /* 체크 표시를 박스 상단에서 1px 아래에 배치 */
+  width: 5px !important;            /* 체크 표시를 이루는 직사각형의 너비 5px 설정 */
+  height: 9px !important;           /* 체크 표시를 이루는 직사각형의 높이 9px 설정 */
+  border: 2px solid #03c75a !important;  /* 브랜드 녹색 2px 테두리로 체크 모양의 선을 표현 */
+  border-top: none !important;      /* 상단 테두리를 제거해 ㄴ자 형태의 꺾인 선 모양 생성 */
+  border-left: none !important;     /* 좌측 테두리를 제거해 우측과 하단만 남긴 L자 형태 생성 */
+  transform: rotate(45deg) !important; /* L자 형태를 45도 회전해 최종적으로 체크(✓) 모양 완성 */
 }

@@ -1,124 +1,128 @@
+/* =============================================
+   Matching.css — 매칭 페이지 레이아웃 및 공통 버튼 스타일
+   ============================================= */
+
 /* 전체 화면 컨테이너 */
 .matching-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  background-color: #f8f9fa;
+  display: flex;              /* 자식 요소(헤더, 메인)를 flexbox로 배치 */
+  flex-direction: column;     /* 헤더가 위, 메인 콘텐츠가 아래로 수직 방향 배치 */
+  min-height: 100vh;          /* 콘텐츠가 적어도 뷰포트 전체 높이를 채우도록 최소 높이를 화면 100%로 설정 */
+  background-color: #f8f9fa;  /* 전체 배경을 연한 회색으로 설정해 흰색 카드와 시각적으로 구분 */
 }
 
 /* 상단 고정 헤더 — 메인페이지와 동일하게 3열 그리드로 정렬 */
 .matching-header {
-  width: 100%;
-  height: 72px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  padding: 0 32px;
-  box-sizing: border-box;
-  background-color: white;
-  border-bottom: 1px solid #e9ecef;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+  width: 100%;                            /* 헤더가 화면 가로 전체를 꽉 차지하도록 설정 */
+  height: 72px;                           /* 헤더 높이를 72px로 고정해 일관된 상단 영역 확보 */
+  display: grid;                          /* 내부 요소를 CSS Grid로 배치해 3열 정렬을 정밀하게 제어 */
+  grid-template-columns: 1fr auto 1fr;    /* 좌측 1fr(로고), 중앙 auto(제목), 우측 1fr(spacer)로 3열 균형 배치 */
+  align-items: center;                    /* 3개 열의 자식 요소를 세로 기준 가운데 정렬 */
+  padding: 0 32px;                        /* 좌우 32px 내부 여백으로 헤더 내용이 화면 끝에 붙지 않도록 */
+  box-sizing: border-box;                 /* padding이 width(100%) 안에 포함되도록 박스 모델 설정 */
+  background-color: white;               /* 헤더 배경을 흰색으로 지정해 회색 페이지 배경과 구분 */
+  border-bottom: 1px solid #e9ecef;      /* 헤더 하단에 연한 회색 구분선 1px 추가로 콘텐츠 영역과 경계 표시 */
+  position: sticky;                      /* 스크롤해도 헤더가 화면 상단에 계속 고정되도록 설정 */
+  top: 0;                                /* sticky 기준점을 화면 최상단(0)으로 지정 */
+  z-index: 10;                           /* 다른 요소 위에 헤더가 항상 표시되도록 z축 우선순위를 10으로 설정 */
 }
 
 /* 메인페이지 로고와 동일한 스타일 */
 .matching-header__logo {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background-color: #cbd5e1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: #475569;
-  justify-self: start;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
+  width: 64px;                    /* 로고 영역 너비 64px로 고정 */
+  height: 64px;                   /* 로고 영역 높이 64px로 고정해 정사각형 형태 유지 */
+  border-radius: 50%;             /* 50% 둥글게 처리해 원형 로고 모양 구현 */
+  background-color: #cbd5e1;      /* 연한 청회색 배경으로 로고 플레이스홀더 색상 지정 */
+  display: flex;                  /* 내부 텍스트나 아이콘을 flexbox로 배치 */
+  align-items: center;            /* 내부 요소를 세로 가운데 정렬 */
+  justify-content: center;        /* 내부 요소를 가로 가운데 정렬 */
+  font-size: 14px;                /* 로고 내부 텍스트(또는 아이콘 레이블) 크기 14px 지정 */
+  color: #475569;                 /* 로고 내부 텍스트 색상을 진한 청회색으로 설정 */
+  justify-self: start;            /* Grid 컨테이너 안에서 로고를 열 시작(왼쪽)에 배치 */
+  cursor: pointer;                /* 로고 클릭 가능 표시를 위해 커서를 손가락 모양으로 변경 */
+  transition: background-color 0.2s ease; /* 배경색 변화를 0.2초 ease 곡선으로 부드럽게 전환 */
 }
 
 .matching-header__logo:hover {
-  background-color: #94a3b8;
+  background-color: #94a3b8;      /* 호버 시 배경색을 더 진한 청회색으로 바꿔 클릭 가능 피드백 제공 */
 }
 
 .matching-header__title {
-  font-size: 32px;
-  font-weight: 700;
-  margin: 0;
-  text-align: center;
-  white-space: nowrap;
+  font-size: 32px;                /* 페이지 제목을 32px 크게 설정해 화면 중앙에서 잘 보이도록 강조 */
+  font-weight: 700;               /* 폰트 굵기 700(bold)으로 제목을 강하게 강조 */
+  margin: 0;                      /* 브라우저 기본 margin 초기화로 헤더 높이 안에서 정확한 세로 정렬 */
+  text-align: center;             /* 제목 텍스트를 중앙 정렬 */
+  white-space: nowrap;            /* 제목이 길어도 줄바꿈 없이 한 줄 유지 */
 }
 
 /* 오른쪽 균형용 빈 공간 (메인페이지 header-spacer와 동일) */
 .matching-header__spacer {
-  /* 그리드 균형용 빈 컬럼 */
+  /* 그리드 균형용 빈 컬럼 — 좌측 로고와 대칭을 맞추기 위한 우측 더미 열, 실제 스타일 없음 */
 }
 
 /* 메인 콘텐츠 영역 (중앙 정렬) */
 .matching-main {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+  flex: 1;                        /* 남은 세로 공간을 모두 차지해 콘텐츠가 화면 아래까지 확장 */
+  display: flex;                  /* 자식 콘텐츠 박스를 flexbox로 배치 */
+  justify-content: center;        /* 콘텐츠 박스를 가로 기준 화면 중앙에 배치 */
+  padding: 20px;                  /* 사방 20px 여백으로 콘텐츠가 화면 가장자리에 붙지 않도록 */
 }
 
 /* 실제 콘텐츠가 담기는 하얀 박스 */
 .matching-content {
-  width: 100%;
-  max-width: 800px;
-  background-color: white;
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;                    /* 부모(.matching-main)의 가로를 100% 사용 */
+  max-width: 800px;               /* 너무 넓어지지 않도록 최대 너비를 800px로 제한 */
+  background-color: white;        /* 콘텐츠 박스 배경을 흰색으로 설정해 회색 배경과 구분 */
+  padding: 30px;                  /* 내부 사방 30px 여백으로 콘텐츠와 박스 테두리 사이 공간 확보 */
+  border-radius: 8px;             /* 모서리를 8px 둥글게 처리해 카드 형태의 부드러운 외형 연출 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* 아래 방향 2px, 번짐 8px, 투명도 10%의 그림자로 부유감 표현 */
 }
 
 /* 카테고리 필터 & 글쓰기 버튼 상단 영역 */
 .category-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+  display: flex;                  /* 카테고리 버튼 그룹과 글쓰기 버튼을 가로로 나란히 배치 */
+  justify-content: space-between; /* 카테고리(좌측)와 버튼(우측)을 양 끝으로 밀어 공간을 균등 분배 */
+  align-items: center;            /* 두 요소를 세로 기준 가운데 정렬 */
+  margin-bottom: 20px;            /* 하단에 20px 여백을 줘 아래 테이블과 간격 확보 */
+  padding-bottom: 10px;           /* 하단 내부 여백 10px으로 구분선과 내용 사이 공간 확보 */
+  border-bottom: 1px solid #eee;  /* 카테고리 영역 하단에 연한 회색 구분선으로 테이블과 시각적 경계 표시 */
 }
 
 /* --- 공통 버튼 스타일 --- */
 button {
-  padding: 8px 18px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 500;
-  transition: all 0.2s ease;
+  padding: 8px 18px;              /* 모든 버튼의 기본 상하 8px, 좌우 18px 여백으로 클릭 영역 통일 */
+  border-radius: 4px;             /* 버튼 모서리를 4px 둥글게 처리해 기본적인 라운드 형태 부여 */
+  border: 1px solid transparent;  /* 테두리 1px을 투명하게 설정해 레이아웃을 유지하면서 기본 스타일 초기화 */
+  cursor: pointer;                /* 마우스 커서를 손가락 모양으로 변경해 모든 버튼이 클릭 가능함을 표시 */
+  font-size: 0.95rem;             /* 글자 크기를 기본의 95%(약 15.2px)로 설정해 버튼 텍스트 크기 통일 */
+  font-weight: 500;               /* 폰트 굵기를 500(medium)으로 설정해 일반 텍스트보다 약간 두껍게 표시 */
+  transition: all 0.2s ease;      /* 모든 속성 변화를 0.2초 ease 곡선으로 부드럽게 전환 */
 }
 
 /* 강조 버튼 (ex. 등록, 글쓰기) */
 .btn-main {
-  background-color: #03c75a;
-  color: white;
+  background-color: #03c75a;      /* 브랜드 녹색 배경으로 주요 행동 버튼(CTA)임을 색상으로 강조 */
+  color: white;                   /* 녹색 배경 위에 흰색 글자로 충분한 명도 대비 확보 */
 }
 
 .btn-main:hover {
-  background-color: #02b351;
+  background-color: #02b351;      /* 호버 시 배경색을 더 어두운 녹색으로 바꿔 클릭 직전 피드백 제공 */
 }
 
 /* 보조 버튼 (ex. 취소, 닫기) */
 .btn-sub {
-  background-color: #f1f3f5;
-  color: #495057;
-  border: 1px solid #dee2e6;
+  background-color: #f1f3f5;      /* 연한 회색 배경으로 주요 버튼보다 시각적 무게를 낮춤 */
+  color: #495057;                 /* 중간 회색 글자로 배경과 적절한 대비를 유지 */
+  border: 1px solid #dee2e6;      /* 연한 회색 테두리 1px로 버튼 경계를 배경과 구분 */
 }
 
 .btn-sub:hover {
-  background-color: #e9ecef;
+  background-color: #e9ecef;      /* 호버 시 배경색을 약간 더 진한 회색으로 변경해 반응 피드백 제공 */
 }
 
 /* 버튼 우측 정렬 컨테이너 */
 .button-area {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
+  display: flex;                  /* 여러 버튼을 가로로 나란히 배치하기 위해 flexbox 사용 */
+  justify-content: flex-end;      /* 버튼들을 오른쪽 끝으로 정렬해 폼 하단 우측 배치 구현 */
+  gap: 10px;                      /* 버튼 사이에 10px 간격으로 붙지 않고 균일한 여백 유지 */
+  margin-top: 20px;               /* 위쪽 요소(폼 입력 등)와 20px 여백으로 버튼 영역을 시각적으로 분리 */
 }

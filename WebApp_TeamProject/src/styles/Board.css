@@ -1,95 +1,102 @@
+/* =============================================
+   Board.css — 게시판 테이블 및 상세보기 스타일
+   ============================================= */
+
 /* 게시판 테이블 레이아웃 */
 .board-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  table-layout: fixed;
+  width: 100%;                  /* 부모 컨테이너의 가로 너비를 100% 꽉 채움 */
+  border-collapse: collapse;    /* 인접한 셀의 테두리를 하나로 합쳐서 이중선 제거 */
+  margin-top: 10px;             /* 테이블 위쪽에 10px 여백을 줘서 상단 요소와 간격 확보 */
+  table-layout: fixed;          /* 각 열의 너비를 콘텐츠가 아닌 설정값 기준으로 고정 (overflow 제어 용이) */
 }
 
 /* 테이블 공통 셀 스타일 */
 .board-table th,
 .board-table td {
-  padding: 12px 8px;
-  border-bottom: 1px solid #eee;
-  text-align: center;
-  word-break: break-all;
-  vertical-align: middle;
+  padding: 12px 8px;            /* 셀 내부 상하 12px, 좌우 8px 여백으로 가독성 확보 */
+  border-bottom: 1px solid #eee; /* 각 행 하단에 연한 회색(#eee) 구분선 1px 추가 */
+  text-align: center;           /* 셀 내용을 가로 기준 가운데 정렬 */
+  word-break: break-all;        /* 긴 단어나 URL도 셀 너비 안에서 강제 줄바꿈 */
+  vertical-align: middle;       /* 셀 내용을 세로 기준 가운데 정렬 */
 }
 
 .board-table th {
-  background-color: #f8f9fa;
-  font-weight: bold;
-  border-top: 2px solid #333;
-  color: #333;
+  background-color: #f8f9fa;    /* 헤더 배경을 아주 연한 회색으로 설정해 본문 행과 시각적으로 구분 */
+  font-weight: bold;            /* 헤더 텍스트를 굵게 표시해 컬럼 제목임을 강조 */
+  border-top: 2px solid #333;   /* 헤더 상단에 진한 회색 2px 선으로 테이블 시작을 명확히 표시 */
+  color: #333;                  /* 헤더 글자색을 진한 회색으로 지정해 가독성 유지 */
 }
-
+/* 테이블 본문 행의 글자 크기: 헤더(th)보다 작게 설정하여 시각적으로 구분 */
+.board-table tbody td {
+  font-size: 0.85rem;         /* 기본(1rem) 대비 15% 작은 크기 (원하는 값으로 조절 가능) */
+}
 /* 제목 셀 한정 스타일 (말줄임표 및 정렬) */
 .board-table td.title-cell {
-  text-align: left;
-  padding-left: 20px;
-  cursor: pointer;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  text-align: left;             /* 제목은 좌측 정렬로 읽기 편하게 처리 */
+  padding-left: 20px;           /* 좌측 여백 20px 추가로 제목 시작점에 들여쓰기 효과 */
+  cursor: pointer;              /* 마우스 커서를 손가락 모양으로 바꿔 클릭 가능함을 표시 */
+  white-space: nowrap;          /* 텍스트가 셀 너비를 넘어도 줄바꿈 없이 한 줄로 유지 */
+  overflow: hidden;             /* 셀 너비를 초과한 텍스트를 잘라서 보이지 않게 처리 */
+  text-overflow: ellipsis;      /* 잘린 텍스트 끝에 말줄임표(…)를 자동으로 표시 */
 }
 
 .board-table td.title-cell:hover {
-  text-decoration: underline;
-  color: #03c75a;
+  text-decoration: underline;   /* 호버 시 제목에 밑줄을 추가해 링크처럼 클릭 유도 */
+  color: #03c75a;               /* 호버 시 네이버 녹색 계열로 글자색을 변경해 인터랙션 피드백 제공 */
 }
 
 .board-table tbody tr:hover {
-  background-color: #fbfbfc;
+  background-color: #fbfbfc;    /* 행 전체에 마우스를 올리면 아주 연한 배경색으로 하이라이트 */
 }
 
 /* --- 상세보기 영역 (아코디언 UI) --- */
 
 .board-table tbody tr.detail-row,
 .board-table tbody tr.detail-row:hover {
-  background-color: #fdfdfd;
+  background-color: #fdfdfd;    /* 상세보기 펼침 행은 호버 포함 항상 흰색에 가까운 배경 유지 (hover 스타일 덮어쓰기 방지) */
 }
 
 /* 본문 컨테이너 박스 */
 .detail-container {
-  text-align: left;
-  padding: 15px 20px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  border: 1px solid #e9ecef;
+  text-align: left;             /* 본문 내용을 좌측 정렬해 자연스러운 읽기 흐름 제공 */
+  padding: 15px 20px;           /* 내부 여백 상하 15px, 좌우 20px으로 콘텐츠가 테두리에 붙지 않도록 */
+  background-color: #f8f9fa;    /* 아주 연한 회색 배경으로 본문 영역을 테이블 행과 구분 */
+  border-radius: 4px;           /* 모서리를 4px 둥글게 처리해 부드러운 박스 형태 연출 */
+  border: 1px solid #e9ecef;    /* 연한 회색 테두리 1px로 컨테이너 경계를 시각적으로 표시 */
 }
 
 /* 본문 텍스트 (줄바꿈 유지) */
 .detail-body {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #495057;
-  white-space: pre-wrap; /* 줄바꿈(\n) 유지 */
-  margin-bottom: 12px;
+  font-size: 0.95rem;           /* 기본 폰트(16px)의 95% 크기인 약 15.2px로 본문 글자 크기 설정 */
+  line-height: 1.6;             /* 줄 간격을 폰트 크기의 1.6배로 넓혀 긴 글의 가독성 향상 */
+  color: #495057;               /* 순수 검정 대신 중간 회색으로 눈의 피로감 감소 */
+  white-space: pre-wrap;        /* \n 줄바꿈 문자와 공백을 그대로 화면에 반영 (사용자 입력 내용 보존) */
+  margin-bottom: 12px;          /* 본문 하단에 12px 여백으로 하단 footer 버튼과 간격 확보 */
 }
 
 .detail-footer {
-  display: flex;
-  justify-content: flex-end;
+  display: flex;                /* 자식 요소를 flexbox로 배치 */
+  justify-content: flex-end;    /* 자식 요소(버튼 등)를 오른쪽 끝으로 정렬 */
 }
 
 .btn-sm {
-  padding: 4px 12px !important;
-  font-size: 0.85rem !important;
+  padding: 4px 12px !important; /* 작은 버튼 전용 상하 4px, 좌우 12px 여백 (!important로 다른 버튼 스타일 덮어쓰기) */
+  font-size: 0.85rem !important; /* 글자 크기를 기본의 85%인 약 13.6px로 줄여 작은 버튼에 어울리게 조절 */
 }
 
 /* --- 매칭 버튼 스타일 --- */
 .btn-matching {
-  background-color: #4dabf7;
-  color: white;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  background-color: #4dabf7;    /* 하늘색 계열 배경으로 매칭 기능임을 색상으로 구분 */
+  color: white;                 /* 텍스트를 흰색으로 설정해 파란 배경 위에서 가독성 확보 */
+  padding: 6px 12px;            /* 상하 6px, 좌우 12px 여백으로 버튼 클릭 영역 확보 */
+  border: none;                 /* 버튼 기본 테두리 제거로 깔끔한 외형 유지 */
+  border-radius: 4px;           /* 모서리 4px 둥글게 처리해 부드러운 버튼 형태 */
+  font-size: 0.85rem;           /* 글자 크기를 기본의 85%로 줄여 보조 버튼으로서의 크기감 조절 */
+  font-weight: bold;            /* 굵은 글자로 버튼 텍스트 강조 */
+  cursor: pointer;              /* 마우스 커서를 손가락 모양으로 변경해 클릭 가능 표시 */
+  transition: all 0.2s ease;    /* 모든 속성 변화를 0.2초 ease 곡선으로 부드럽게 전환 */
 }
 
 .btn-matching:hover {
-  background-color: #339af0;
+  background-color: #339af0;    /* 호버 시 배경색을 약간 더 진한 파란색으로 변경해 클릭 유도 피드백 제공 */
 }
