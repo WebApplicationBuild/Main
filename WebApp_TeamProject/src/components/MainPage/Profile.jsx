@@ -14,6 +14,7 @@ export default function Profile() {
     const { user, login, logout } = useAuth();
 
     // ─── 로그아웃 상태 UI ────────────────────────────────
+    // 데모 로그인 버튼 삭제
     if (!user) {
         return (
             <div className="profile">
@@ -22,31 +23,27 @@ export default function Profile() {
                     <p className="profile__guest-text">로그인이 필요합니다</p>
                     <ProfileButton />
 
-                    {/* 프로필 UI 변화를 확인하기 위한 임시 버튼 -> 나중에 제거해야함. */}
-                    <button
-                        type="button"
-                        className="profile__dev-button"
-                        onClick={() => login("민성", ["게임 개발", "C++", "Unreal Engine"])}
-                    >
-                        (데모) 즉시 로그인
-                    </button>
                 </div>
             </div>
         );
     }
+
+    // 기본값 설정 (에러 방지)
+    const nickname = user.nickname || "사용자";
+    const interests = user.interests || [];
 
     // ─── 로그인 상태 UI ─────────────────────────────────
     return (
         <div className="profile">
             <h2 className="profile__heading">프로필</h2>
             <div className="profile__user-info">
-                <div className="profile__avatar">{user.nickname.charAt(0)}</div>    {/* 닉네임 첫 글자를 프로필이미지로 설정 */}
-                <div className="profile__nickname">{user.nickname}</div>
+                <div className="profile__avatar">{nickname.charAt(0)}</div>    {/* 닉네임 첫 글자를 프로필이미지로 설정 */}
+                <div className="profile__nickname">{nickname}</div>
 
                 <div className="profile__interests-label">관심 분야</div>
                 <ul className="profile__tag-list">
                     {/* user의 interests를 나열 */}
-                    {user.interests.map((interest) => (
+                    {interests.map((interest) => (
                         <li key={interest} className="profile__tag">
                             {interest}
                         </li>
