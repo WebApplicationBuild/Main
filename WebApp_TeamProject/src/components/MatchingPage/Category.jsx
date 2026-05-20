@@ -3,7 +3,12 @@ import '../../styles/Category.css';
 
 //현재 활성화된 카테고리 배열(activeCategories)과 클릭 핸들러(onCategoryClick)를 props로 받음
 function Category({ activeCategories, onCategoryClick }) {
-  const categories = ['AI', 'Vision', '자율주행', '해커톤', '빅데이터'];
+  const categories = [
+    "기계", "화공", "전자", "건축", "산공", 
+    "대외활동", "공모전", "창업", "캡스톤", "스터디",
+    "AI", "Vision", "자율주행", "빅데이터", "IoT",
+    "프론트엔드", "백엔드", "기획", "디자인", "설계"
+  ];
 
   return (
     <div className="category-list">
