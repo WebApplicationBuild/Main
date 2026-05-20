@@ -26,6 +26,9 @@ export default function App() {
           <Route path="/signup" element={<SignupPage />} />
           <Route path="/matching" element={<MatchingPage />} />
 
+          {/* ★ 프로젝트 전체보기 (선택 전) */}
+          <Route path="/projectManage" element={<ProjectPage />} />
+          
           {/* ★ 프로젝트 클릭 시 ProjectPage로 이동 */}
           <Route
             path="/projectManage/:projectId"

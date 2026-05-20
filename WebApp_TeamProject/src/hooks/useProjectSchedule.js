@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { projectInitialData, defaultProjectData } from "../store/initialData";
 import { createSchedule } from "../api/scheduleApi";
 
@@ -9,9 +9,17 @@ function useProjectSchedule(projectId) {
     projectInitialData[numericProjectId] || defaultProjectData;
   // ★ projectId에 맞는 기본 데이터를 가져오고, 없으면 기본 데이터 사용
 
-  const [members] = useState(currentProjectData.members); // 팀원 목록 상태 저장 부분
+  const [members, setMembers] = useState(currentProjectData.members); // 팀원 목록 상태 저장 부분
   const [schedules, setSchedules] = useState(currentProjectData.schedules); // 일정 리스트 상태 관리 부분
   const [voteList, setVoteList] = useState([]); // 투표 리스트 상태 관리 부분
+
+  // ★ URL의 projectId가 변경될 때마다 해당 프로젝트에 맞는 데이터로 상태를 초기화
+  useEffect(() => {
+    const newData = projectInitialData[numericProjectId] || defaultProjectData;
+    setMembers(newData.members);
+    setSchedules(newData.schedules);
+    setVoteList([]); // 투표 리스트는 프로젝트 이동 시 빈 배열로 초기화
+  }, [numericProjectId]);
 
   function addSchedule(title) {
     const newSchedule = createSchedule(title, numericProjectId); // ★ 현재 projectId를 포함해서 새 일정 생성
