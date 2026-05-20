@@ -70,7 +70,7 @@
 /* 실제 콘텐츠가 담기는 하얀 박스 */
 .matching-content {
   width: 100%;                    /* 부모(.matching-main)의 가로를 100% 사용 */
-  max-width: 800px;               /* 너무 넓어지지 않도록 최대 너비를 800px로 제한 */
+  max-width: 1200px;              /* 너무 좁지 않도록 최대 너비를 1200px로 대폭 확장 */
   background-color: white;        /* 콘텐츠 박스 배경을 흰색으로 설정해 회색 배경과 구분 */
   padding: 30px;                  /* 내부 사방 30px 여백으로 콘텐츠와 박스 테두리 사이 공간 확보 */
   border-radius: 8px;             /* 모서리를 8px 둥글게 처리해 카드 형태의 부드러운 외형 연출 */
@@ -125,4 +125,43 @@ button {
   justify-content: flex-end;      /* 버튼들을 오른쪽 끝으로 정렬해 폼 하단 우측 배치 구현 */
   gap: 10px;                      /* 버튼 사이에 10px 간격으로 붙지 않고 균일한 여백 유지 */
   margin-top: 20px;               /* 위쪽 요소(폼 입력 등)와 20px 여백으로 버튼 영역을 시각적으로 분리 */
+}
+
+/* =============================================
+   모달 (글쓰기 팝업) 레이아웃
+   ============================================= */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* 최상단 배치 */
+}
+
+.modal-content {
+  background-color: white;
+  width: 90%;
+  max-width: 700px;
+  max-height: 90vh; /* 화면을 넘지 않도록 제한 */
+  overflow-y: auto; /* 내용이 길면 내부 스크롤 생성 */
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease; /* 부드럽게 나타나는 애니메이션 */
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
