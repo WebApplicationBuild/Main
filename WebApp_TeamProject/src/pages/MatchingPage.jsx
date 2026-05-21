@@ -16,6 +16,7 @@ function Matching() {
   
   // 데이터 상태 관리
   const [posts, setPosts] = useState(matchingPosts);//등록된 게시글 목록 배열 (초기값으로 mock 데이터 사용)
+
   const [activeCategories, setActiveCategories] = useState([]); //현재 필터로 선택된 카테고리 이름 배열
   const [searchTerm, setSearchTerm] = useState(''); // 실시간 검색어 상태 관리
 
