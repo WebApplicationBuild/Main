@@ -1,5 +1,5 @@
-import { useParams, Link, useNavigate } from "react-router-dom"; // useNavigate 추가
-import { matchingPosts, myProjects } from "../api/mockData"; // recentProjects 대신 matchingPosts로 변경
+import { useParams, useNavigate } from "react-router-dom";
+import { myProjects } from "../api/mockData";
 
 import useProjectSchedule from "../hooks/useProjectSchedule";
 import TeamMemberList from "../components/ProjectManagePage/TeamMemberList";
@@ -14,15 +14,8 @@ import "../styles/WeeklyScheduleBox.css";
 import "../styles/ScheduleList.css";
 import "../styles/VoteBox.css";
 
-function ProjectPage() {
-  const { projectId } = useParams(); 
+function ProjectPageContent({ projectId }) {
   const navigate = useNavigate();
-
-  // 모든 프로젝트 데이터 병합 (진행 중인 프로젝트 + 매칭 게시글(최신 프로젝트 대체))
-  const allProjects = [...matchingPosts, ...myProjects]; 
-  const currentProject = allProjects.find(
-    (project) => project.id === Number(projectId)
-  );
 
   const {
     members,
@@ -142,6 +135,11 @@ function ProjectPage() {
       )}
     </div>
   );
+}
+
+function ProjectPage() {
+  const { projectId } = useParams();
+  return <ProjectPageContent key={projectId ?? "project-overview"} projectId={projectId} />;
 }
 
 export default ProjectPage;

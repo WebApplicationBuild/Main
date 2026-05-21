@@ -9,34 +9,37 @@ import '../styles/Matching.css';
 function Matching() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const postIdFromUrl = Number(searchParams.get("postId"));
   
   const [isWritingMode, setIsWritingMode] = useState(false);//현재 화면이 글쓰기 모드인지 여부 (true=글쓰기 화면, false=목록 화면)
-  const [selectedPost, setSelectedPost] = useState(null);//현재 상세보기(아코디언)가 열린 게시글 객체 (없으면 null)
+  const [selectedPostId, setSelectedPostId] = useState(null);//현재 상세보기(아코디언)가 열린 게시글 id (없으면 null)
   
   // 데이터 상태 관리
   const [posts, setPosts] = useState(matchingPosts);//등록된 게시글 목록 배열 (초기값으로 mock 데이터 사용)
   const [activeCategories, setActiveCategories] = useState([]); //현재 필터로 선택된 카테고리 이름 배열
   const [searchTerm, setSearchTerm] = useState(''); // 실시간 검색어 상태 관리
 
-  // 페이지 로드 시 URL 파라미터(postId)를 확인하여 해당 게시글의 상세보기를 자동으로 열기
+  const selectedPost =
+    posts.find((post) => post.id === selectedPostId) ||
+    posts.find((post) => post.id === postIdFromUrl) ||
+    null;
+
+  // URL 파라미터(postId)가 있으면 해당 게시글 위치로 스크롤
   useEffect(() => {
-    const postIdFromUrl = searchParams.get('postId');
-    if (postIdFromUrl) {
-      const targetPost = posts.find(post => post.id === Number(postIdFromUrl));
-      if (targetPost) {
-        setSelectedPost(targetPost);
-        // DOM이 렌더링될 시간을 벌기 위해 약간의 지연 후 스크롤 이동
-        setTimeout(() => {
-          const element = document.getElementById(`post-${postIdFromUrl}`);
-          if (element) {
-            // 헤더 높이(72px) 등을 고려하여 화면 중앙쯤에 오도록 부드럽게 스크롤
-            const y = element.getBoundingClientRect().top + window.scrollY - 150;
-            window.scrollTo({ top: y, behavior: 'smooth' });
-          }
-        }, 300); // 300ms 지연
-      }
+    if (!postIdFromUrl) return;
+    const targetPost = posts.find((post) => post.id === postIdFromUrl);
+    if (targetPost) {
+      // DOM이 렌더링될 시간을 벌기 위해 약간의 지연 후 스크롤 이동
+      setTimeout(() => {
+        const element = document.getElementById(`post-${postIdFromUrl}`);
+        if (element) {
+          // 헤더 높이(72px) 등을 고려하여 화면 중앙쯤에 오도록 부드럽게 스크롤
+          const y = element.getBoundingClientRect().top + window.scrollY - 150;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 300); // 300ms 지연
     }
-  }, [searchParams, posts]);
+  }, [postIdFromUrl, posts]);
 
   // Writing 컴포넌트에서 새 게시글이 등록될 때 호출되는 핸들러
   const addPost = (newPost) => {
@@ -138,7 +141,9 @@ function Matching() {
           <Board
             posts={filteredAndSortedPosts}
             selectedPost={selectedPost}
-            onPostClick={(post) => setSelectedPost(prev => prev?.id === post.id ? null : post)}
+            onPostClick={(post) =>
+              setSelectedPostId((prevId) => (prevId === post.id ? null : post.id))
+            }
             searchTerm={searchTerm}
             activeCategories={activeCategories}
           />

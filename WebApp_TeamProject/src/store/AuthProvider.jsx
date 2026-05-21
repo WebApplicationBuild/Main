@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 // Firebase 로그인 상태 감지 함수, 로그아웃 함수
 import { onAuthStateChanged, signOut } from "firebase/auth";
 // Firebase 인증 객체
