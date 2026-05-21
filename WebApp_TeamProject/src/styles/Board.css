@@ -38,6 +38,9 @@
   white-space: nowrap;          /* 텍스트가 셀 너비를 넘어도 줄바꿈 없이 한 줄로 유지 */
   overflow: hidden;             /* 셀 너비를 초과한 텍스트를 잘라서 보이지 않게 처리 */
   text-overflow: ellipsis;      /* 잘린 텍스트 끝에 말줄임표(…)를 자동으로 표시 */
+  display: flex;                /* 태그와 텍스트를 가로로 정렬하기 위해 flex 사용 */
+  align-items: center;
+  gap: 8px;                     /* 태그와 제목 텍스트 사이 간격 */
 }
 
 .board-table td.title-cell:hover {
@@ -47,6 +50,40 @@
 
 .board-table tbody tr:hover {
   background-color: #fbfbfc;    /* 행 전체에 마우스를 올리면 아주 연한 배경색으로 하이라이트 */
+}
+
+/* --- 상태 태그 (모집중, 마감) --- */
+.status-tag {
+  display: inline-block;
+  padding: 4px 8px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 12px;          /* 동글동글한 뱃지 모양 */
+  white-space: nowrap;
+}
+
+.status-open {
+  background-color: #e6fcf5;    /* 아주 연한 민트 배경 */
+  color: #0ca678;               /* 쨍한 초록색 글씨 */
+  border: 1px solid #63e6be;
+}
+
+.status-full {
+  background-color: #fff0f6;    /* 연한 핑크 배경 */
+  color: #d6336c;               /* 진한 핑크/빨강 글씨 */
+  border: 1px solid #faa2c1;
+}
+
+.status-closed {
+  background-color: #f1f3f5;    /* 회색 배경 */
+  color: #868e96;               /* 짙은 회색 글씨 */
+  border: 1px solid #ced4da;
+}
+
+/* 마감된 게시글의 제목 스타일 */
+.text-closed {
+  color: #adb5bd;               /* 흐린 회색으로 변경 */
+  text-decoration: line-through; /* 취소선 추가 */
 }
 
 /* --- 상세보기 영역 (아코디언 UI) --- */
@@ -63,6 +100,24 @@
   background-color: #f8f9fa;    /* 아주 연한 회색 배경으로 본문 영역을 테이블 행과 구분 */
   border-radius: 4px;           /* 모서리를 4px 둥글게 처리해 부드러운 박스 형태 연출 */
   border: 1px solid #e9ecef;    /* 연한 회색 테두리 1px로 컨테이너 경계를 시각적으로 표시 */
+}
+
+/* 상세 요약 정보 (카테고리, 인원 등) */
+.detail-header-info {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed #ced4da;
+  font-size: 0.85rem;
+  color: #495057;
+}
+
+.detail-info-item strong {
+  color: #212529;
+  margin-right: 6px;
 }
 
 /* 본문 텍스트 (줄바꿈 유지) */
@@ -99,5 +154,14 @@
 
 .btn-matching:hover {
   background-color: #339af0;    /* 호버 시 배경색을 약간 더 진한 파란색으로 변경해 클릭 유도 피드백 제공 */
+}
+
+/* --- 검색어 하이라이트 스타일 --- */
+.highlight {
+  background-color: rgba(3, 199, 90, 0.2); /* 브랜드 색상(녹색)을 투명하게 배경으로 사용 */
+  color: #02b351;                          /* 진한 녹색으로 글자색 변경 */
+  font-weight: bold;                       /* 텍스트 굵게 */
+  padding: 0 2px;                          /* 좌우 살짝 여백 */
+  border-radius: 3px;                      /* 둥근 테두리 */
 }
 

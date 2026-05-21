@@ -11,7 +11,7 @@ import "../../styles/Profile.css";
    useAuth()로 전역 상태를 가져오므로, 다른 페이지에서도 같은 user 정보를 공유 가능
  */
 export default function Profile() {
-    const { user, login, logout } = useAuth();
+    const { user, logout } = useAuth();
 
     // ─── 로그아웃 상태 UI ────────────────────────────────
     // 데모 로그인 버튼 삭제

@@ -6,9 +6,15 @@ function Writing({ onSave, onCancel }) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
-  const [recruitCount, setRecruitCount] = useState('');
+  const [requiredMembers, setRequiredMembers] = useState('');
+  const [deadline, setDeadline] = useState('');
 
-  const categories = ["AI", "Vision", "자율주행", "해커톤", "빅데이터"];
+  const categories = [
+    "기계", "화공", "전자", "건축", "산공", 
+    "대외활동", "공모전", "창업", "캡스톤", "스터디",
+    "AI", "Vision", "자율주행", "빅데이터", "IoT",
+    "프론트엔드", "백엔드", "기획", "디자인", "설계"
+  ];
 
   // 카테고리 체크박스 변경 시 선택 목록을 토글하는 핸들러
   const handleCategoryChange = (cat) => {
@@ -23,7 +29,8 @@ function Writing({ onSave, onCancel }) {
   const handleSubmit = () => {
     if (!title) return alert('제목을 입력해주세요.'); // 제목이 비어 있으면 알림을 띄우고 함수 종료 (이후 코드는 실행되지 않음)
     if (selectedCategories.length === 0) return alert('카테고리를 선택해주세요.');
-    if (!recruitCount) return alert('모집 인원을 입력해주세요.');
+    if (!requiredMembers) return alert('모집 인원을 입력해주세요.');
+    if (!deadline) return alert('모집 마감일을 선택해주세요.');
     if (!content) return alert('내용을 입력해주세요.');
 
     // 유효성 검사를 모두 통과하면 새 게시글 객체를 생성
@@ -32,8 +39,9 @@ function Writing({ onSave, onCancel }) {
       title,
       content,
       category: selectedCategories.join(', '),
-      recruitCount,
-      date: new Date().toLocaleDateString(),
+      requiredMembers,
+      deadline,
+      createdAt: new Date().toISOString().split('T')[0], // yyyy-mm-dd 포맷
     };
 
     // 생성된 게시글 객체를 부모(Matching) 컴포넌트의 onSave 콜백으로 전달
@@ -71,17 +79,28 @@ function Writing({ onSave, onCancel }) {
         </div>
       </div>
 
-      <div className="form-group writing-group">
-        <label>모집 인원 (명)</label>
-        <input
-          className="form-input writing-input"
-          value={recruitCount}
-          //"숫자(0~9)가 아닌 모든 문자" 빈 문자열로 교체하여 숫자만 허용
-          // [^0-9] : 숫자가 아닌 문자 / ^ = NOT, 0-9 = 숫자, g = 전체 반복 / '' = 삭제
-          onChange={(e) => setRecruitCount(e.target.value.replace(/[^0-9]/g, ''))} //
-          
-          placeholder="숫자만 입력하세요 (예: 3)"
-        />
+      <div className="form-group writing-group" style={{ display: 'flex', gap: '20px' }}>
+        <div style={{ flex: 1 }}>
+          <label>모집 인원 (명)</label>
+          <input
+            className="form-input writing-input"
+            value={requiredMembers}
+            //"숫자(0~9)가 아닌 모든 문자" 빈 문자열로 교체하여 숫자만 허용
+            // [^0-9] : 숫자가 아닌 문자 / ^ = NOT, 0-9 = 숫자, g = 전체 반복 / '' = 삭제
+            onChange={(e) => setRequiredMembers(e.target.value.replace(/[^0-9]/g, ''))} //
+            
+            placeholder="숫자만 입력하세요 (예: 3)"
+          />
+        </div>
+        <div style={{ flex: 1 }}>
+          <label>모집 마감일</label>
+          <input
+            type="date"
+            className="form-input writing-input"
+            value={deadline}
+            onChange={(e) => setDeadline(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="form-group writing-group">
