@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
+import {matchingPosts}from '../api/matchingMock';
 import '../styles/Matching.css';
 
 function Matching() {
@@ -12,7 +13,7 @@ function Matching() {
   const [selectedPost, setSelectedPost] = useState(null);//현재 상세보기(아코디언)가 열린 게시글 객체 (없으면 null)
   
   // 데이터 상태 관리
-  const [posts, setPosts] = useState([]);//등록된 게시글 목록 배열 (초기값은 빈 배열)
+  const [posts, setPosts] = useState(matchingPosts);//등록된 게시글 목록 배열 (초기값은 빈 배열)
   const [activeCategories, setActiveCategories] = useState([]); //현재 필터로 선택된 카테고리 이름 배열
 
   // Writing 컴포넌트에서 새 게시글이 등록될 때 호출되는 핸들러
