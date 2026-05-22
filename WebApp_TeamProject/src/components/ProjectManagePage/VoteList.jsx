@@ -1,4 +1,4 @@
-import VoteItem from "./VoteItem"; // 투표 항목 컴포넌트 불러옴
+import VoteItem from "../VoteItem"; // 투표 항목 컴포넌트 불러옴
 
 function VoteList({ voteList, onVoteTrue, onVoteFalse }) {
     return (

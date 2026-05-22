@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
-import { myProjects } from "../api/mockData";
-import "../styles/MyProjects.css";
+import { useAuth } from "../../hooks/useAuth";
+import { myProjects } from "../../api/mockData";
+import "../../styles/MyProjects.css";
 
 /*
    내가 진행중인 프로젝트
@@ -15,7 +15,17 @@ export default function MyProjects() {
 
     return (
         <div className="my-projects">
-            <h2 className="my-projects__heading">내가 진행중인 프로젝트</h2>
+            <div className="my-projects__header">
+                <h2 className="my-projects__heading">내가 진행중인 프로젝트</h2>
+                {/* 로그인 상태일 때만 전체보기 버튼 렌더링 */}
+                {user && (
+                    <button
+                        className="my-projects__view-all"
+                        // 전체보기 클릭 시, 특정 프로젝트가 선택되지 않은 프로젝트 관리 메인 페이지로 이동
+                        onClick={() => navigate('/projectManage')}
+                    >전체보기 →</button>
+                )}
+            </div>
 
             {!user ? (                                  /* 로그인이 되어있는지 확인 */
                 <div className="my-projects__empty">

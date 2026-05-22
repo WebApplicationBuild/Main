@@ -9,7 +9,7 @@ function useProjectSchedule(projectId) {
     projectInitialData[numericProjectId] || defaultProjectData;
   // ★ projectId에 맞는 기본 데이터를 가져오고, 없으면 기본 데이터 사용
 
-  const [members] = useState(currentProjectData.members); // 팀원 목록 상태 저장 부분
+  const members = currentProjectData.members; // 팀원 목록은 초기 데이터 기준으로 사용
   const [schedules, setSchedules] = useState(currentProjectData.schedules); // 일정 리스트 상태 관리 부분
   const [voteList, setVoteList] = useState([]); // 투표 리스트 상태 관리 부분
 

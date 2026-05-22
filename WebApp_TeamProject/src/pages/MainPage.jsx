@@ -1,7 +1,7 @@
-import NoticeCarousel from "../components/NoticeCarousel";
-import Profile from "../components/Profile";
-import RecentProjects from "../components/RecentProjects";
-import MyProjects from "../components/MyProjects";
+import NoticeCarousel from "../components/MainPage/NoticeCarousel";
+import Profile from "../components/MainPage/Profile";
+import RecentProjects from "../components/MainPage/RecentProjects";
+import MyProjects from "../components/MainPage/MyProjects";
 import "../styles/MainPage.css";
 
 export default function MainPage() {

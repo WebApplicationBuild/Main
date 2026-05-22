@@ -50,12 +50,12 @@
  *   notice  profile
  *   recent  my
  *
- * 컬럼 비율 2:1 → 왼쪽이 더 넓다.
+ * 컬럼 비율 3:1 → 왼쪽(최신 프로젝트)을 기존 2:1보다 더 넓게 확장
  * grid-template-areas로 레이아웃이 코드만 봐도 보인다.
  */
 .main-page__grid {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 3fr 1fr;
     grid-template-rows: auto auto;
     grid-template-areas:
         "notice profile"

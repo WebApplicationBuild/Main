@@ -1,4 +1,4 @@
-import ScheduleItem from "./ScheduleItem"; // 일정 하나를 출력하는 컴포넌트 불러옴
+import ScheduleItem from "../ScheduleItem"; // 일정 하나를 출력하는 컴포넌트 불러옴
 
 function ScheduleList({ schedules, onMoveToVote }) {
     return (
