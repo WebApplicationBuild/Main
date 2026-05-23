@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../../styles/Writing.css';
+import CategoryOptions from './CategoryOptions';
 
 // 새 게시글 작성 폼 컴포넌트
 function Writing({ onSave, onCancel }) {
@@ -8,13 +9,6 @@ function Writing({ onSave, onCancel }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [requiredMembers, setRequiredMembers] = useState('');
   const [deadline, setDeadline] = useState('');
-
-  const categories = [
-    "기계", "화공", "전자", "건축", "산공", 
-    "대외활동", "공모전", "창업", "캡스톤", "스터디",
-    "AI", "Vision", "자율주행", "빅데이터", "IoT",
-    "프론트엔드", "백엔드", "기획", "디자인", "설계"
-  ];
 
   // 카테고리 체크박스 변경 시 선택 목록을 토글하는 핸들러
   const handleCategoryChange = (cat) => {
@@ -64,19 +58,11 @@ function Writing({ onSave, onCancel }) {
 
       <div className="form-group writing-group">
         <label>카테고리</label>
-        <div className="checkbox-group">
-          {/* categories 배열을 순회하여 각 카테고리에 대한 체크박스 항목을 렌더링 */}
-          {categories.map((cat) => (
-            <label key={cat} className="checkbox-item writing-checkbox-item">
-              <input
-                type="checkbox"
-                checked={selectedCategories.includes(cat)}
-                onChange={() => handleCategoryChange(cat)}
-              />
-              {cat}
-            </label>
-          ))}
-        </div>
+        <CategoryOptions
+          selectedCategories={selectedCategories}
+          onToggle={handleCategoryChange}
+          variant="checkbox"
+        />
       </div>
 
       <div className="form-group writing-group" style={{ display: 'flex', gap: '20px' }}>
