@@ -1,10 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 
 /*
- useParams()로 현재 URL의 projectId 값을 꺼냄
- ex) URL이 /projectManage/201 이면 projectId === "201"
-
- Link를 통해 "메인으로" 클릭시 전 페이지로 이동
+    useParams()로 현재 URL의 projectId 값을 꺼냄
+    ex) URL이 /projectManage/201 이면 projectId === "201"
+    Link를 통해 "메인으로" 클릭시 전 페이지로 이동
 */
 
 export default function ProjectManagePage() {
