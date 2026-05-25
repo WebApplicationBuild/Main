@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useProjectData } from '../store/ProjectDataProvider';
+import { useProjectData } from '../store/MatchingDataProvider';
 //import { matchingPosts } from '../api/mockData';
 
 function useMatchingPageData() {

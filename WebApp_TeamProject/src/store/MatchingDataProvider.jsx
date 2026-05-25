@@ -3,7 +3,7 @@ import { matchingPosts } from "../api/mockData";
 
 const ProjectDataContext = createContext(null);
 
-export function ProjectDataProvider({ children }) {
+export function MatchingDataProvider({ children }) {
     const [matchingPostsData, setMatchingPostsData] = useState(matchingPosts);
     const [matchingActiveCategories, setMatchingActiveCategories] = useState([]);
     const [matchingSearchTerm, setMatchingSearchTerm] = useState("");
