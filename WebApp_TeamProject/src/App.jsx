@@ -5,7 +5,6 @@ import SignupPage from './pages/SignupPage';
 import MatchingPage from './pages/MatchingPage';
 import ProjectPage from './pages/ProjectPage'; // ★ 기존 임시 프로젝트 페이지 대신 실제 프로젝트 관리 페이지 연결
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./store/AuthProvider";
 
 /*
     라우트:
@@ -19,23 +18,21 @@ import { AuthProvider } from "./store/AuthProvider";
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/matching" element={<MatchingPage />} />
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/matching" element={<MatchingPage />} />
 
-          {/* ★ 프로젝트 전체보기 (선택 전) */}
-          <Route path="/projectManage" element={<ProjectPage />} />
-          
-          {/* ★ 프로젝트 클릭 시 ProjectPage로 이동 */}
-          <Route
-            path="/projectManage/:projectId"
-            element={<ProjectPage />}
-          />
-        </Routes>
-      </AuthProvider>
+        {/* ★ 프로젝트 전체보기 (선택 전) */}
+        <Route path="/projectManage" element={<ProjectPage />} />
+        
+        {/* ★ 프로젝트 클릭 시 ProjectPage로 이동 */}
+        <Route
+          path="/projectManage/:projectId"
+          element={<ProjectPage />}
+        />
+      </Routes>
     </BrowserRouter>
   );
 }
