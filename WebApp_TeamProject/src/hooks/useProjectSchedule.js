@@ -1,23 +1,27 @@
-import { useState } from "react";
-import { projectInitialData, defaultProjectData } from "../store/initialData";
 import { createSchedule } from "../api/scheduleApi";
+import { useProjectManageData } from "../store/ProjectManageDataProvider";
 
 function useProjectSchedule(projectId) {
-  const numericProjectId = Number(projectId); // ★ URL에서 받은 projectId는 문자열이므로 숫자로 변환
+  const numericProjectId = Number(projectId);
 
-  const currentProjectData =
-    projectInitialData[numericProjectId] || defaultProjectData;
-  // ★ projectId에 맞는 기본 데이터를 가져오고, 없으면 기본 데이터 사용
+  const {
+    getProjectManageData,
+    updateProjectManageData,
+  } = useProjectManageData();
 
-  const members = currentProjectData.members; // 팀원 목록은 초기 데이터 기준으로 사용
-  const [schedules, setSchedules] = useState(currentProjectData.schedules); // 일정 리스트 상태 관리 부분
-  const [voteList, setVoteList] = useState([]); // 투표 리스트 상태 관리 부분
+  const currentProjectData = getProjectManageData(numericProjectId);
+
+  const members = currentProjectData.members;
+  const schedules = currentProjectData.schedules;
+  const voteList = currentProjectData.voteList;
 
   function addSchedule(title) {
-    const newSchedule = createSchedule(title, numericProjectId); // ★ 현재 projectId를 포함해서 새 일정 생성
+    const newSchedule = createSchedule(title, numericProjectId);
 
-    setSchedules((prevSchedules) => [...prevSchedules, newSchedule]);
-    // ★ 이전 schedules 값을 기준으로 새 일정을 추가하여 state 안정성 높임
+    updateProjectManageData(numericProjectId, (prevData) => ({
+      ...prevData,
+      schedules: [...prevData.schedules, newSchedule],
+    }));
   }
 
   function moveToVote(id) {
@@ -31,11 +35,11 @@ function useProjectSchedule(projectId) {
       falseCount: 0,
     };
 
-    setSchedules((prevSchedules) =>
-      prevSchedules.filter((schedule) => schedule.id !== id)
-    );
-
-    setVoteList((prevVoteList) => [...prevVoteList, voteItem]);
+    updateProjectManageData(numericProjectId, (prevData) => ({
+      ...prevData,
+      schedules: prevData.schedules.filter((schedule) => schedule.id !== id),
+      voteList: [...prevData.voteList, voteItem],
+    }));
   }
 
   function voteTrue(id) {
@@ -52,15 +56,21 @@ function useProjectSchedule(projectId) {
     if (selectedItem.trueCount >= 3) {
       const restoredSchedule = {
         id: selectedItem.id,
-        projectId: selectedItem.projectId, // ★ 복구될 때도 프로젝트 ID 유지
+        projectId: selectedItem.projectId,
         title: selectedItem.title,
         day: selectedItem.day,
       };
 
-      setSchedules((prevSchedules) => [...prevSchedules, restoredSchedule]);
-      setVoteList(updatedList.filter((item) => item.id !== id));
+      updateProjectManageData(numericProjectId, (prevData) => ({
+        ...prevData,
+        schedules: [...prevData.schedules, restoredSchedule],
+        voteList: updatedList.filter((item) => item.id !== id),
+      }));
     } else {
-      setVoteList(updatedList);
+      updateProjectManageData(numericProjectId, (prevData) => ({
+        ...prevData,
+        voteList: updatedList,
+      }));
     }
   }
 
@@ -76,9 +86,15 @@ function useProjectSchedule(projectId) {
     if (!selectedItem) return;
 
     if (selectedItem.falseCount >= 3) {
-      setVoteList(updatedList.filter((item) => item.id !== id));
+      updateProjectManageData(numericProjectId, (prevData) => ({
+        ...prevData,
+        voteList: updatedList.filter((item) => item.id !== id),
+      }));
     } else {
-      setVoteList(updatedList);
+      updateProjectManageData(numericProjectId, (prevData) => ({
+        ...prevData,
+        voteList: updatedList,
+      }));
     }
   }
 
