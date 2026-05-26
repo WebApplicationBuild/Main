@@ -7,6 +7,7 @@ import WeeklyScheduleBox from "../components/ProjectManagePage/WeeklyScheduleBox
 import ScheduleInput from "../components/ProjectManagePage/ScheduleInput";
 import ScheduleList from "../components/ProjectManagePage/ScheduleList";
 import VoteList from "../components/ProjectManagePage/VoteList";
+import NavDropdown from "../components/NavDropdown";
 
 import "../styles/App.css";
 import "../styles/TeamMemberList.css";
@@ -97,7 +98,7 @@ function ProjectPageContent({ projectId }) {
             : "프로젝트 관리 페이지"}
         </h1>
 
-        <div className="header-spacer" />
+        <div className="header-spacer"><NavDropdown /></div>
       </header>
 
       {/* --- 상단: 내 프로젝트 이동 네비게이션 카드 --- */}

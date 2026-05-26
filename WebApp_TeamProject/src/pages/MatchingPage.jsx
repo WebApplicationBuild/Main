@@ -4,6 +4,7 @@ import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
+import NavDropdown from "../components/NavDropdown";
 import '../styles/Matching.css';
 
 function Matching() {
@@ -31,7 +32,7 @@ function Matching() {
         <h1 className="matching-header__title">
           매칭 페이지
         </h1>
-        <div className="matching-header__spacer" />
+        <div className="matching-header__spacer"><NavDropdown /></div>
       </header>
 
       <main className="matching-main">
