@@ -1,10 +1,16 @@
 import { createContext, useContext, useState } from "react";
 import { initialMembers, initialSchedules } from "../api/manageMock";
+import { myProjects } from "../api/mockData";
 
 const ProjectManageDataContext = createContext(null);
 
 export function ProjectManageDataProvider({ children }) {
     const [projectManageData, setProjectManageData] = useState({});
+    const [myProjectsData, setMyProjectsData] = useState(myProjects);
+
+    function addMyProject(project) {
+        setMyProjectsData((prev) => [...prev, project]);
+    }
 
     function getProjectManageData(projectId) {
         const numericProjectId = Number(projectId);
@@ -39,6 +45,8 @@ export function ProjectManageDataProvider({ children }) {
     return (
         <ProjectManageDataContext.Provider
         value={{
+            myProjectsData,
+            addMyProject,
             getProjectManageData,
             updateProjectManageData,
         }}

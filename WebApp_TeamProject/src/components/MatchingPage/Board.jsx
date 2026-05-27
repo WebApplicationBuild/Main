@@ -1,15 +1,36 @@
 import React from 'react';
 import '../../styles/Board.css';
+import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories }) {
+  const { addMyProject, updateProjectManageData } = useProjectManageData();
   
   // '매칭' 버튼 클릭 시 실행될 핸들러 함수
   const handleMatchClick = (e, post) => {
-    // 이벤트 버블링 방지: 제목 클릭 이벤트(상세보기 토글)가 트리거되는 것을 막음
-    e.stopPropagation(); 
-    alert(`[${post.title}] 게시글에 매칭이 신청되었습니다!`);
+  e.stopPropagation();
+
+  const newProjectId = Date.now();
+
+  const newProject = {
+    id: newProjectId,
+    title: post.title,
+    status: '진행 중',
+    members: 1,
   };
+
+  addMyProject(newProject);
+
+  updateProjectManageData(newProjectId, () => ({
+    members: [
+      { id: 1, name: '황대성', role: '★팀장★' },
+    ],
+    schedules: [],
+    voteList: [],
+  }));
+
+  alert(`[${post.title}] 프로젝트가 생성되었습니다!`);
+};
 
   // D-Day 및 스타일 정보 계산 함수
   const getDDayInfo = (deadline) => {
