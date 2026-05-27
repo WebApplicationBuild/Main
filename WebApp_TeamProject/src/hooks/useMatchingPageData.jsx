@@ -35,6 +35,10 @@ function useMatchingPageData() {
   );
 
   useEffect(() => {
+    document.title = "TeaMo | 팀 매칭";
+  }, []);
+
+  useEffect(() => {
     if (!postIdFromUrl) return;
 
     const targetPost = posts.find((post) => post.id === postIdFromUrl);

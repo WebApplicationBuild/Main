@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { createSchedule } from "../api/scheduleApi";
 import { useProjectManageData } from "../store/ProjectManageDataProvider";
 
@@ -14,6 +15,10 @@ function useProjectSchedule(projectId) {
   const members = currentProjectData.members;
   const schedules = currentProjectData.schedules;
   const voteList = currentProjectData.voteList;
+
+  useEffect(() => {
+    document.title = "TeaMo | 프로젝트 관리";
+  }, []);
 
   function addSchedule(title) {
     const newSchedule = createSchedule(title, numericProjectId);
