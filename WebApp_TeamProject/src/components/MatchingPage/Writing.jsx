@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
+import { useContext } from "react";
+import { AuthContext } from "../../store/AuthContext";
 import '../../styles/Writing.css';
 import CategoryOptions from './CategoryOptions';
 
+
 // 새 게시글 작성 폼 컴포넌트
 function Writing({ onSave, onCancel }) {
+  const { user, userInfo } = useContext(AuthContext); // 유저용
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [requiredMembers, setRequiredMembers] = useState('');
   const [deadline, setDeadline] = useState('');
-
+  
   // 카테고리 체크박스 변경 시 선택 목록을 토글하는 핸들러
   const handleCategoryChange = (cat) => {
     setSelectedCategories((prev) =>
@@ -36,7 +40,12 @@ function Writing({ onSave, onCancel }) {
       requiredMembers,
       deadline,
       createdAt: new Date().toISOString().split('T')[0], // yyyy-mm-dd 포맷
+
+      authorId: user.uid,
+      author: userInfo.nickname,
     };
+
+    console.log(newPost); // 유저 확인용
 
     // 생성된 게시글 객체를 부모(Matching) 컴포넌트의 onSave 콜백으로 전달
     onSave(newPost);

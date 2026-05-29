@@ -7,8 +7,19 @@ import useMatchingPageData from '../hooks/useMatchingPageData';
 import NavDropdown from "../components/NavDropdown";
 import '../styles/Matching.css';
 
+// 유저 확인용
+import { useContext } from "react";
+import { AuthContext } from "../store/AuthContext";
+
 function Matching() {
   const navigate = useNavigate();
+
+  // 유저 확인용
+  const { user, userInfo } = useContext(AuthContext);
+
+  console.log(user);
+  console.log(userInfo);
+
   // 데이터/상태/핸들러는 훅에서 받고, 페이지는 화면 조합만 담당
   const {
     isWritingMode,
