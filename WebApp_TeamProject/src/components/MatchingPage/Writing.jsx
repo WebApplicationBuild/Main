@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import '../../styles/Writing.css';
 import CategoryOptions from './CategoryOptions';
+import { useProjectManageData } from "../../store/ProjectManageDataProvider";
 
 
 // 새 게시글 작성 폼 컴포넌트
@@ -13,6 +14,7 @@ function Writing({ onSave, onCancel }) {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [requiredMembers, setRequiredMembers] = useState('');
   const [deadline, setDeadline] = useState('');
+  const { updateProjectManageData } = useProjectManageData();
   
   // 카테고리 체크박스 변경 시 선택 목록을 토글하는 핸들러
   const handleCategoryChange = (cat) => {
@@ -31,9 +33,11 @@ function Writing({ onSave, onCancel }) {
     if (!deadline) return alert('모집 마감일을 선택해주세요.');
     if (!content) return alert('내용을 입력해주세요.');
 
+    const newPostId = Date.now();
+
     // 유효성 검사를 모두 통과하면 새 게시글 객체를 생성
     const newPost = {
-      id: Date.now(),
+      id: newPostId,
       title,
       content,
       category: selectedCategories.join(', '),
@@ -41,14 +45,31 @@ function Writing({ onSave, onCancel }) {
       deadline,
       createdAt: new Date().toISOString().split('T')[0], // yyyy-mm-dd 포맷
 
+      // 사용자
       authorId: user.uid,
       author: userInfo.nickname,
-    };
 
-    console.log(newPost); // 유저 확인용
+      // 게시글에 프로젝트 정보 넣기
+      ownerId: user.uid,  // 글 작성자 uid
+      ownerName: userInfo.nickname, 
+      memberIds: [user.uid],  // 참여한 사람 목록
+      appliedMembers: 1,  // 현재 참여 인원
+    };
 
     // 생성된 게시글 객체를 부모(Matching) 컴포넌트의 onSave 콜백으로 전달
     onSave(newPost);
+
+    updateProjectManageData(newPostId, () => ({
+      members: [
+        {
+          id: user.uid,
+          name: userInfo.nickname,
+          role: "★팀장★",
+        },
+      ],
+      schedules: [],
+      voteList: [],
+    }));
   };
 
   return (

@@ -5,45 +5,57 @@ import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
-function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories }) {
+function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject }) {
   const { addMyProject, updateProjectManageData } = useProjectManageData();
   
   const { user, userInfo } = useContext(AuthContext);
 
   // '매칭' 버튼 클릭 시 실행될 핸들러 함수
   const handleMatchClick = (e, post) => {
-  e.stopPropagation();
+    e.stopPropagation();
 
-  if (!user || !userInfo) {
-    alert("로그인 후 이용해주세요.");
-    return;
-  }
+    if (!user || !userInfo) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
 
-  const newProjectId = Date.now();
+    const currentMemberIds = post.memberIds || [];
 
-  const newProject = {
-    id: newProjectId,
-    title: post.title,
-    status: '진행 중',
-    members: 1,
+    if (currentMemberIds.includes(user.uid)) {
+      alert("이미 참여한 프로젝트입니다.");
+      return;
+    }
 
-    ownerId: user.uid,
-    memberIds: [user.uid],
-    ownerName: userInfo.nickname,
+    const updatedMemberIds = [...currentMemberIds, user.uid];
+
+    onJoinProject(post.id, user.uid);
+
+    const newProject = {
+      id: post.id,
+      title: post.title,
+      status: "진행 중",
+      members: updatedMemberIds.length,
+      ownerId: post.ownerId,
+      ownerName: post.ownerName,
+      memberIds: updatedMemberIds,
+    };
+
+    addMyProject(newProject);
+
+    updateProjectManageData(post.id, (currentData) => ({
+      ...currentData,
+      members: [
+        ...(currentData.members || []),
+        {
+          id: user.uid,
+          name: userInfo.nickname,
+          role: "팀원",
+        },
+      ],
+    }));
+
+    alert(`[${post.title}] 프로젝트에 참여했습니다!`);
   };
-
-  addMyProject(newProject);
-
-  updateProjectManageData(newProjectId, () => ({
-    members: [
-      { id: 1, name: userInfo.nickname, role: '★팀장★' },
-    ],
-    schedules: [],
-    voteList: [],
-  }));
-
-  alert(`[${post.title}] 프로젝트가 생성되었습니다!`);
-};
 
   // D-Day 및 스타일 정보 계산 함수
   const getDDayInfo = (deadline) => {

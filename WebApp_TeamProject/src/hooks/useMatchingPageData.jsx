@@ -19,7 +19,24 @@ function useMatchingPageData() {
     setMatchingActiveCategories: setActiveCategories,
     matchingSearchTerm: searchTerm,
     setMatchingSearchTerm: setSearchTerm,
-} = useProjectData();
+  } = useProjectData();
+
+  function joinProject(postId, userId) {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) {
+          return post;
+        }
+
+        return {
+          ...post,
+          memberIds: [...(post.memberIds || []), userId],
+          appliedMembers: (post.appliedMembers || 0) + 1,
+        };
+      })
+    );
+  }
+
   // Context 사용하여 밑에 3줄 사용 안 함
   // const [posts, setPosts] = useState(matchingPosts);
   // const [activeCategories, setActiveCategories] = useState([]);
@@ -124,6 +141,7 @@ function useMatchingPageData() {
     handleCategoryClick,
     filteredAndSortedPosts,
     togglePostSelection,
+    joinProject,
   };
 }
 
