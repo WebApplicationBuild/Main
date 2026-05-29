@@ -5,7 +5,7 @@ import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
-function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject}) {
+function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
   const { addMyProject, updateProjectManageData } = useProjectManageData();
   
   const { user, userInfo } = useContext(AuthContext);
@@ -55,6 +55,27 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     }));
 
     alert(`[${post.title}] 프로젝트가 생성되었습니다!`);
+  };
+  // 팀장만 사용하는 게시글 삭제 함수
+  const handleDeleteClick = (e, post) => {
+    e.stopPropagation();
+
+    if (!user || !userInfo) {
+      alert("로그인 후 이용해주세요.");
+      return;
+    }
+
+    if (post.ownerId !== user.uid) {
+      alert("팀장만 삭제할 수 있습니다.");
+      return;
+    }
+
+    if (!window.confirm(`[${post.title}] 글을 삭제하시겠습니까?`)) {
+      return;
+    }
+
+    onDeletePost(post.id);
+    alert("게시글이 삭제되었습니다.");
   };
 
   // D-Day 및 스타일 정보 계산 함수
@@ -213,7 +234,15 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
                           {highlightText(post.content)}
                         </div>
                         <div className="detail-footer">
-                          {/* 닫기 버튼: 클릭 시 onPostClick을 다시 호출하여 상세보기를 토글(닫기) */}
+                          {post.ownerId === user?.uid && (
+                            <button
+                              className="btn-sub btn-sm"
+                              onClick={(e) => handleDeleteClick(e, post)}
+                            >
+                              삭제
+                            </button>
+                          )}
+
                           <button className="btn-sub btn-sm" onClick={() => onPostClick(post)}>
                             닫기
                           </button>

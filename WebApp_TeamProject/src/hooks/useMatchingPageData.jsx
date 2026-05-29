@@ -19,7 +19,6 @@ function useMatchingPageData() {
     setMatchingActiveCategories: setActiveCategories,
     matchingSearchTerm: searchTerm,
     setMatchingSearchTerm: setSearchTerm,
-    setMatchingSearchTerm,
   } = useProjectData();
   
   function joinProject(postId, userId) {
@@ -35,6 +34,12 @@ function useMatchingPageData() {
           appliedMembers: (post.appliedMembers || 0) + 1,
         };
       })
+    );
+  }
+  // 팀장만 삭제 가능
+  function deletePost(postId) {
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post.id !== postId)
     );
   }
 
@@ -138,6 +143,7 @@ function useMatchingPageData() {
     filteredAndSortedPosts,
     togglePostSelection,
     joinProject,
+    deletePost,
   };
 }
 

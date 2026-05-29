@@ -30,6 +30,7 @@ function Matching() {
     filteredAndSortedPosts,
     togglePostSelection,
     joinProject,
+    deletePost,
   } = useMatchingPageData();
 
   return (
@@ -80,6 +81,7 @@ function Matching() {
             searchTerm={searchTerm}
             activeCategories={activeCategories}
             onJoinProject={joinProject}
+            onDeletePost={deletePost}
           />
         </div>
       </main>
