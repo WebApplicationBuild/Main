@@ -1,14 +1,23 @@
 import React from 'react';
 import '../../styles/Board.css';
+import { useContext } from "react";
+import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories }) {
   const { addMyProject, updateProjectManageData } = useProjectManageData();
   
+  const { user, userInfo } = useContext(AuthContext);
+
   // '매칭' 버튼 클릭 시 실행될 핸들러 함수
   const handleMatchClick = (e, post) => {
   e.stopPropagation();
+
+  if (!user || !userInfo) {
+    alert("로그인 후 이용해주세요.");
+    return;
+  }
 
   const newProjectId = Date.now();
 
@@ -17,13 +26,17 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories 
     title: post.title,
     status: '진행 중',
     members: 1,
+
+    ownerId: user.uid,
+    memberIds: [user.uid],
+    ownerName: userInfo.nickname,
   };
 
   addMyProject(newProject);
 
   updateProjectManageData(newProjectId, () => ({
     members: [
-      { id: 1, name: '황대성', role: '★팀장★' },
+      { id: 1, name: userInfo.nickname, role: '★팀장★' },
     ],
     schedules: [],
     voteList: [],
