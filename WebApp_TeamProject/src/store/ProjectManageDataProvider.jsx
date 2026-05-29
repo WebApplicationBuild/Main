@@ -1,12 +1,22 @@
 import { createContext, useContext, useState } from "react";
 import { initialMembers, initialSchedules } from "../api/manageMock";
 import { myProjects } from "../api/mockData";
+import { AuthContext } from "./AuthContext";
 
 const ProjectManageDataContext = createContext(null);
 
 export function ProjectManageDataProvider({ children }) {
+    const { user } = useContext(AuthContext);
+
     const [projectManageData, setProjectManageData] = useState({});
     const [myProjectsData, setMyProjectsData] = useState(myProjects);
+
+    const filteredMyProjectsData = myProjectsData.filter((project) => {
+        if (!user) return false;
+        if (!project.memberIds) return false;
+
+        return project.memberIds.includes(user.uid);
+    });
 
     function addMyProject(project) {
         setMyProjectsData((prev) => [...prev, project]);
@@ -28,30 +38,30 @@ export function ProjectManageDataProvider({ children }) {
         const numericProjectId = Number(projectId);
 
         setProjectManageData((prev) => {
-        const currentData =
-            prev[numericProjectId] || {
-            members: initialMembers,
-            schedules: initialSchedules,
-            voteList: [],
-            };
+            const currentData =
+                prev[numericProjectId] || {
+                    members: initialMembers,
+                    schedules: initialSchedules,
+                    voteList: [],
+                };
 
-        return {
-            ...prev,
-            [numericProjectId]: updater(currentData),
-        };
+            return {
+                ...prev,
+                [numericProjectId]: updater(currentData),
+            };
         });
     }
 
     return (
         <ProjectManageDataContext.Provider
-        value={{
-            myProjectsData,
-            addMyProject,
-            getProjectManageData,
-            updateProjectManageData,
-        }}
+            value={{
+                myProjectsData: filteredMyProjectsData,
+                addMyProject,
+                getProjectManageData,
+                updateProjectManageData,
+            }}
         >
-        {children}
+            {children}
         </ProjectManageDataContext.Provider>
     );
 }
