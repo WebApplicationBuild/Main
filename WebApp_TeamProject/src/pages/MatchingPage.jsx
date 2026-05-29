@@ -17,9 +17,6 @@ function Matching() {
   // 유저 확인용
   const { user, userInfo } = useContext(AuthContext);
 
-  console.log(user);
-  console.log(userInfo);
-
   // 데이터/상태/핸들러는 훅에서 받고, 페이지는 화면 조합만 담당
   const {
     isWritingMode,
@@ -32,6 +29,7 @@ function Matching() {
     handleCategoryClick,
     filteredAndSortedPosts,
     togglePostSelection,
+    joinProject,
   } = useMatchingPageData();
 
   return (
@@ -81,6 +79,7 @@ function Matching() {
             onPostClick={togglePostSelection}
             searchTerm={searchTerm}
             activeCategories={activeCategories}
+            onJoinProject={joinProject}
           />
         </div>
       </main>

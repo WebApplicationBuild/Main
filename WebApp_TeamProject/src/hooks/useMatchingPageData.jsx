@@ -19,11 +19,24 @@ function useMatchingPageData() {
     setMatchingActiveCategories: setActiveCategories,
     matchingSearchTerm: searchTerm,
     setMatchingSearchTerm: setSearchTerm,
-} = useProjectData();
-  // Context 사용하여 밑에 3줄 사용 안 함
-  // const [posts, setPosts] = useState(matchingPosts);
-  // const [activeCategories, setActiveCategories] = useState([]);
-  // const [searchTerm, setSearchTerm] = useState('');
+    setMatchingSearchTerm,
+  } = useProjectData();
+  
+  function joinProject(postId, userId) {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) {
+          return post;
+        }
+
+        return {
+          ...post,
+          memberIds: [...(post.memberIds || []), userId],
+          appliedMembers: (post.appliedMembers || 0) + 1,
+        };
+      })
+    );
+  }
 
   // 우선순위: 직접 클릭한 게시글(selectedPostId) -> URL postId -> 없음(null)
   const selectedPost = useMemo(
@@ -124,6 +137,7 @@ function useMatchingPageData() {
     handleCategoryClick,
     filteredAndSortedPosts,
     togglePostSelection,
+    joinProject,
   };
 }
 
