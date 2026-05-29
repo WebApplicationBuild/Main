@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'; // localStorage 사용용
 import '../../styles/Board.css';
 import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
@@ -7,8 +7,26 @@ import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
   const { addMyProject, updateProjectManageData } = useProjectManageData();
-  
   const { user, userInfo } = useContext(AuthContext);
+  const [favoritePosts, setFavoritePosts] = useState([]);
+
+  // localStorage용 사용자별 즐겨찾기
+  const favoriteStorageKey = user
+    ? `favoritePosts_${user.uid}`
+    : "favoritePosts_guest";
+
+  // localStorage에서 즐겨찾기 불러오기
+  useEffect(() => {
+    if (!user) {
+      setFavoritePosts([]);
+      return;
+    }
+
+    const savedFavorites =
+      JSON.parse(localStorage.getItem(favoriteStorageKey)) || [];
+
+    setFavoritePosts(savedFavorites);
+  }, [user, favoriteStorageKey]);
 
   // '매칭' 버튼 클릭 시 실행될 핸들러 함수
   const handleMatchClick = (e, post) => {
@@ -78,6 +96,26 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     alert("게시글이 삭제되었습니다.");
   };
 
+  // 즐겨찾기 토글 함수 추가
+  const handleFavoriteClick = (e, postId) => {
+    e.stopPropagation();
+
+    let updatedFavorites;
+
+    if (favoritePosts.includes(postId)) {
+      updatedFavorites = favoritePosts.filter((id) => id !== postId);
+    } else {
+      updatedFavorites = [...favoritePosts, postId];
+    }
+
+    setFavoritePosts(updatedFavorites);
+
+    localStorage.setItem(
+      favoriteStorageKey,
+      JSON.stringify(updatedFavorites)
+    );
+  };
+
   // D-Day 및 스타일 정보 계산 함수
   const getDDayInfo = (deadline) => {
     if (!deadline) return { text: '상시모집', color: '#228be6', isClosed: false };
@@ -145,6 +183,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     <table className="board-table">
       <thead>
         <tr>
+          <th style={{ width: '5%' }}>⭐</th>
           <th style={{ width: '6%' }}>번호</th>
           <th style={{ width: '48%' }}>제목</th>
           <th style={{ width: '12%' }}>모집 현황</th>
@@ -157,7 +196,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
         {/* posts 배열이 비어 있으면 안내 문구를 표시하고, 아니면 게시글 목록을 렌더링 */}
         {posts.length === 0 ? (
           <tr>
-            <td colSpan="6" style={{ padding: '50px 0', color: '#999', textAlign: 'center' }}>
+            <td colSpan="7" style={{ padding: '50px 0', color: '#999', textAlign: 'center' }}>
               등록된 게시글이 없습니다. 첫 번째 글을 남겨보세요!
             </td>
           </tr>
@@ -171,7 +210,22 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
               <React.Fragment key={post.id}>
                 {/* 리스트 행 */}
                 <tr id={`post-${post.id}`}>
+                  <td>
+                    <button
+                      onClick={(e) => handleFavoriteClick(e, post.id)}
+                      style={{
+                        border: "none",
+                        background: "transparent",
+                        cursor: "pointer",
+                        fontSize: "18px",
+                      }}
+                    >
+                      {favoritePosts.includes(post.id) ? "⭐" : "☆"}
+                    </button>
+                  </td>
+
                   <td>{index + 1}</td>
+
                   <td className="title-cell" onClick={() => onPostClick(post)}>
                     <span className={`status-tag ${statusInfo.className}`}>
                       {statusInfo.text}
@@ -190,11 +244,15 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
                     {ddayText}
                   </td>
                   <td>
-                    <button 
-                      className="btn-matching" 
+                    <button
+                      className="btn-matching"
                       onClick={(e) => handleMatchClick(e, post)}
                       disabled={isFullyClosed}
-                      style={{ opacity: isFullyClosed ? 0.5 : 1, cursor: isFullyClosed ? 'not-allowed' : 'pointer' }}
+                      style={{
+                        opacity: isFullyClosed ? 0.5 : 1,
+                        cursor: isFullyClosed ? 'not-allowed' : 'pointer',
+                        whiteSpace: "nowrap",
+                      }}
                     >
                       {isFullyClosed ? '마감' : '매칭'}
                     </button>
@@ -204,7 +262,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
                 {/* 상세보기 토글 (아코디언 UI) */}
                 {selectedPost?.id === post.id && (
                   <tr className="detail-row">
-                    <td colSpan="6">
+                    <td colSpan="7">
                       <div className="detail-container">
                         {/* 세부 요약 정보 영역 추가 */}
                         <div className="detail-header-info">
