@@ -38,9 +38,15 @@
   white-space: nowrap;          /* 텍스트가 셀 너비를 넘어도 줄바꿈 없이 한 줄로 유지 */
   overflow: hidden;             /* 셀 너비를 초과한 텍스트를 잘라서 보이지 않게 처리 */
   text-overflow: ellipsis;      /* 잘린 텍스트 끝에 말줄임표(…)를 자동으로 표시 */
-  display: flex;                /* 태그와 텍스트를 가로로 정렬하기 위해 flex 사용 */
-  align-items: center;
-  gap: 8px;                     /* 태그와 제목 텍스트 사이 간격 */
+}
+
+.board-table td.title-cell .status-tag {
+  margin-right: 8px;       /*모집중 태그 오른쪽 간격*/
+  vertical-align: middle;  /*세로 가운데 정렬*/
+}
+
+.board-table td.title-cell span {
+  vertical-align: middle;  /*제목 글자 span도 세로 가운데 맞춤*/
 }
 
 .board-table td.title-cell:hover {

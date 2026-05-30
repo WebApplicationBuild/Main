@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { myProjects } from "../../api/mockData";
+import { useProjectManageData } from "../../store/ProjectManageDataProvider";
 import "../../styles/MyProjects.css";
 
 /*
@@ -12,6 +12,7 @@ import "../../styles/MyProjects.css";
 export default function MyProjects() {
     const { user } = useAuth();
     const navigate = useNavigate();
+    const { myProjectsData } = useProjectManageData();
 
     return (
         <div className="my-projects">
@@ -31,13 +32,13 @@ export default function MyProjects() {
                 <div className="my-projects__empty">
                     <p>로그인 후 이용해주세요</p>
                 </div>
-            ) : myProjects.length === 0 ? (             /* 프로젝트가 존재하지않으면 진행중인 프로젝트가 없다고 표시*/
+            ) : myProjectsData.length === 0 ? (             /* 프로젝트가 존재하지않으면 진행중인 프로젝트가 없다고 표시*/
                 <div className="my-projects__empty">
                     <p>아직 진행중인 프로젝트가 없습니다</p>
                 </div>
             ) : (                                       /* 프로젝트가 존재한다면, myProjects 리스트의 요소를 list item으로서 나타냄 */
                 <ul className="my-projects__list">
-                    {myProjects.map((project) => (
+                    {myProjectsData.map((project) => (
                         <li
                             key={project.id}
                             className="my-projects__item"
