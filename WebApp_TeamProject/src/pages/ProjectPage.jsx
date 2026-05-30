@@ -8,6 +8,7 @@ import ScheduleInput from "../components/ProjectManagePage/ScheduleInput";
 import ScheduleList from "../components/ProjectManagePage/ScheduleList";
 import VoteList from "../components/ProjectManagePage/VoteList";
 import NavDropdown from "../components/NavDropdown";
+import ProjectChatBox from "../components/ProjectManagePage/ProjectChatBox";
 
 import "../styles/App.css";
 import "../styles/TeamMemberList.css";
@@ -217,6 +218,7 @@ function ProjectPageContent({ projectId }) {
               />
             </div>
           </div>
+          <ProjectChatBox projectId={projectId} />
         </>
       ) : (
         <div 
