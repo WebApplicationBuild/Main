@@ -1,9 +1,7 @@
-import { useContext } from "react";
-
-import { defaultProjectData } from "../store/initialData";
-import { ProjectContext } from "../store/ProjectContext";
+import { useEffect } from "react";
 
 import { createSchedule } from "../api/scheduleApi";
+import { useProjectManageData } from "../store/ProjectManageDataProvider";
 
 function useProjectSchedule(projectId) {
   const numericProjectId = Number(projectId);
@@ -11,60 +9,53 @@ function useProjectSchedule(projectId) {
 
   /*
     ☆ 수정:
-    ProjectProvider에서 관리하는
-    projectData를 사용
+    ProjectContext 대신
 
-    기존:
-    useProjectSchedule 내부에서
-    useState로 상태 생성
-
-    수정 후:
-    ProjectProvider가 가진 상태를
-    가져와서 사용
-
-    장점:
-    - 페이지 이동 시 데이터 유지
-    - 프로젝트별 데이터 분리
-    - 다른 페이지에서도 사용 가능
-    - 상태를 부모에서 관리
+    ProjectManageDataProvider에서 제공하는
+    프로젝트 데이터 관리 함수 사용
   */
   const {
-    projectData,
-    setProjectData,
-  } = useContext(ProjectContext);
+    getProjectManageData,
+    updateProjectManageData,
+  } = useProjectManageData();
 
   /*
     ☆ 수정:
-    현재 projectId에 해당하는 데이터 가져오기
+    현재 프로젝트 데이터 조회
   */
   const currentProjectData =
-    projectData[numericProjectId] || defaultProjectData;
+    getProjectManageData(numericProjectId);
 
   const members = currentProjectData.members;
   const schedules = currentProjectData.schedules;
-  const voteList = currentProjectData.voteList || [];
+  const voteList = currentProjectData.voteList;
+
+  useEffect(() => {
+    document.title = "TeaMo | 프로젝트 관리";
+  }, []);
 
   function addSchedule(title) {
     const newSchedule =
       createSchedule(title, numericProjectId);
 
-    setProjectData((prevData) => ({
-      ...prevData,
-
-      [numericProjectId]: {
-        ...prevData[numericProjectId],
+    updateProjectManageData(
+      numericProjectId,
+      (prevData) => ({
+        ...prevData,
 
         schedules: [
-          ...prevData[numericProjectId].schedules,
+          ...prevData.schedules,
           newSchedule,
         ],
-      },
-    }));
+      })
+    );
   }
 
   function moveToVote(id) {
     const target =
-      schedules.find((schedule) => schedule.id === id);
+      schedules.find(
+        (schedule) => schedule.id === id
+      );
 
     if (!target) return;
 
@@ -74,23 +65,22 @@ function useProjectSchedule(projectId) {
       falseCount: 0,
     };
 
-    setProjectData((prevData) => ({
-      ...prevData,
-
-      [numericProjectId]: {
-        ...prevData[numericProjectId],
+    updateProjectManageData(
+      numericProjectId,
+      (prevData) => ({
+        ...prevData,
 
         schedules:
-          prevData[numericProjectId].schedules.filter(
+          prevData.schedules.filter(
             (schedule) => schedule.id !== id
           ),
 
         voteList: [
-          ...(prevData[numericProjectId].voteList || []),
+          ...prevData.voteList,
           voteItem,
         ],
-      },
-    }));
+      })
+    );
   }
 
   function voteTrue(id) {
@@ -104,26 +94,30 @@ function useProjectSchedule(projectId) {
     );
 
     const selectedItem =
-      updatedList.find((item) => item.id === id);
+      updatedList.find(
+        (item) => item.id === id
+      );
 
     if (!selectedItem) return;
 
     if (selectedItem.trueCount >= 3) {
       const restoredSchedule = {
         id: selectedItem.id,
+
+        // ★ 복구될 때도 프로젝트 ID 유지
         projectId: selectedItem.projectId,
+
         title: selectedItem.title,
         day: selectedItem.day,
       };
 
-      setProjectData((prevData) => ({
-        ...prevData,
-
-        [numericProjectId]: {
-          ...prevData[numericProjectId],
+      updateProjectManageData(
+        numericProjectId,
+        (prevData) => ({
+          ...prevData,
 
           schedules: [
-            ...prevData[numericProjectId].schedules,
+            ...prevData.schedules,
             restoredSchedule,
           ],
 
@@ -131,18 +125,17 @@ function useProjectSchedule(projectId) {
             updatedList.filter(
               (item) => item.id !== id
             ),
-        },
-      }));
+        })
+      );
     } else {
-      setProjectData((prevData) => ({
-        ...prevData,
-
-        [numericProjectId]: {
-          ...prevData[numericProjectId],
+      updateProjectManageData(
+        numericProjectId,
+        (prevData) => ({
+          ...prevData,
 
           voteList: updatedList,
-        },
-      }));
+        })
+      );
     }
   }
 
@@ -157,33 +150,33 @@ function useProjectSchedule(projectId) {
     );
 
     const selectedItem =
-      updatedList.find((item) => item.id === id);
+      updatedList.find(
+        (item) => item.id === id
+      );
 
     if (!selectedItem) return;
 
     if (selectedItem.falseCount >= 3) {
-      setProjectData((prevData) => ({
-        ...prevData,
-
-        [numericProjectId]: {
-          ...prevData[numericProjectId],
+      updateProjectManageData(
+        numericProjectId,
+        (prevData) => ({
+          ...prevData,
 
           voteList:
             updatedList.filter(
               (item) => item.id !== id
             ),
-        },
-      }));
+        })
+      );
     } else {
-      setProjectData((prevData) => ({
-        ...prevData,
-
-        [numericProjectId]: {
-          ...prevData[numericProjectId],
+      updateProjectManageData(
+        numericProjectId,
+        (prevData) => ({
+          ...prevData,
 
           voteList: updatedList,
-        },
-      }));
+        })
+      );
     }
   }
 

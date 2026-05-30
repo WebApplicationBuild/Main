@@ -8,21 +8,7 @@ import ProjectPage from './pages/ProjectPage'; // ★ 기존 임시 프로젝트
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { AuthProvider } from "./store/AuthProvider";
-
-/*
-  ☆ 수정:
-  프로젝트 상태를 전역으로 관리하기 위한 Provider 추가
-
-  역할:
-  - 프로젝트별 일정 관리
-  - 프로젝트별 팀원 관리
-  - 프로젝트별 투표 관리
-
-  장점:
-  - 페이지 이동 시 데이터 유지
-  - 다른 페이지에서도 프로젝트 데이터 접근 가능
-*/
-import { ProjectProvider } from "./store/ProjectProvider";
+import { ProjectManageDataProvider } from "./store/ProjectManageDataProvider";
 
 /*
     라우트:
@@ -42,20 +28,17 @@ export default function App() {
 
       <AuthProvider>
 
-        {/* 
+        {/*
           ☆ 수정:
-          프로젝트 데이터를 전역으로 공급
+          ProjectManageDataProvider 사용
 
-          하위 컴포넌트 어디서든
-
-          const {
-            projectData,
-            setProjectData
-          } = useContext(ProjectContext);
-
-          형태로 사용 가능
+          역할:
+          - 프로젝트별 일정 관리
+          - 프로젝트별 팀원 관리
+          - 프로젝트별 투표 관리
+          - 프로젝트 목록 관리
         */}
-        <ProjectProvider>
+        <ProjectManageDataProvider>
 
           <Routes>
 
@@ -81,7 +64,7 @@ export default function App() {
 
           </Routes>
 
-        </ProjectProvider>
+        </ProjectManageDataProvider>
 
       </AuthProvider>
 
