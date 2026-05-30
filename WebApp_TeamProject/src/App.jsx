@@ -6,10 +6,6 @@ import MatchingPage from './pages/MatchingPage';
 import ProjectPage from './pages/ProjectPage'; // ★ 기존 임시 프로젝트 페이지 대신 실제 프로젝트 관리 페이지 연결
 
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import { AuthProvider } from "./store/AuthProvider";
-import { ProjectManageDataProvider } from "./store/ProjectManageDataProvider";
-
 /*
     라우트:
       /                          → MainPage
@@ -24,50 +20,24 @@ import { ProjectManageDataProvider } from "./store/ProjectManageDataProvider";
 */
 export default function App() {
   return (
-    <BrowserRouter>
+      <BrowserRouter>
+            <Routes>
 
-      <AuthProvider>
-
-        {/*
-          ☆ 수정:
-          ProjectManageDataProvider 사용
-
-          역할:
-          - 프로젝트별 일정 관리
-          - 프로젝트별 팀원 관리
-          - 프로젝트별 투표 관리
-          - 프로젝트 목록 관리
-        */}
-        <ProjectManageDataProvider>
-
-          <Routes>
-
-            <Route path="/" element={<MainPage />} />
-
-            <Route path="/login" element={<LoginPage />} />
-
-            <Route path="/signup" element={<SignupPage />} />
-
-            <Route path="/matching" element={<MatchingPage />} />
-
-            {/* ★ 프로젝트 전체보기 (선택 전) */}
-            <Route
-              path="/projectManage"
-              element={<ProjectPage />}
-            />
-
-            {/* ★ 프로젝트 클릭 시 ProjectPage로 이동 */}
-            <Route
-              path="/projectManage/:projectId"
-              element={<ProjectPage />}
-            />
-
-          </Routes>
-
-        </ProjectManageDataProvider>
-
-      </AuthProvider>
-
-    </BrowserRouter>
+              <Route path="/" element={<MainPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/signup" element={<SignupPage />} />
+              <Route path="/matching" element={<MatchingPage />} />
+              {/* ★ 프로젝트 전체보기 (선택 전) */}
+              <Route
+                path="/projectManage"
+                element={<ProjectPage />}
+              />
+              {/* ★ 프로젝트 클릭 시 ProjectPage로 이동 */}
+              <Route
+                path="/projectManage/:projectId"
+                element={<ProjectPage />}
+              />
+            </Routes>
+      </BrowserRouter>
   );
 }
