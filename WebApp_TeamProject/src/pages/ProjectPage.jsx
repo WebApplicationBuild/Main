@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { myProjects } from "../api/mockData";
+import { useProjectManageData } from "../store/ProjectManageDataProvider";
 
 import useProjectSchedule from "../hooks/useProjectSchedule";
 import TeamMemberList from "../components/ProjectManagePage/TeamMemberList";
@@ -7,6 +7,7 @@ import WeeklyScheduleBox from "../components/ProjectManagePage/WeeklyScheduleBox
 import ScheduleInput from "../components/ProjectManagePage/ScheduleInput";
 import ScheduleList from "../components/ProjectManagePage/ScheduleList";
 import VoteList from "../components/ProjectManagePage/VoteList";
+import NavDropdown from "../components/NavDropdown";
 
 import "../styles/App.css";
 import "../styles/TeamMemberList.css";
@@ -15,6 +16,8 @@ import "../styles/ScheduleList.css";
 import "../styles/VoteBox.css";
 
 function ProjectPageContent({ projectId }) {
+  const { myProjectsData } = useProjectManageData();
+
   const navigate = useNavigate();
 
   /*
@@ -25,7 +28,7 @@ function ProjectPageContent({ projectId }) {
     /projectManage/201 이면
     id가 201인 프로젝트 정보를 가져옴
   */
-  const currentProject = myProjects.find(
+  const currentProject = myProjectsData.find(
     (project) => project.id === Number(projectId)
   );
 
@@ -38,6 +41,8 @@ function ProjectPageContent({ projectId }) {
     voteTrue,
     voteFalse,
   } = useProjectSchedule(projectId);
+
+  
 
   return (
     <div className="project-page">
@@ -97,7 +102,7 @@ function ProjectPageContent({ projectId }) {
             : "프로젝트 관리 페이지"}
         </h1>
 
-        <div className="header-spacer" />
+        <div className="header-spacer"><NavDropdown /></div>
       </header>
 
       {/* --- 상단: 내 프로젝트 이동 네비게이션 카드 --- */}
@@ -129,7 +134,7 @@ function ProjectPageContent({ projectId }) {
             paddingBottom: '10px' 
           }}
         >
-          {myProjects.map(project => {
+          {myProjectsData.map(project => {
 
             // 현재 선택된 프로젝트 카드인지 확인
             const isActive = projectId && project.id === Number(projectId);

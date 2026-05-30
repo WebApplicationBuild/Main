@@ -36,14 +36,6 @@ function useProjectSchedule(projectId) {
   /*
     ☆ 수정:
     현재 projectId에 해당하는 데이터 가져오기
-
-    예:
-    projectId = 201
-
-    projectData[201]
-      → members
-      → schedules
-      → voteList
   */
   const currentProjectData =
     projectData[numericProjectId] || defaultProjectData;
@@ -56,10 +48,6 @@ function useProjectSchedule(projectId) {
     const newSchedule =
       createSchedule(title, numericProjectId);
 
-    /*
-      ☆ 수정:
-      특정 프로젝트의 schedules만 수정
-    */
     setProjectData((prevData) => ({
       ...prevData,
 
@@ -86,11 +74,6 @@ function useProjectSchedule(projectId) {
       falseCount: 0,
     };
 
-    /*
-      ☆ 수정:
-      schedules와 voteList를
-      현재 프로젝트 내부에서만 수정
-    */
     setProjectData((prevData) => ({
       ...prevData,
 
@@ -128,19 +111,11 @@ function useProjectSchedule(projectId) {
     if (selectedItem.trueCount >= 3) {
       const restoredSchedule = {
         id: selectedItem.id,
-
-        // ★ 복구될 때도 프로젝트 ID 유지
         projectId: selectedItem.projectId,
-
         title: selectedItem.title,
         day: selectedItem.day,
       };
 
-      /*
-        ☆ 수정:
-        True 3표 이상이면
-        현재 프로젝트 일정 리스트로 복구
-      */
       setProjectData((prevData) => ({
         ...prevData,
 
@@ -187,12 +162,6 @@ function useProjectSchedule(projectId) {
     if (!selectedItem) return;
 
     if (selectedItem.falseCount >= 3) {
-
-      /*
-        ☆ 수정:
-        False 3표 이상이면
-        현재 프로젝트 voteList에서 제거
-      */
       setProjectData((prevData) => ({
         ...prevData,
 

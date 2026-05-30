@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 // Firebase 로그인 상태 감지 함수, 로그아웃 함수
 import { onAuthStateChanged, signOut } from "firebase/auth";
 // Firebase 인증 객체
-import { auth } from "../api/firebase"; 
+import { auth, db } from "../api/firebase"; 
 // Context 저장소 가져오기
 import { AuthContext } from "./AuthContext";    
+import { doc, getDoc } from "firebase/firestore";
 
 /*
     AuthProvider: 로그인 상태를 전역으로 선언하고 상태를 트리 전체에 공급해 공유하는 역할
@@ -23,6 +24,8 @@ export function AuthProvider({ children }) {
     // Firebase가 로그인 상태 확인 중인지 저장
     // true 동안은 아직 로그인 확인 안 끝난 상태
     const [authLoading, setAuthLoading] = useState(true);
+
+    const [userInfo, setUserInfo] = useState(null);
     /*
     useEffect
     → 컴포넌트 처음 실행 시 로그인 상태 감지 시작
@@ -36,9 +39,23 @@ export function AuthProvider({ children }) {
         로그인 성공 시 사용자 정보 객체
         로그아웃 시 null
         */
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             // 현재 로그인 사용자 저장
             setUser(currentUser);
+
+            if (currentUser) {
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+
+                if (userSnap.exists()) {
+                    setUserInfo(userSnap.data());
+                } else {
+                    setUserInfo(null);
+                }
+            } else {
+                setUserInfo(null);
+            }
+
             // 로그인 상태 확인 완료
             setAuthLoading(false);
         });
@@ -61,7 +78,7 @@ export function AuthProvider({ children }) {
     전체 앱에 공유
     */
     return (
-        <AuthContext.Provider value={{ user, authLoading, logout }}>
+        <AuthContext.Provider value={{ user, userInfo, authLoading, logout }}>
             {children}
         </AuthContext.Provider>
     );

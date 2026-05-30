@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { matchingPosts } from '../api/mockData';
+import { useProjectData } from '../store/MatchingDataProvider';
+//import { matchingPosts } from '../api/mockData';
 
 function useMatchingPageData() {
   const [searchParams] = useSearchParams();
@@ -10,9 +11,37 @@ function useMatchingPageData() {
   // MatchingPage 화면 상태를 훅으로 분리해 UI 컴포넌트는 렌더링에만 집중하도록 구성
   const [isWritingMode, setIsWritingMode] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [posts, setPosts] = useState(matchingPosts);
-  const [activeCategories, setActiveCategories] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
+
+  const {
+    matchingPostsData: posts,
+    setMatchingPostsData: setPosts,
+    matchingActiveCategories: activeCategories,
+    setMatchingActiveCategories: setActiveCategories,
+    matchingSearchTerm: searchTerm,
+    setMatchingSearchTerm: setSearchTerm,
+  } = useProjectData();
+  
+  function joinProject(postId, userId) {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => {
+        if (post.id !== postId) {
+          return post;
+        }
+
+        return {
+          ...post,
+          memberIds: [...(post.memberIds || []), userId],
+          appliedMembers: (post.appliedMembers || 0) + 1,
+        };
+      })
+    );
+  }
+  // 팀장만 삭제 가능
+  function deletePost(postId) {
+    setPosts((prevPosts) =>
+      prevPosts.filter((post) => post.id !== postId)
+    );
+  }
 
   // 우선순위: 직접 클릭한 게시글(selectedPostId) -> URL postId -> 없음(null)
   const selectedPost = useMemo(
@@ -22,6 +51,10 @@ function useMatchingPageData() {
       null,
     [posts, postIdFromUrl, selectedPostId]
   );
+
+  useEffect(() => {
+    document.title = "TeaMo | 팀 매칭";
+  }, []);
 
   useEffect(() => {
     if (!postIdFromUrl) return;
@@ -109,6 +142,8 @@ function useMatchingPageData() {
     handleCategoryClick,
     filteredAndSortedPosts,
     togglePostSelection,
+    joinProject,
+    deletePost,
   };
 }
 

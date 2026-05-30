@@ -4,10 +4,19 @@ import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
+import NavDropdown from "../components/NavDropdown";
 import '../styles/Matching.css';
+
+// 유저 확인용
+import { useContext } from "react";
+import { AuthContext } from "../store/AuthContext";
 
 function Matching() {
   const navigate = useNavigate();
+
+  // 유저 확인용
+  const { user, userInfo } = useContext(AuthContext);
+
   // 데이터/상태/핸들러는 훅에서 받고, 페이지는 화면 조합만 담당
   const {
     isWritingMode,
@@ -20,6 +29,8 @@ function Matching() {
     handleCategoryClick,
     filteredAndSortedPosts,
     togglePostSelection,
+    joinProject,
+    deletePost,
   } = useMatchingPageData();
 
   return (
@@ -31,7 +42,7 @@ function Matching() {
         <h1 className="matching-header__title">
           매칭 페이지
         </h1>
-        <div className="matching-header__spacer" />
+        <div className="matching-header__spacer"><NavDropdown /></div>
       </header>
 
       <main className="matching-main">
@@ -69,6 +80,8 @@ function Matching() {
             onPostClick={togglePostSelection}
             searchTerm={searchTerm}
             activeCategories={activeCategories}
+            onJoinProject={joinProject}
+            onDeletePost={deletePost}
           />
         </div>
       </main>

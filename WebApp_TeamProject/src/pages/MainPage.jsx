@@ -1,16 +1,23 @@
+import { useEffect } from "react";
 import NoticeCarousel from "../components/MainPage/NoticeCarousel";
 import Profile from "../components/MainPage/Profile";
 import RecentProjects from "../components/MainPage/RecentProjects";
 import MyProjects from "../components/MainPage/MyProjects";
+import NavDropdown from "../components/NavDropdown";
 import "../styles/MainPage.css";
 
 export default function MainPage() {
+
+    useEffect(() => {
+        document.title = "TeaMo";
+    }, []);
+
     return (
         <div className="main-page">
             <header className="main-page__header">
                 <div className="main-page__logo">로고</div>
                 <h1 className="main-page__title">메인 페이지</h1>
-                <div className="main-page__header-spacer" />
+                <div className="main-page__header-spacer"><NavDropdown /></div>
             </header>
 
             <main className="main-page__grid">
