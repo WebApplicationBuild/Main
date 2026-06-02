@@ -1,0 +1,131 @@
+/* =============================================
+   ProjectPage.css — 프로젝트 관리 페이지
+   인라인 스타일을 클래스로 추출, 메인페이지 팔레트(파란 강조)로 통일
+   ============================================= */
+
+/* ── 상단 헤더 (메인페이지 헤더와 동일한 3열 그리드) ── */
+.project-page .page-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 72px;
+  padding: 0 4px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.project-page .header-logo {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.project-page .header-logo:hover {
+  opacity: 0.8;
+}
+
+.project-page .page-title {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.project-page .header-spacer {
+  justify-self: end;
+}
+
+/* ── 내 프로젝트 이동 네비게이션 카드 ── */
+.project-nav-section {
+  margin: 0 0 24px;
+  padding: 18px 20px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-nav-title {
+  margin: 0 0 12px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.project-nav-cards {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  /* overflow-x:auto가 세로도 클리핑하므로, 카드 hover/active의
+     translateY(-2px)와 그림자가 잘리지 않도록 상하 여백 확보 */
+  padding: 8px 2px 12px;
+}
+
+.project-nav-card {
+  min-width: 200px;
+  padding: 14px 16px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.project-nav-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.project-nav-card.is-active {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.project-nav-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-h);
+  margin-bottom: 4px;
+}
+
+.project-nav-card.is-active .project-nav-card-title {
+  color: var(--accent-text);
+}
+
+.project-nav-card-meta {
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+/* ── 프로젝트 미선택 안내 (빈 상태) ── */
+.project-empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: var(--card);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius);
+}
+
+.project-empty-title {
+  color: var(--text-h);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+}
+
+.project-empty-desc {
+  color: var(--text);
+  font-size: 0.9rem;
+  margin: 0;
+}

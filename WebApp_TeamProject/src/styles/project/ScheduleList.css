@@ -1,0 +1,72 @@
+/* 일정 입력 영역 */
+.schedule-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.schedule-input input {
+  flex: 1;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  color: var(--text-h);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.schedule-input input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+/* '추가' 버튼 — 메인 강조 파랑 */
+.schedule-input button {
+  width: 74px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.schedule-input button:hover {
+  background-color: var(--accent-hover);
+}
+
+.schedule-list {
+  width: 100%;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 17px;
+  color: var(--text-h);
+}
+
+/* '삭제 요청' 버튼 — 보조(회색) 스타일 */
+.schedule-item button {
+  min-width: 96px;
+  height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--surface);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.schedule-item button:hover {
+  background-color: #e5e7eb;
+  color: var(--text-h);
+}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { noticeBanners } from "../../api/mockData";
-import "../../styles/NoticeCarousel.css";
+import "../../styles/main/NoticeCarousel.css";
 
 /*
    캐러셀(슬라이드 쇼).

@@ -1,7 +1,7 @@
 /*
 로그인 페이지 화면, 로그인 동작 연결
 */
-import "../styles/LoginPage.css";
+import "../styles/auth/LoginPage.css";
 
 import useLoginForm from "../hooks/useLoginForm";
 import InputField from "../components/LoginPage/InputField";

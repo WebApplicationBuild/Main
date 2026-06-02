@@ -1,0 +1,126 @@
+/* =============================================
+   SignupPage.css — 회원가입 페이지
+   로그인 페이지와 동일한 중앙 카드 레이아웃으로 통일
+   ============================================= */
+
+.signup-page {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: var(--surface);
+    box-sizing: border-box;
+}
+
+.signup-card {
+    width: 100%;
+    max-width: 400px;
+    background-color: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px 36px;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.signup-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-h);
+    margin: 0 0 8px;
+}
+
+.signup-desc {
+    font-size: 14px;
+    color: var(--text);
+    margin: 0 0 24px;
+}
+
+.signup-error:empty {
+    display: none;
+}
+
+.signup-error {
+    margin-bottom: 14px;
+}
+
+.signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.signup-input-group {
+    text-align: left;
+}
+
+.signup-form .input-field {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    font-size: 15px;
+    color: var(--text-h);
+    background-color: var(--card);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.signup-form .input-field::placeholder {
+    color: #9ca3af;
+}
+
+.signup-form .input-field:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.signup-submit-wrapper {
+    margin-top: 4px;
+}
+
+/* MUI Button(contained) — 메인 강조색으로 재정의 */
+.signup-submit-btn.signup-submit-btn {
+    width: 100%;
+    height: 46px;
+    background-color: var(--accent);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: var(--radius-sm);
+    box-shadow: none;
+    text-transform: none;
+}
+
+.signup-submit-btn.signup-submit-btn:hover {
+    background-color: var(--accent-hover);
+    box-shadow: none;
+}
+
+.signup-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 하단 로그인 이동 링크 */
+.signup-link {
+    margin-top: 22px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.signup-link-text {
+    margin-left: 6px;
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.signup-link-text:hover {
+    text-decoration: underline;
+}

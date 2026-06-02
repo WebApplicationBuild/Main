@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { useProjectManageData } from "../../store/ProjectManageDataProvider";
-import "../../styles/MyProjects.css";
+import "../../styles/main/MyProjects.css";
 
 /*
    내가 진행중인 프로젝트

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import "../styles/NavDropdown.css";
+import "../styles/common/NavDropdown.css";
 
 function PageDropdown() {
   const navigate = useNavigate(); // 특정 경로로 이동시켜주는 함수

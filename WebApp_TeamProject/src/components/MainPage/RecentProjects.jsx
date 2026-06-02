@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { matchingPosts } from "../../api/mockData";
-import "../../styles/RecentProjects.css";
+import "../../styles/main/RecentProjects.css";
 
 // D-Day 및 스타일 정보 계산 함수 (매칭 페이지와 동일)
 const getDDayInfo = (deadline) => {

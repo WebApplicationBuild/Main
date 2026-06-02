@@ -1,0 +1,33 @@
+/* 모든 페이지 헤더 좌상단 로고 이미지 (버튼 안의 <img>) */
+.header-logo-img {
+  display: block;
+  height: 60px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* 페이지 이동 드롭다운 (헤더 우측) */
+.page-dropdown-container {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+}
+
+.page-select {
+  padding: 6px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  outline: none;
+}
+
+.page-select:hover {
+  border-color: #888;
+}
+
+.page-select:focus {
+  border-color: var(--accent);
+}

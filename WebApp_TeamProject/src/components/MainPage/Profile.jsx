@@ -4,7 +4,7 @@ import { useAuth } from "../../hooks/useAuth";
 import useProfile from "../../hooks/useProfile";
 import ProfileButton from "./ProfileButton";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
-import "../../styles/Profile.css";
+import "../../styles/main/Profile.css";
 
 /*
     로그인 상태에 따라 다른 프로필 UI 출력

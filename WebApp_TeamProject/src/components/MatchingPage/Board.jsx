@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; // localStorage 사용용
-import '../../styles/Board.css';
+import '../../styles/matching/Board.css';
 import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
