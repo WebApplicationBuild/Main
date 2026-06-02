@@ -1,0 +1,52 @@
+.vote-box {
+  margin-top: 32px;
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+}
+
+.vote-box h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-top: 0;
+}
+
+.vote-box p {
+  font-size: 15px;
+}
+
+.empty-text {
+  color: var(--text);
+  margin-top: 24px;
+}
+
+.vote-item {
+  margin-top: 18px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  background-color: var(--surface);
+}
+
+.vote-item button {
+  margin-right: 8px;
+  padding: 8px 16px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background-color: var(--card);
+  color: var(--text-h);
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.vote-item button:hover {
+  background-color: var(--accent-bg);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}

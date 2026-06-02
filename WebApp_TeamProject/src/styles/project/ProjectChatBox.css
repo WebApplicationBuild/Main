@@ -62,12 +62,12 @@
     padding: 10px 16px;
     border: none;
     border-radius: 8px;
-    background-color: #03c75a;
+    background-color: var(--accent);
     color: white;
     font-weight: bold;
     cursor: pointer;
 }
 
 .project-chat-button:hover {
-    background-color: #02b350;
+    background-color: var(--accent-hover);
 }

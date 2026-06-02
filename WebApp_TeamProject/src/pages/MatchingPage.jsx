@@ -5,7 +5,7 @@ import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
 import NavDropdown from "../components/NavDropdown";
-import '../styles/Matching.css';
+import '../styles/matching/Matching.css';
 
 // 유저 확인용
 import { useContext } from "react";
@@ -36,9 +36,14 @@ function Matching() {
   return (
     <div className="matching-container">
       <header className="matching-header">
-        <div className="matching-header__logo" onClick={() => navigate('/')}>
-          로고
-        </div>
+        <button
+          type="button"
+          className="matching-header__logo"
+          onClick={() => navigate('/')}
+          aria-label="TEAMO 홈으로"
+        >
+          <img src="/teamo-logo.png" alt="TEAMO" className="header-logo-img" />
+        </button>
         <h1 className="matching-header__title">
           매칭 페이지
         </h1>
@@ -47,19 +52,13 @@ function Matching() {
 
       <main className="matching-main">
         <div className="matching-content">
-          <div className="search-section" style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+          <div className="search-section">
             <input
               type="text"
+              className="matching-search"
               placeholder="제목이나 내용을 검색해보세요..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{
-                flex: 1,
-                padding: '10px',
-                borderRadius: '8px',
-                border: '1px solid #ddd',
-                fontSize: '14px'
-              }}
             />
           </div>
 

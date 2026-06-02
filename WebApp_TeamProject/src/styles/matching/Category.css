@@ -1,0 +1,38 @@
+/* =============================================
+   Category.css — 카테고리 필터 버튼 (캡슐형)
+   ============================================= */
+
+.category-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-item {
+  padding: 8px 16px;
+  background-color: #f1f3f5;
+  border-radius: 20px;
+  border: none;
+  font-size: 0.9rem;
+  color: #495057;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.category-item:hover {
+  background-color: #e9ecef;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+/* 선택된 카테고리 */
+.category-item.active {
+  background-color: var(--accent);
+  color: white;
+  font-weight: bold;
+}
+
+.category-item.active:hover {
+  background-color: var(--accent-hover);
+}

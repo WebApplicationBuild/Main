@@ -1,0 +1,49 @@
+/* =============================================
+   WeeklyScheduleBox.css — 주간 일정 박스
+   요일 라벨 + 일정 텍스트의 2열 행으로 정렬해 가독성 향상
+   ============================================= */
+
+.weekly-box {
+  width: 100%;
+  min-height: 370px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--card);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* 박스 제목 — 좌측 정렬 + 하단 구분선 */
+.weekly-box h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin: 0 0 8px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+/* 요일별 일정 한 줄 — 라벨(요일) + 내용 */
+.weekly-box p {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  padding: 11px 4px;
+  font-size: 15px;
+  color: var(--text-h);
+  border-bottom: 1px solid var(--border);
+}
+
+.weekly-box p:last-child {
+  border-bottom: none;
+}
+
+/* 요일 라벨 — 고정폭으로 정렬 맞춤 */
+.weekly-box strong {
+  flex-shrink: 0;
+  min-width: 96px;
+  font-weight: 600;
+  color: var(--text);
+}

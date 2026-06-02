@@ -1,0 +1,143 @@
+/* =============================================
+   Writing.css — 글쓰기 폼 레이아웃 및 커스텀 체크박스
+   ============================================= */
+
+.writing-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 본문 영역 — 좌(제목/카테고리/모집정보) · 우(내용) 가로 2열 */
+.writing-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: stretch;
+}
+
+.writing-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+/* 오른쪽 내용 칼럼: 텍스트영역이 왼쪽 칼럼 높이만큼 늘어남 */
+.writing-col--right {
+  height: 100%;
+}
+
+.writing-group--content {
+  flex: 1;
+}
+
+.writing-col--right .form-textarea {
+  flex: 1;
+  height: 100%;
+  min-height: 260px;
+}
+
+/* 좁은 화면에서는 세로 1열로 */
+@media (max-width: 640px) {
+  .writing-body {
+    grid-template-columns: 1fr;
+  }
+}
+
+.writing-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--text-h);
+}
+
+/* 입력 필드 묶음 (라벨 + 입력창) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+.form-input {
+  padding: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+}
+
+/* 카테고리 체크박스 */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 10px 0;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.form-textarea {
+  padding: 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  min-height: 200px;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+/* 전역 스타일 오버라이드 방지 (입력값 색·정렬 고정) */
+.writing-input,
+.writing-textarea {
+  background-color: white !important;
+  color: var(--text-h) !important;
+  text-align: left !important;
+}
+
+.writing-group label {
+  text-align: left !important;
+}
+
+/* 커스텀 체크박스 — 브라우저 기본 외형 제거 후 재디자인 */
+.writing-checkbox-item input[type="checkbox"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  background-color: white !important;
+  border: 1.5px solid #adb5bd !important;
+  border-radius: 3px !important;
+  cursor: pointer !important;
+  position: relative !important;
+  flex-shrink: 0 !important;
+  transition: border-color 0.15s ease !important;
+}
+
+.writing-checkbox-item input[type="checkbox"]:checked {
+  border-color: var(--accent) !important;
+}
+
+/* ::after를 회전시켜 체크(✓) 모양 표현 */
+.writing-checkbox-item input[type="checkbox"]:checked::after {
+  content: '' !important;
+  position: absolute !important;
+  left: 4px !important;
+  top: 1px !important;
+  width: 5px !important;
+  height: 9px !important;
+  border: 2px solid var(--accent) !important;
+  border-top: none !important;
+  border-left: none !important;
+  transform: rotate(45deg) !important;
+}

@@ -21,16 +21,18 @@
 }
 
 .main-page__logo {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    background-color: #cbd5e1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    color: #475569;
     justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+
+.main-page__logo:hover {
+    opacity: 0.8;
 }
 
 .main-page__title {
@@ -42,7 +44,8 @@
 }
 
 .main-page__header-spacer {
-    /* 그리드 균형용 빈 컬럼 */
+    /* 네비게이션 바를 헤더 오른쪽 끝으로 정렬 */
+    justify-self: end;
 }
 
 /*

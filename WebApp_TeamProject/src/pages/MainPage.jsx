@@ -1,12 +1,14 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import NoticeCarousel from "../components/MainPage/NoticeCarousel";
 import Profile from "../components/MainPage/Profile";
 import RecentProjects from "../components/MainPage/RecentProjects";
 import MyProjects from "../components/MainPage/MyProjects";
 import NavDropdown from "../components/NavDropdown";
-import "../styles/MainPage.css";
+import "../styles/main/MainPage.css";
 
 export default function MainPage() {
+    const navigate = useNavigate();
 
     useEffect(() => {
         document.title = "TeaMo";
@@ -15,7 +17,14 @@ export default function MainPage() {
     return (
         <div className="main-page">
             <header className="main-page__header">
-                <div className="main-page__logo">로고</div>
+                <button
+                    type="button"
+                    className="main-page__logo"
+                    onClick={() => navigate('/')}
+                    aria-label="TEAMO 홈으로"
+                >
+                    <img src="/teamo-logo.png" alt="TEAMO" className="header-logo-img" />
+                </button>
                 <h1 className="main-page__title">메인 페이지</h1>
                 <div className="main-page__header-spacer"><NavDropdown /></div>
             </header>

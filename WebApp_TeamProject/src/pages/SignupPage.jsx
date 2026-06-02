@@ -1,4 +1,4 @@
-import "../styles/SignupPage.css";
+import "../styles/auth/SignupPage.css";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";

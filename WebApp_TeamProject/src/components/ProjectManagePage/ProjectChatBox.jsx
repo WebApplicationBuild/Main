@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
-import "../../styles/ProjectChatBox.css";
+import "../../styles/project/ProjectChatBox.css";
 
 function ProjectChatBox({ projectId }) {
     const { user, userInfo } = useContext(AuthContext);
