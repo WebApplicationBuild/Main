@@ -1,5 +1,5 @@
 /*
-input 재사용성을 늘리기 위해 inputfield 사용 
+// 로그인/회원가입 페이지에서 공통으로 사용하는 재사용 입력 컴포넌트 
 로그인, 회원가입 페이지에서 사용(id, pw 사용)
 */
 import { forwardRef } from "react";

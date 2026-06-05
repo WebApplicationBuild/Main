@@ -77,9 +77,6 @@ function useSignupForm() {
             alert("회원가입이 완료되었습니다. 다시 로그인해주세요.");
             navigate("/login");
             } catch (err) { // 회원가입 실패 시
-                console.log("회원가입 오류 코드:", err.code);
-                console.log("회원가입 오류 메시지:", err.message);
-
                 if (err.code === "auth/email-already-in-use") {
                     setError("이미 사용 중인 이메일입니다.");
                 } else if (err.code === "auth/invalid-email") {
