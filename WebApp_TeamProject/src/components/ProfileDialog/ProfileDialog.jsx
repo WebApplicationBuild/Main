@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "../../styles/common/ProfileDialog.css";
 
-function ProfileDialog({ open, onClose, profile, onChange, onSave, loading }) {
+function ProfileDialog({ open, onClose, profile, error, onChange, onSave, loading }) {
     useEffect(() => {
         if (!open) return;
         const handleKey = (e) => { if (e.key === "Escape") onClose(); };
@@ -18,6 +18,10 @@ function ProfileDialog({ open, onClose, profile, onChange, onSave, loading }) {
                     <h2 className="profile-dialog__title">프로필 수정</h2>
                     <button className="profile-dialog__close" onClick={onClose}>×</button>
                 </div>
+
+                {error && (
+                    <p className="profile-dialog__error">{error}</p>
+                )}
 
                 <div className="profile-dialog__field">
                     <label className="profile-dialog__label">닉네임</label>

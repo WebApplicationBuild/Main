@@ -53,6 +53,15 @@
     color: var(--text-h);
 }
 
+.profile-dialog__error {
+    font-size: 13px;
+    color: #d63030;
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    background: #fdf0f0;
+    border-radius: 6px;
+}
+
 .profile-dialog__field {
     display: flex;
     flex-direction: column;

@@ -35,6 +35,8 @@ function useLoginForm() {
     // async -> 비동기 작업 (로그인 요청이 끝날 때까지 기다리는 함수) -> 로그인 시간이 걸리기 때문
     async function handleLogin(e) { 
         e.preventDefault(); // 새로고침 방지
+        if (isLoading) return;
+
         setError("");
 
         if (form.email.trim() === "") {
@@ -54,8 +56,6 @@ function useLoginForm() {
 
             navigate("/");  // 로그인 성공
         } catch (err) { // 로그인 실패
-            console.log("로그인 오류 코드:", err.code);
-            console.log("로그인 오류 메시지:", err.message);
             setError("이메일 또는 비밀번호가 올바르지 않습니다.");
         } finally { // 성공/실패 상관없이 로딩 종료.
             setIsLoading(false);

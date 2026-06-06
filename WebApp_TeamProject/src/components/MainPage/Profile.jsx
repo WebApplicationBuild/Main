@@ -5,77 +5,24 @@ import ProfileButton from "./ProfileButton";
 import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import "../../styles/main/Profile.css";
 
-/*
-    로그인 상태에 따라 다른 프로필 UI 출력
-
-    - 비로그인 상태:
-        로그인 필요 메시지 + 로그인 버튼 출력
-
-    - 로그인 상태:
-        사용자 프로필 정보 출력
-        프로필 수정 가능
-        로그아웃 가능
-
-    useAuth()
-    → 로그인 사용자 정보(user)
-    → 로그아웃 함수(logout)
-
-    useProfile()
-    → Firestore 프로필 데이터 관리
-    → 프로필 수정 기능 관리
-*/
 export default function Profile() {
-
-    // 현재 로그인 사용자 정보 + 로그아웃 함수
-    const { user, logout } = useAuth();
-
-    // 프로필 수정 모달(Dialog) 열림 상태
+    const { user, logout, updateUserInfo } = useAuth();
     const [open, setOpen] = useState(false);
 
-    /*
-        Firestore 프로필 관련 상태/함수
-
-        profile
-        → 사용자 프로필 정보 저장
-
-        loading
-        → 저장 중 상태
-
-        handleChange
-        → input 값 변경 함수
-
-        saveProfile
-        → Firestore 저장 함수
-    */
     const {
         profile,
         loading,
+        error,
         handleChange,
         saveProfile,
-    } = useProfile(user);
+    } = useProfile(user, updateUserInfo);
 
-    // 프로필 수정 Dialog 열기
-    function handleOpen() {
-        setOpen(true);
-    }
+    function handleOpen()  { setOpen(true);  }
+    function handleClose() { setOpen(false); }
 
-    // 프로필 수정 Dialog 닫기
-    function handleClose() {
-        setOpen(false);
-    }
-
-    /*
-        프로필 저장 처리
-
-        saveProfile() 성공 시
-        Dialog 자동 닫기
-    */
     async function handleSave() {
         const result = await saveProfile();
-
-        if (result) {
-            setOpen(false);
-        }
+        if (result) setOpen(false);
     }
 
     if (!user) {
@@ -128,6 +75,7 @@ export default function Profile() {
                 open={open}
                 onClose={handleClose}
                 profile={profile}
+                error={error}
                 onChange={handleChange}
                 onSave={handleSave}
                 loading={loading}

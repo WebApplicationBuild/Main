@@ -27,15 +27,18 @@ function useSignupForm() {
 
     // 상태 변경 (현재 입력값만 변경하고 나머지는 유지)
     function handleChange(e) {
-        setForm({
-        ...form,
-        [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     }
 
     // 회원가입 처리 함수
     async function handleSignup(e) {
         e.preventDefault(); // 새로고침 방지
+        if (loading) return;
 
         if (!form.email.trim()) {
             setError("이메일을 입력하세요.");
@@ -79,9 +82,6 @@ function useSignupForm() {
             showToast("회원가입이 완료되었습니다. 다시 로그인해주세요.", "success");
             setTimeout(() => navigate("/login"), 1500);
             } catch (err) { // 회원가입 실패 시
-                console.log("회원가입 오류 코드:", err.code);
-                console.log("회원가입 오류 메시지:", err.message);
-
                 if (err.code === "auth/email-already-in-use") {
                     setError("이미 사용 중인 이메일입니다.");
                 } else if (err.code === "auth/invalid-email") {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../api/firebase";
 import { useToast } from "../contexts/ToastContext";
 
-function useProfile(user) {
+function useProfile(user, onProfileUpdate) {
     const showToast = useToast();
     const [profile, setProfile] = useState({
         nickname: "",
@@ -13,23 +13,29 @@ function useProfile(user) {
     });
 
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function fetchProfile() {
             if (!user) return;
 
-            const userRef = doc(db, "users", user.uid);
-            const userSnap = await getDoc(userRef);
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
 
-            if (userSnap.exists()) {
-                const data = userSnap.data();
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
 
-                setProfile({
-                    nickname: data.nickname || "",
-                    department: data.department || "",
-                    mbti: data.mbti || "",
-                    techStack: data.techStack || "",
-                });
+                    setProfile({
+                        nickname: data.nickname || "",
+                        department: data.department || "",
+                        mbti: data.mbti || "",
+                        techStack: data.techStack || "",
+                    });
+                }
+            } catch (err) {
+                console.error("프로필 정보를 불러오지 못했습니다:", err);
+                setError("프로필 정보를 불러오지 못했습니다.");
             }
         }
 
@@ -46,24 +52,30 @@ function useProfile(user) {
     }
 
     async function saveProfile() {
-        if (!user) return;
+        if (!user) return false;
 
         try {
             setLoading(true);
+            setError("");
+
+            const nextProfile = {
+                nickname: profile.nickname.trim(),
+                department: profile.department.trim(),
+                mbti: profile.mbti.trim(),
+                techStack: profile.techStack.trim(),
+            };
 
             const userRef = doc(db, "users", user.uid);
 
-            await updateDoc(userRef, {
-                nickname: profile.nickname,
-                department: profile.department,
-                mbti: profile.mbti,
-                techStack: profile.techStack,
-            });
+            await setDoc(userRef, nextProfile, { merge: true });
+            setProfile(nextProfile);
+            onProfileUpdate?.(nextProfile);
 
             showToast("프로필이 저장되었습니다.", "success");
             return true;
         } catch (err) {
-            console.log("프로필 저장 오류:", err);
+            console.error("프로필 저장 오류:", err);
+            setError("프로필 저장 중 오류가 발생했습니다.");
             showToast("프로필 저장 중 오류가 발생했습니다.", "error");
             return false;
         } finally {
@@ -74,6 +86,7 @@ function useProfile(user) {
     return {
         profile,
         loading,
+        error,
         handleChange,
         saveProfile,
     };
