@@ -1,131 +1,134 @@
+/* 사이드바 프로필 카드 */
 .profile {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.profile__heading {
-    margin: 0 0 12px 0;
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-h);
-    text-align: left;
-}
-
-/* ─── 로그아웃 상태 ──────────────────────────────────── */
-.profile__guest {
     flex: 1;
+    min-height: 300px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-}
-
-.profile__guest-text {
-    color: var(--text);
-    font-size: 14px;
-    margin: 0;
-}
-
-/* ProfileButton 안의 <button>도 함께 스타일링 */
-.profile__guest button {
-    width: 100%;
-    padding: 10px 16px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.15s;
-}
-
-.profile__guest button:hover {
-    background-color: #2563eb;
-}
-
-.profile__dev-button {
-    width: 100%;
-    padding: 8px 16px !important;
-    background-color: transparent !important;
-    color: var(--text) !important;
-    border: 1px dashed #9ca3af !important;
-    border-radius: 6px !important;
-    font-size: 12px !important;
-    font-weight: 400 !important;
-    cursor: pointer;
-}
-
-/* ─── 로그인 상태 ───────────────────────────────────── */
-.profile__user-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
+    text-align: center;
 }
 
 .profile__avatar {
-    width: 56px;
-    height: 56px;
+    width: 54px;
+    height: 54px;
     border-radius: 50%;
-    background-color: #3b82f6;
-    color: white;
-    font-size: 24px;
-    font-weight: 700;
+    background: var(--accent);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 500;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
 }
 
 .profile__nickname {
-    font-size: 18px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 500;
     color: var(--text-h);
-}
-
-.profile__interests-label {
-    font-size: 12px;
-    color: var(--text);
-    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
 .profile__tag-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    gap: 5px;
     justify-content: center;
-    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
 }
 
 .profile__tag {
-    background-color: #ffffff;
-    color: #374151;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 5px;
+}
+
+.profile__mbti {
     font-size: 12px;
-    padding: 4px 10px;
-    border-radius: 999px; /* pill 모양 */
-    border: 1px solid #d1d5db;
+    color: var(--text-mute);
+    margin-bottom: 16px;
+}
+
+.profile__edit-button {
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 8px;
+    transition: background 0.15s;
+}
+
+.profile__edit-button:hover {
+    background: var(--accent-hover);
 }
 
 .profile__logout-button {
-    margin-top: auto;
     width: 100%;
-    padding: 8px;
-    background-color: transparent;
-    color: #ef4444;
-    border: 1px solid #ef4444;
-    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-sub);
+    border-radius: 8px;
+    padding: 9px;
     font-size: 13px;
     cursor: pointer;
     transition: all 0.15s;
 }
 
 .profile__logout-button:hover {
-    background-color: #ef4444;
-    color: white;
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+/* 비로그인 상태 */
+.profile__guest-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    width: 100%;
+    gap: 12px;
+}
+
+.profile__guest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.profile__guest-text {
+    color: var(--text-sub);
+    font-size: 14px;
+    margin: 0;
+}
+
+.profile__guest button {
+    width: 100%;
+    padding: 10px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.profile__guest button:hover {
+    background: var(--accent-hover);
 }

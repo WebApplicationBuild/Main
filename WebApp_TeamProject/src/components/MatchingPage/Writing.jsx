@@ -4,11 +4,13 @@ import { AuthContext } from "../../store/AuthContext";
 import '../../styles/matching/Writing.css';
 import CategoryOptions from './CategoryOptions';
 import { useProjectManageData } from "../../store/ProjectManageDataProvider";
+import { useToast } from "../../contexts/ToastContext";
 
 
 // 새 게시글 작성 폼 컴포넌트
 function Writing({ onSave, onCancel }) {
-  const { user, userInfo } = useContext(AuthContext); // 유저용
+  const showToast = useToast();
+  const { user, userInfo } = useContext(AuthContext);
   const { updateProjectManageData } = useProjectManageData(); 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -27,11 +29,11 @@ function Writing({ onSave, onCancel }) {
 
   // 유효성 검사 후 게시글 객체를 부모로 전달
   const handleSubmit = () => {
-    if (!title) return alert('제목을 입력해주세요.');
-    if (selectedCategories.length === 0) return alert('카테고리를 선택해주세요.');
-    if (!requiredMembers) return alert('모집 인원을 입력해주세요.');
-    if (!deadline) return alert('모집 마감일을 선택해주세요.');
-    if (!content) return alert('내용을 입력해주세요.');
+    if (!title)                        { showToast('제목을 입력해주세요.', 'warning');       return; }
+    if (selectedCategories.length === 0) { showToast('카테고리를 선택해주세요.', 'warning');  return; }
+    if (!requiredMembers)              { showToast('모집 인원을 입력해주세요.', 'warning');   return; }
+    if (!deadline)                     { showToast('모집 마감일을 선택해주세요.', 'warning'); return; }
+    if (!content)                      { showToast('내용을 입력해주세요.', 'warning');        return; }
 
     const newPostId = Date.now();
 

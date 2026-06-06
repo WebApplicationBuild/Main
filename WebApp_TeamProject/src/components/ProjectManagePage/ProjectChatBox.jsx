@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
+import { useToast } from "../../contexts/ToastContext";
 import "../../styles/project/ProjectChatBox.css";
 
 function ProjectChatBox({ projectId }) {
+    const showToast = useToast();
     const { user, userInfo } = useContext(AuthContext);
     const [message, setMessage] = useState("");
     const [chatList, setChatList] = useState([]);
@@ -18,7 +20,7 @@ function ProjectChatBox({ projectId }) {
 
     function handleSendMessage() {
         if (!user || !userInfo) {
-            alert("로그인 후 이용해주세요.");
+            showToast("로그인 후 이용해주세요.", "info");
             return;
         }
 

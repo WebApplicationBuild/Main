@@ -4,8 +4,10 @@ import { createUserWithEmailAndPassword, signOut } from "firebase/auth";    // F
 import { auth } from "../api/firebase"; // Firebase 인증 객체
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../api/firebase";
+import { useToast } from "../contexts/ToastContext";
 
 function useSignupForm() {
+    const showToast = useToast();
     const emailRef = useRef(null);
     const navigate = useNavigate();
 
@@ -77,8 +79,8 @@ function useSignupForm() {
 
             await signOut(auth);    // 회원가입 성공 시 자동 로그인 상태 해제
 
-            alert("회원가입이 완료되었습니다. 다시 로그인해주세요.");
-            navigate("/login");
+            showToast("회원가입이 완료되었습니다. 다시 로그인해주세요.", "success");
+            setTimeout(() => navigate("/login"), 1500);
             } catch (err) { // 회원가입 실패 시
                 if (err.code === "auth/email-already-in-use") {
                     setError("이미 사용 중인 이메일입니다.");

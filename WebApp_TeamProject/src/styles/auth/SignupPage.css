@@ -71,7 +71,7 @@
 }
 
 .signup-form .input-field::placeholder {
-    color: #9ca3af;
+    color: var(--text);
 }
 
 .signup-form .input-field:focus {

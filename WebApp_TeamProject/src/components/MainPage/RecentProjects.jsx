@@ -38,63 +38,41 @@ export default function RecentProjects() {
 
     return (
         <div className="recent-projects">
-            {/* 헤더 전체가 클릭 영역 */}
-            <button
-                type="button"
-                className="recent-projects__header-button"
-                onClick={() => navigate("/matching")}
-            >
-                <span className="recent-projects__heading">최신 프로젝트 목록</span>
-                <span className="recent-projects__more-hint">전체 보기 →</span>
-            </button>
+            <div className="recent-projects__section-header">
+                <span className="recent-projects__heading">최신 프로젝트</span>
+                <button
+                    type="button"
+                    className="recent-projects__more-hint"
+                    onClick={() => navigate("/matching")}
+                >전체 보기 →</button>
+            </div>
 
             <ul className="recent-projects__list">
-
-                {/* 꼭 key를 사용하고 사용에 유의하기 (index 사용 절대 금지) */}
                 {projectsToShow.map((project) => {
                     const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
-                    
+                    const ddayStyle = isClosed
+                        ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
+                        : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
+
                     return (
                         <li
                             key={project.id}
-                            className="recent-projects__item"
-                            // 클릭 시 매칭 페이지로 이동하되 URL에 쿼리 파라미터로 postId를 전달
+                            className={`recent-projects__item${isClosed ? ' recent-projects__item--closed' : ''}`}
                             onClick={() => navigate(`/matching?postId=${project.id}`)}
-                            style={{ opacity: isClosed ? 0.6 : 1 }} // 마감된 프로젝트는 살짝 흐리게 처리
                         >
-                            <div className="recent-projects__item-title">
-                                {project.title}
+                            <div className="recent-projects__card-head">
+                                <span className="recent-projects__item-title">{project.title}</span>
+                                <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
                             </div>
                             <div className="recent-projects__item-meta">
                                 <span>{project.author}</span>
                                 <span className="recent-projects__dot">·</span>
-                                <span>{project.createdAt}</span>
+                                <span>{project.appliedMembers}/{project.requiredMembers}명</span>
                             </div>
-                            
-                            {/* 호버 시 나타날 글 내용 영역 추가 */}
-                            <div className="recent-projects__item-content">
-                                {project.content}
-                            </div>
-
                             <div className="recent-projects__tag-row">
-                                {/* 프로젝트마다 태그(matchingPosts의 category) 표시 */}
                                 {(Array.isArray(project.category) ? project.category : [project.category]).map((cat) => (
-                                    <span key={cat} className="recent-projects__tag">
-                                        #{cat}
-                                    </span>
+                                    <span key={cat} className="recent-projects__tag">#{cat}</span>
                                 ))}
-                            </div>
-
-                            {/* 우측 하단 D-Day 배지 */}
-                            <div 
-                                className="recent-projects__dday" 
-                                style={{ 
-                                    backgroundColor: `${ddayColor}15`, // 투명도 15% 정도의 배경색 (헥스 뒤에 15 추가)
-                                    color: ddayColor,
-                                    border: `1px solid ${ddayColor}40` // 투명도 40% 정도의 테두리
-                                }}
-                            >
-                                {ddayText}
                             </div>
                         </li>
                     );

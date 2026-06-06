@@ -67,7 +67,7 @@
 }
 
 .login-form .input-field::placeholder {
-    color: #9ca3af;
+    color: var(--text);
 }
 
 .login-form .input-field:focus {

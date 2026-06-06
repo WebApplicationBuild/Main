@@ -54,7 +54,7 @@
 }
 
 .board-table tbody tr:hover {
-  background-color: #fbfbfc;
+  background-color: var(--surface);
 }
 
 /* --- 상태 태그 (모집중/마감) --- */
@@ -68,34 +68,41 @@
 }
 
 .status-open {
-  background-color: #e6fcf5;
-  color: #0ca678;
-  border: 1px solid #63e6be;
+  background-color: var(--accent-bg);
+  color: var(--accent-text);
+  border: 1px solid var(--border);
 }
 
 .status-full {
-  background-color: #fff0f6;
-  color: #d6336c;
-  border: 1px solid #faa2c1;
+  background-color: var(--danger-bg);
+  color: var(--danger);
+  border: 1px solid #e8b4b0;
+}
+
+.status-soon {
+  background-color: var(--soon-bg);
+  color: var(--soon-fg);
+  border: 1px solid #e8c99a;
 }
 
 .status-closed {
-  background-color: #f1f3f5;
-  color: #868e96;
-  border: 1px solid #ced4da;
+  background-color: var(--closed-bg);
+  color: var(--closed-fg);
+  border: 1px solid var(--border-strong);
 }
 
 /* 마감된 게시글 제목 */
 .text-closed {
-  color: #adb5bd;
+  color: var(--text);
   text-decoration: line-through;
+  opacity: 0.6;
 }
 
 /* --- 상세보기 (아코디언) --- */
 /* 펼침 행은 호버 포함 항상 밝은 배경 유지 */
 .board-table tbody tr.detail-row,
 .board-table tbody tr.detail-row:hover {
-  background-color: #fdfdfd;
+  background-color: var(--card);
 }
 
 .detail-container {
@@ -115,11 +122,11 @@
   padding-bottom: 12px;
   border-bottom: 1px dashed var(--border-strong);
   font-size: 0.85rem;
-  color: #495057;
+  color: var(--text);
 }
 
 .detail-info-item strong {
-  color: #212529;
+  color: var(--text-h);
   margin-right: 6px;
 }
 
@@ -127,7 +134,7 @@
 .detail-body {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #495057;
+  color: var(--text);
   white-space: pre-wrap;
   margin-bottom: 12px;
 }

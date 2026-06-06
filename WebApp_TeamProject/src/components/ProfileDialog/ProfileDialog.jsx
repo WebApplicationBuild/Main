@@ -1,85 +1,83 @@
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import TextField from "@mui/material/TextField";
+import { useEffect } from "react";
+import "../../styles/common/ProfileDialog.css";
 
-function ProfileDialog({
-    open,
-    onClose,
-    profile,
-    error,
-    onChange,
-    onSave,
-    loading,
-}) {
+function ProfileDialog({ open, onClose, profile, error, onChange, onSave, loading }) {
+    useEffect(() => {
+        if (!open) return;
+        const handleKey = (e) => { if (e.key === "Escape") onClose(); };
+        window.addEventListener("keydown", handleKey);
+        return () => window.removeEventListener("keydown", handleKey);
+    }, [open, onClose]);
+
+    if (!open) return null;
+
     return (
-        <Dialog
-            open={open}
-            onClose={onClose}
-        >
-            <div style={{ padding: "24px", width: "320px" }}>
-                <h2>프로필 수정</h2>
+        <div className="profile-dialog__backdrop" onMouseDown={onClose}>
+            <div className="profile-dialog" onMouseDown={(e) => e.stopPropagation()}>
+                <div className="profile-dialog__header">
+                    <h2 className="profile-dialog__title">프로필 수정</h2>
+                    <button className="profile-dialog__close" onClick={onClose}>×</button>
+                </div>
 
                 {error && (
-                    <p style={{ color: "#d32f2f", margin: "8px 0 0" }}>
-                        {error}
-                    </p>
+                    <p className="profile-dialog__error">{error}</p>
                 )}
 
-                <TextField
-                    label="닉네임"
-                    name="nickname"
-                    value={profile.nickname}
-                    onChange={onChange}
-                    fullWidth
-                    margin="normal"
-                />
+                <div className="profile-dialog__field">
+                    <label className="profile-dialog__label">닉네임</label>
+                    <input
+                        className="profile-dialog__input"
+                        name="nickname"
+                        value={profile.nickname}
+                        onChange={onChange}
+                    />
+                </div>
 
-                <TextField
-                    label="학과"
-                    name="department"
-                    value={profile.department}
-                    onChange={onChange}
-                    fullWidth
-                    margin="normal"
-                />
+                <div className="profile-dialog__field">
+                    <label className="profile-dialog__label">학과</label>
+                    <input
+                        className="profile-dialog__input"
+                        name="department"
+                        value={profile.department}
+                        onChange={onChange}
+                    />
+                </div>
 
-                <TextField
-                    label="MBTI"
-                    name="mbti"
-                    value={profile.mbti}
-                    onChange={onChange}
-                    fullWidth
-                    margin="normal"
-                />
+                <div className="profile-dialog__field">
+                    <label className="profile-dialog__label">MBTI</label>
+                    <input
+                        className="profile-dialog__input"
+                        name="mbti"
+                        value={profile.mbti}
+                        onChange={onChange}
+                    />
+                </div>
 
-                <TextField
-                    label="기술스택"
-                    name="techStack"
-                    value={profile.techStack}
-                    onChange={onChange}
-                    fullWidth
-                    margin="normal"
-                    placeholder="React, Firebase, Java"
-                />
+                <div className="profile-dialog__field">
+                    <label className="profile-dialog__label">기술스택</label>
+                    <input
+                        className="profile-dialog__input"
+                        name="techStack"
+                        value={profile.techStack}
+                        onChange={onChange}
+                        placeholder="React, Firebase, Java"
+                    />
+                </div>
 
-                <div style={{ marginTop: "16px", display: "flex", gap: "8px" }}>
-                    <Button
-                        variant="contained"
+                <div className="profile-dialog__footer">
+                    <button
+                        className="profile-dialog__save"
                         onClick={onSave}
                         disabled={loading}
                     >
                         {loading ? "저장 중..." : "저장"}
-                    </Button>
-
-                    <Button
-                        variant="outlined"
-                        onClick={onClose}
-                    >
+                    </button>
+                    <button className="profile-dialog__cancel" onClick={onClose}>
                         취소
-                    </Button>
+                    </button>
                 </div>
             </div>
-        </Dialog>
+        </div>
     );
 }
 

@@ -17,26 +17,31 @@ export default function MyProjects() {
     return (
         <div className="my-projects">
             <div className="my-projects__header">
-                <h2 className="my-projects__heading">내가 진행중인 프로젝트</h2>
-                {/* 로그인 상태일 때만 전체보기 버튼 렌더링 */}
+                <span className="my-projects__heading">진행중 프로젝트</span>
                 {user && (
                     <button
                         className="my-projects__view-all"
-                        // 전체보기 클릭 시, 특정 프로젝트가 선택되지 않은 프로젝트 관리 메인 페이지로 이동
                         onClick={() => navigate('/projectManage')}
                     >전체보기 →</button>
                 )}
             </div>
 
-            {!user ? (                                  /* 로그인이 되어있는지 확인 */
+            {!user ? (
                 <div className="my-projects__empty">
-                    <p>로그인 후 이용해주세요</p>
+                    <div className="my-projects__empty-icon">🔐</div>
+                    <div className="my-projects__empty-text">로그인 후<br />이용해주세요</div>
                 </div>
-            ) : myProjectsData.length === 0 ? (             /* 프로젝트가 존재하지않으면 진행중인 프로젝트가 없다고 표시*/
+            ) : myProjectsData.length === 0 ? (
                 <div className="my-projects__empty">
-                    <p>아직 진행중인 프로젝트가 없습니다</p>
+                    <div className="my-projects__empty-icon">🌱</div>
+                    <div className="my-projects__empty-text">아직 진행중인<br />프로젝트가 없습니다</div>
+                    <button
+                        type="button"
+                        className="my-projects__empty-action"
+                        onClick={() => navigate('/matching')}
+                    >팀 매칭하러 가기</button>
                 </div>
-            ) : (                                       /* 프로젝트가 존재한다면, myProjects 리스트의 요소를 list item으로서 나타냄 */
+            ) : (
                 <ul className="my-projects__list">
                     {myProjectsData.map((project) => (
                         <li
@@ -46,16 +51,10 @@ export default function MyProjects() {
                             role="button"
                             tabIndex={0}
                         >
-                            <div className="my-projects__item-title">
-                                {project.title}
-                            </div>
+                            <div className="my-projects__item-title">{project.title}</div>
                             <div className="my-projects__item-meta">
-                                <span className="my-projects__badge">
-                                    {project.status}
-                                </span>
-                                <span className="my-projects__members">
-                                    팀원 {project.members}명
-                                </span>
+                                <span className="my-projects__badge">{project.status}</span>
+                                <span className="my-projects__members">팀원 {project.members}명</span>
                             </div>
                         </li>
                     ))}

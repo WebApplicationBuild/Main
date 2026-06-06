@@ -1,0 +1,47 @@
+/*
+ * PageHeader — 전 페이지 공통 헤더 (다크 그린 sticky 바)
+ */
+
+.page-header {
+    background: var(--teamo-forest);
+    height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.page-header__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.page-header__logo {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+.page-header__logo:hover { opacity: 0.8; }
+
+.page-header__title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    color: var(--teamo-bg);
+    white-space: nowrap;
+}
+
+.page-header__nav {
+    justify-self: end;
+}

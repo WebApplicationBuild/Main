@@ -1,18 +1,73 @@
+/* 사이드바 진행중 프로젝트 카드 — accent 테두리 */
 .my-projects {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--accent);
+    border-radius: 14px;
+    padding: 18px;
 }
 
-.my-projects__empty {
-    flex: 1;
+.my-projects__header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--text);
-    font-size: 13px;
+    justify-content: space-between;
+    margin-bottom: 14px;
 }
 
+.my-projects__heading {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-h);
+}
+
+.my-projects__view-all {
+    font-size: 13px;
+    color: var(--accent);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.my-projects__view-all:hover {
+    color: var(--accent-hover);
+}
+
+/* 빈 상태 */
+.my-projects__empty {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.my-projects__empty-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.my-projects__empty-text {
+    font-size: 13px;
+    color: var(--text-mute);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.my-projects__empty-action {
+    background: var(--accent-bg);
+    color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.my-projects__empty-action:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* 프로젝트 리스트 */
 .my-projects__list {
     list-style: none;
     margin: 0;
@@ -20,14 +75,14 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    flex: 1;
     text-align: left;
 }
 
 .my-projects__item {
-    background-color: white;
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 8px;
-    padding: 12px;
+    padding: 10px 12px;
     cursor: pointer;
     transition: transform 0.12s, box-shadow 0.12s;
 }
@@ -35,15 +90,15 @@
 .my-projects__item:hover,
 .my-projects__item:focus {
     transform: translateX(2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     outline: none;
 }
 
 .my-projects__item-title {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     color: var(--text-h);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .my-projects__item-meta {
@@ -56,41 +111,11 @@
     font-size: 11px;
     padding: 2px 8px;
     border-radius: 999px;
-    background-color: #dbeafe;
-    color: #1e40af;
+    background: var(--accent-bg);
+    color: var(--accent);
 }
 
 .my-projects__members {
     font-size: 11px;
-    color: var(--text);
-}
-
-.my-projects__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-}
-
-/* heading의 기존 margin-bottom은 header로 이동했으니 제거 */
-.my-projects__heading {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--text-h);
-    text-align: left;
-}
-
-.my-projects__view-all {
-    font-size: 12px;
-    color: var(--accent);
-    font-weight: 500;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-}
-
-.my-projects__view-all:hover {
-    color: var(--text-h);
+    color: var(--text-sub);
 }
