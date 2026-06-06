@@ -35,6 +35,8 @@ function useLoginForm() {
     // async -> 비동기 작업 (로그인 요청이 끝날 때까지 기다리는 함수) -> 로그인 시간이 걸리기 때문
     async function handleLogin(e) { 
         e.preventDefault(); // 새로고침 방지
+        if (isLoading) return;
+
         setError("");
 
         if (form.email.trim() === "") {

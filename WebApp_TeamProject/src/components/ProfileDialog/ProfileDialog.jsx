@@ -6,6 +6,7 @@ function ProfileDialog({
     open,
     onClose,
     profile,
+    error,
     onChange,
     onSave,
     loading,
@@ -17,6 +18,12 @@ function ProfileDialog({
         >
             <div style={{ padding: "24px", width: "320px" }}>
                 <h2>프로필 수정</h2>
+
+                {error && (
+                    <p style={{ color: "#d32f2f", margin: "8px 0 0" }}>
+                        {error}
+                    </p>
+                )}
 
                 <TextField
                     label="닉네임"

@@ -2,7 +2,7 @@
 로그인한 사용자만 특정 페이지에 접근 가능하도록 막아주는 보호 기능(인증 가드)
 */
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../store/AuthProvider";    // AuthContext에 저장된 로그인 상태 가져오기
+import { useAuth } from "../../hooks/useAuth";    // AuthContext에 저장된 로그인 상태 가져오기
 
 function ProtectedRoute({ children }) { // 보호할 페이지를 감싸는 컴포넌트
     const { user, authLoading } = useAuth();    // 로그인 상태 가져오기
