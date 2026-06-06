@@ -1,9 +1,22 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { initialMembers, initialSchedules } from "../api/manageMock";
 import { myProjects } from "../api/mockData";
 import { AuthContext } from "./AuthContext";
 
 const ProjectManageDataContext = createContext(null);
+
+function createDefaultProjectManageData() {
+    return {
+        members: [...initialMembers],
+        schedules: [...initialSchedules],
+        voteList: [],
+    };
+}
+
+function normalizeProjectId(projectId) {
+    const numericProjectId = Number(projectId);
+    return Number.isFinite(numericProjectId) ? numericProjectId : null;
+}
 
 export function ProjectManageDataProvider({ children }) {
     const { user } = useContext(AuthContext);
@@ -11,56 +24,86 @@ export function ProjectManageDataProvider({ children }) {
     const [projectManageData, setProjectManageData] = useState({});
     const [myProjectsData, setMyProjectsData] = useState(myProjects);
 
-    const filteredMyProjectsData = myProjectsData.filter((project) => {
-        if (!user) return false;
-        if (!project.memberIds) return false;
+    const filteredMyProjectsData = useMemo(
+        () =>
+            myProjectsData.filter((project) => {
+                if (!user) return false;
+                if (!project.memberIds) return true;
 
-        return project.memberIds.includes(user.uid);
-    });
+                return project.memberIds.includes(user.uid);
+            }),
+        [myProjectsData, user]
+    );
 
-    function addMyProject(project) {
-        setMyProjectsData((prev) => [...prev, project]);
-    }
+    const addMyProject = useCallback((project) => {
+        setMyProjectsData((prevProjects) => {
+            const existingProject = prevProjects.find(
+                (prevProject) => prevProject.id === project.id
+            );
 
-    function getProjectManageData(projectId) {
-        const numericProjectId = Number(projectId);
+            if (existingProject) {
+                return prevProjects.map((prevProject) =>
+                    prevProject.id === project.id
+                        ? { ...prevProject, ...project }
+                        : prevProject
+                );
+            }
 
-        return (
-        projectManageData[numericProjectId] || {
-            members: initialMembers,
-            schedules: initialSchedules,
-            voteList: [],
-        }
-        );
-    }
+            return [...prevProjects, project];
+        });
+    }, []);
 
-    function updateProjectManageData(projectId, updater) {
-        const numericProjectId = Number(projectId);
+    const getProjectManageData = useCallback(
+        (projectId) => {
+            const numericProjectId = normalizeProjectId(projectId);
+
+            if (numericProjectId === null) {
+                return createDefaultProjectManageData();
+            }
+
+            return projectManageData[numericProjectId] || createDefaultProjectManageData();
+        },
+        [projectManageData]
+    );
+
+    const updateProjectManageData = useCallback((projectId, updater) => {
+        const numericProjectId = normalizeProjectId(projectId);
+
+        if (numericProjectId === null) return;
 
         setProjectManageData((prev) => {
             const currentData =
-                prev[numericProjectId] || {
-                    members: initialMembers,
-                    schedules: initialSchedules,
-                    voteList: [],
-                };
+                prev[numericProjectId] || createDefaultProjectManageData();
+            const nextData =
+                typeof updater === "function" ? updater(currentData) : updater;
 
             return {
                 ...prev,
-                [numericProjectId]: updater(currentData),
+                [numericProjectId]: {
+                    ...currentData,
+                    ...nextData,
+                },
             };
         });
-    }
+    }, []);
+
+    const value = useMemo(
+        () => ({
+            myProjectsData: filteredMyProjectsData,
+            addMyProject,
+            getProjectManageData,
+            updateProjectManageData,
+        }),
+        [
+            addMyProject,
+            filteredMyProjectsData,
+            getProjectManageData,
+            updateProjectManageData,
+        ]
+    );
 
     return (
-        <ProjectManageDataContext.Provider
-            value={{
-                myProjectsData: filteredMyProjectsData,
-                addMyProject,
-                getProjectManageData,
-                updateProjectManageData,
-            }}
-        >
+        <ProjectManageDataContext.Provider value={value}>
             {children}
         </ProjectManageDataContext.Provider>
     );
@@ -71,7 +114,7 @@ export function useProjectManageData() {
 
     if (!context) {
         throw new Error(
-        "useProjectManageData는 ProjectManageDataProvider 안에서만 사용해야 합니다."
+            "useProjectManageData must be used within ProjectManageDataProvider."
         );
     }
 
