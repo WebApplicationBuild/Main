@@ -3,45 +3,10 @@
    인라인 스타일을 클래스로 추출, 메인페이지 팔레트(파란 강조)로 통일
    ============================================= */
 
-/* ── 상단 헤더 (메인페이지 헤더와 동일한 3열 그리드) ── */
+/* 프로젝트 페이지 헤더 — 공통 .page-header에 구분선만 추가 */
 .project-page .page-header {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  height: 72px;
-  padding: 0 4px;
   margin-bottom: 24px;
   border-bottom: 1px solid var(--border);
-}
-
-.project-page .header-logo {
-  justify-self: start;
-  display: inline-flex;
-  align-items: center;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.project-page .header-logo:hover {
-  opacity: 0.8;
-}
-
-.project-page .page-title {
-  margin: 0;
-  padding: 0;
-  border: none;
-  font-size: 28px;
-  font-weight: 700;
-  text-align: center;
-  color: var(--text-h);
-  white-space: nowrap;
-}
-
-.project-page .header-spacer {
-  justify-self: end;
 }
 
 /* ── 내 프로젝트 이동 네비게이션 카드 ── */

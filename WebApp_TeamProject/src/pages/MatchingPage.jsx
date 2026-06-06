@@ -1,23 +1,15 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext } from 'react';
 import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
-import NavDropdown from "../components/NavDropdown";
+import PageHeader from '../components/PageHeader';
+import { AuthContext } from "../store/AuthContext";
 import '../styles/matching/Matching.css';
 
-// 유저 확인용
-import { useContext } from "react";
-import { AuthContext } from "../store/AuthContext";
-
 function Matching() {
-  const navigate = useNavigate();
-
-  // 유저 확인용
   const { user, userInfo } = useContext(AuthContext);
 
-  // 데이터/상태/핸들러는 훅에서 받고, 페이지는 화면 조합만 담당
   const {
     isWritingMode,
     setIsWritingMode,
@@ -35,20 +27,7 @@ function Matching() {
 
   return (
     <div className="matching-container">
-      <header className="matching-header">
-        <button
-          type="button"
-          className="matching-header__logo"
-          onClick={() => navigate('/')}
-          aria-label="TEAMO 홈으로"
-        >
-          <img src="/teamo-logo.png" alt="TEAMO" className="header-logo-img" />
-        </button>
-        <h1 className="matching-header__title">
-          매칭 페이지
-        </h1>
-        <div className="matching-header__spacer"><NavDropdown /></div>
-      </header>
+      <PageHeader title="매칭 페이지" />
 
       <main className="matching-main">
         <div className="matching-content">
@@ -67,7 +46,6 @@ function Matching() {
               activeCategories={activeCategories}
               onCategoryClick={handleCategoryClick}
             />
-            {/* 글쓰기 버튼 */}
             <button className="btn-main" onClick={() => setIsWritingMode(true)}>
               글쓰기
             </button>
@@ -85,7 +63,6 @@ function Matching() {
         </div>
       </main>
 
-      {/* 글쓰기 모달 영역 */}
       {isWritingMode && (
         <div className="modal-overlay">
           <div className="modal-content">

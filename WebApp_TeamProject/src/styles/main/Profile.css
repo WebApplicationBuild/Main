@@ -32,7 +32,7 @@
 .profile__guest button {
     width: 100%;
     padding: 10px 16px;
-    background-color: #3b82f6;
+    background-color: var(--accent);
     color: white;
     border: none;
     border-radius: 8px;
@@ -43,7 +43,7 @@
 }
 
 .profile__guest button:hover {
-    background-color: #2563eb;
+    background-color: var(--accent-hover);
 }
 
 .profile__dev-button {
@@ -51,7 +51,7 @@
     padding: 8px 16px !important;
     background-color: transparent !important;
     color: var(--text) !important;
-    border: 1px dashed #9ca3af !important;
+    border: 1px dashed var(--border-strong) !important;
     border-radius: 6px !important;
     font-size: 12px !important;
     font-weight: 400 !important;
@@ -71,7 +71,7 @@
     width: 56px;
     height: 56px;
     border-radius: 50%;
-    background-color: #3b82f6;
+    background-color: var(--accent);
     color: white;
     font-size: 24px;
     font-weight: 700;
@@ -104,12 +104,12 @@
 }
 
 .profile__tag {
-    background-color: #ffffff;
-    color: #374151;
+    background-color: var(--accent-bg);
+    color: var(--accent-text);
     font-size: 12px;
     padding: 4px 10px;
-    border-radius: 999px; /* pill 모양 */
-    border: 1px solid #d1d5db;
+    border-radius: 999px;
+    border: 1px solid var(--border);
 }
 
 .profile__logout-button {
@@ -117,8 +117,8 @@
     width: 100%;
     padding: 8px;
     background-color: transparent;
-    color: #ef4444;
-    border: 1px solid #ef4444;
+    color: var(--danger);
+    border: 1px solid var(--danger);
     border-radius: 6px;
     font-size: 13px;
     cursor: pointer;
@@ -126,6 +126,6 @@
 }
 
 .profile__logout-button:hover {
-    background-color: #ef4444;
+    background-color: var(--danger);
     color: white;
 }

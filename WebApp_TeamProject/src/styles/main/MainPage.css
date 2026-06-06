@@ -1,60 +1,27 @@
 /*
  * MainPage 전용 레이아웃 스타일.
- * CSS Grid의 grid-template-areas로 영역을 이름으로 배치 → 가독성 우수.
+ * 수평 padding은 PageHeader가 자체적으로 보유(0 32px).
+ * 컨테이너는 수직 padding만 담당.
  */
 
 .main-page {
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
-    padding: 24px 32px;
+    padding: 0 0 24px;
     box-sizing: border-box;
     text-align: left;
 }
 
-/* 헤더: 로고 | 제목 | 빈공간 (3분할로 제목을 가운데 정렬) */
-.main-page__header {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
+/* PageHeader 아래 그리드 간격 */
+.main-page .page-header {
     margin-bottom: 32px;
-}
-
-.main-page__logo {
-    justify-self: start;
-    display: inline-flex;
-    align-items: center;
-    padding: 0;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s ease;
-}
-
-.main-page__logo:hover {
-    opacity: 0.8;
-}
-
-.main-page__title {
-    font-size: 40px;
-    font-weight: 700;
-    margin: 0;
-    text-align: center;
-    /* index.css의 h1 기본 margin을 덮어쓰기 */
-}
-
-.main-page__header-spacer {
-    /* 네비게이션 바를 헤더 오른쪽 끝으로 정렬 */
-    justify-self: end;
 }
 
 /*
  * 그리드 영역 배치
  *   notice  profile
  *   recent  my
- *
- * 컬럼 비율 3:1 → 왼쪽(최신 프로젝트)을 기존 2:1보다 더 넓게 확장
- * grid-template-areas로 레이아웃이 코드만 봐도 보인다.
  */
 .main-page__grid {
     display: grid;
@@ -64,6 +31,7 @@
         "notice profile"
         "recent my";
     gap: 24px;
+    padding: 0 32px;
 }
 
 .main-page__cell--notice  { grid-area: notice; }
@@ -72,15 +40,15 @@
 .main-page__cell--my      { grid-area: my; }
 
 .main-page__cell {
-    background-color: #e5e7eb;
+    background-color: var(--card-alt);
     border-radius: 12px;
     padding: 20px;
     min-height: 200px;
 }
 
-/* 내 프로젝트 카드만 강조 테두리 (UI 시안과 동일) */
+/* 내 프로젝트 카드만 강조 테두리 */
 .main-page__cell--my {
-    border: 2px solid #3b82f6;
+    border: 1.5px solid var(--accent);
 }
 
 /* 좁은 화면: 1열로 전환 */
@@ -92,9 +60,10 @@
             "profile"
             "recent"
             "my";
+        padding: 0 16px;
     }
 
-    .main-page__title {
-        font-size: 28px;
+    .main-page .page-header {
+        padding: 0 16px;
     }
 }

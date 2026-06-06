@@ -67,6 +67,6 @@
 }
 
 .schedule-item button:hover {
-  background-color: #e5e7eb;
+  background-color: var(--card-alt);
   color: var(--text-h);
 }

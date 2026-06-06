@@ -46,10 +46,10 @@
 
 .notice-carousel__button {
     padding: 8px 16px;
-    background-color: #ffffff;
-    color: #000;               /* 텍스트색을 검정으로 명시 (상속 끊기) */
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
+    background-color: var(--card);
+    color: var(--text-h);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-xs);
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
@@ -57,11 +57,11 @@
 }
 
 .notice-carousel__button:hover {
-    background-color: #f3f4f6;
+    background-color: var(--surface);
 }
 
 .notice-carousel__button:active {
-    background-color: #e5e7eb;
+    background-color: var(--card-alt);
 }
 
 .notice-carousel__indicator {

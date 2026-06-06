@@ -25,7 +25,7 @@
 }
 
 .my-projects__item {
-    background-color: white;
+    background-color: var(--card);
     border-radius: 8px;
     padding: 12px;
     cursor: pointer;
@@ -56,8 +56,8 @@
     font-size: 11px;
     padding: 2px 8px;
     border-radius: 999px;
-    background-color: #dbeafe;
-    color: #1e40af;
+    background-color: var(--accent-bg);
+    color: var(--accent-text);
 }
 
 .my-projects__members {

@@ -17,7 +17,7 @@ body {
   max-width: 1280px;
   margin: 0 auto;
   min-height: 100vh;
-  padding: 20px;
+  padding: 0 0 24px;
   background-color: var(--surface);
   box-sizing: border-box;
   text-align: left;
@@ -28,6 +28,11 @@ body {
   font-size: 28px;
   margin: 0 0 18px 0;
   color: var(--text-h);
+}
+
+/* 헤더 아래 콘텐츠 영역 — 수평 padding 통일 */
+.project-page__body {
+  padding: 0 32px;
 }
 
 /* 좌/우 2단 레이아웃 */

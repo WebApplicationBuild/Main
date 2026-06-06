@@ -1,0 +1,39 @@
+/* =============================================
+   PageHeader — 전 페이지 공통 헤더
+   padding·height 모두 이 파일에서 결정.
+   각 페이지 컨테이너는 수평 padding 없이 사용.
+   ============================================= */
+
+.page-header {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    height: 72px;
+    padding: 0 32px;
+    box-sizing: border-box;
+}
+
+.page-header__logo {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+}
+.page-header__logo:hover { opacity: 0.8; }
+
+.page-header__title {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text-h);
+    white-space: nowrap;
+}
+
+.page-header__nav {
+    justify-self: end;
+}

@@ -62,7 +62,7 @@
 .form-group label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #495057;
+  color: var(--text);
 }
 
 .form-input {
@@ -100,7 +100,7 @@
 /* 전역 스타일 오버라이드 방지 (입력값 색·정렬 고정) */
 .writing-input,
 .writing-textarea {
-  background-color: white !important;
+  background-color: var(--card) !important;
   color: var(--text-h) !important;
   text-align: left !important;
 }
@@ -115,8 +115,8 @@
   -webkit-appearance: none !important;
   width: 16px !important;
   height: 16px !important;
-  background-color: white !important;
-  border: 1.5px solid #adb5bd !important;
+  background-color: var(--card) !important;
+  border: 1.5px solid var(--border-strong) !important;
   border-radius: 3px !important;
   cursor: pointer !important;
   position: relative !important;

@@ -1,33 +1,46 @@
+@import './styles/teamo-theme.css';
+
 :root {
   /* ── 텍스트 ───────────────────────────── */
-  --text: #6b7280;          /* 본문 보조 텍스트 (slate-500) */
-  --text-h: #111827;        /* 제목·강조 텍스트 (slate-900) */
+  --text: #3A5A3F;          /* 본문 텍스트 (teamo-text-body) */
+  --text-sub: #6A7A62;      /* 보조/메타 텍스트 (teamo-text-sub) */
+  --text-mute: #9AA892;     /* 비활성 텍스트 (teamo-text-mute) */
+  --text-h: #173B22;        /* 제목·강조 텍스트 */
 
   /* ── 표면(배경) ───────────────────────── */
-  --bg: #fff;               /* 페이지 기본 배경 */
-  --surface: #f8f9fa;       /* 콘텐츠 페이지의 연회색 배경 */
+  --bg: #EAF1E2;            /* 페이지 기본 배경 (연녹색) */
+  --surface: #F5F8F0;       /* 콘텐츠 페이지의 연녹색 배경 */
   --card: #ffffff;          /* 카드 표면 (흰색) */
-  --card-alt: #e5e7eb;      /* 메인 그리드 셀의 회색 표면 */
+  --card-alt: #E3EDDA;      /* 메인 그리드 셀의 연녹색 표면 */
 
   /* ── 테두리 ───────────────────────────── */
-  --border: #e5e7eb;        /* 기본 연한 테두리 */
-  --border-strong: #d1d5db; /* 조금 더 진한 테두리 */
+  --border: #D2E0C8;        /* 기본 연한 테두리 */
+  --border-strong: #C9DBBD; /* 조금 더 진한 테두리 */
   --code-bg: #f4f3ec;
 
-  /* ── 강조색 (메인페이지 기준 파란색) ──── */
-  --accent: #3b82f6;        /* 주 강조색 (blue-500) */
-  --accent-hover: #2563eb;  /* 호버 시 진한 파랑 (blue-600) */
-  --accent-bg: #dbeafe;     /* 연한 파랑 배경 (뱃지·태그) */
-  --accent-text: #1e40af;   /* 파랑 배경 위 텍스트 (blue-800) */
-  --accent-border: rgba(59, 130, 246, 0.5);
+  /* ── 강조색 (그린 테마) ──────────────── */
+  --accent: #1F5132;        /* 주 강조색 (dark green) */
+  --accent-hover: #2E7D46;  /* 호버 시 진한 초록 */
+  --accent-bg: #E3F0E0;     /* 연한 초록 배경 (뱃지·태그) */
+  --accent-text: #1F5132;   /* 초록 배경 위 텍스트 */
+  --accent-border: rgba(46, 125, 70, 0.5);
+
+  /* ── 포인트 ──────────────────────────── */
+  --clay: #D98C3A;           /* 팀장 ★ 등 소수 포인트 (teamo-clay) */
 
   /* ── 상태색 ───────────────────────────── */
-  --danger: #ef4444;
-  --danger-hover: #dc2626;
+  --danger: #8A2B22;
+  --danger-hover: #6e1f19;
+  --danger-bg: #F0DDDA;
+  --soon-bg: #FBEAD7;        /* 마감임박 배경 */
+  --soon-fg: #8A4A12;        /* 마감임박 텍스트 */
+  --closed-bg: #E4E6E0;      /* 기한마감 배경 */
+  --closed-fg: #5A5C54;      /* 기한마감 텍스트 */
 
   /* ── 모양 ─────────────────────────────── */
-  --radius: 12px;           /* 카드 모서리 */
-  --radius-sm: 8px;         /* 작은 요소 모서리 */
+  --radius: 12px;           /* 카드 모서리 (teamo-radius-lg) */
+  --radius-sm: 8px;         /* 버튼·입력 모서리 (teamo-radius-md) */
+  --radius-xs: 6px;         /* 태그·배지 모서리 (teamo-radius-sm) */
   --radius-pill: 999px;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
 
@@ -35,8 +48,8 @@
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: "Pretendard", system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: "Pretendard", system-ui, 'Segoe UI', Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
   font: 18px/145% var(--sans);
