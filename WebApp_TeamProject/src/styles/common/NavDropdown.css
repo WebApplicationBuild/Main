@@ -1,33 +1,37 @@
-/* 모든 페이지 헤더 좌상단 로고 이미지 (버튼 안의 <img>) */
+/* 모든 페이지 헤더 좌상단 로고 이미지 */
 .header-logo-img {
   display: block;
-  height: 60px;
+  height: 52px;
   width: auto;
   object-fit: contain;
 }
 
-/* 페이지 이동 드롭다운 (헤더 우측) */
-.page-dropdown-container {
-  justify-self: end;
+/* 페이지 네비게이션 버튼 (헤더 우측) */
+.page-nav {
   display: flex;
   align-items: center;
+  gap: 28px;
 }
 
-.page-select {
-  padding: 6px 10px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius-sm);
-  background-color: var(--card);
+.page-nav__btn {
+  padding: 0 0 2px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
   font-size: 14px;
-  color: var(--text-h);
+  font-weight: 400;
+  color: rgba(234, 241, 226, 0.65);
   cursor: pointer;
-  outline: none;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
 }
 
-.page-select:hover {
-  border-color: var(--accent);
+.page-nav__btn:hover {
+  color: var(--teamo-bg);
 }
 
-.page-select:focus {
-  border-color: var(--accent);
+.page-nav__btn--active {
+  color: var(--teamo-bg);
+  font-weight: 500;
+  border-bottom-color: var(--teamo-bg);
 }

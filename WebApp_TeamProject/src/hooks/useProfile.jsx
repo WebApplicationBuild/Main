@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "../api/firebase";
+import { useToast } from "../contexts/ToastContext";
 
 function useProfile(user) {
+    const showToast = useToast();
     const [profile, setProfile] = useState({
         nickname: "",
         department: "",
@@ -58,11 +60,11 @@ function useProfile(user) {
                 techStack: profile.techStack,
             });
 
-            alert("프로필이 저장되었습니다.");
+            showToast("프로필이 저장되었습니다.", "success");
             return true;
         } catch (err) {
             console.log("프로필 저장 오류:", err);
-            alert("프로필 저장 중 오류가 발생했습니다.");
+            showToast("프로필 저장 중 오류가 발생했습니다.", "error");
             return false;
         } finally {
             setLoading(false);

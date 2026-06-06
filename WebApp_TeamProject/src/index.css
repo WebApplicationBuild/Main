@@ -38,7 +38,7 @@
   --closed-fg: #5A5C54;      /* 기한마감 텍스트 */
 
   /* ── 모양 ─────────────────────────────── */
-  --radius: 12px;           /* 카드 모서리 (teamo-radius-lg) */
+  --radius: 14px;           /* 카드 모서리 (teamo-radius-lg) */
   --radius-sm: 8px;         /* 버튼·입력 모서리 (teamo-radius-md) */
   --radius-xs: 6px;         /* 태그·배지 모서리 (teamo-radius-sm) */
   --radius-pill: 999px;
@@ -87,16 +87,17 @@
   }
 } */
 
+html {
+  /* 스크롤바 생멸로 인한 레이아웃 시프트 방지 */
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  /* border-inline: 1px solid var(--border); => 화면 중앙의 줄*/
+  width: 100%;
   min-height: 100svh;
   display: flex;
   flex-direction: column;

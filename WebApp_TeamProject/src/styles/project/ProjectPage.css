@@ -3,12 +3,6 @@
    인라인 스타일을 클래스로 추출, 메인페이지 팔레트(파란 강조)로 통일
    ============================================= */
 
-/* 프로젝트 페이지 헤더 — 공통 .page-header에 구분선만 추가 */
-.project-page .page-header {
-  margin-bottom: 24px;
-  border-bottom: 1px solid var(--border);
-}
-
 /* ── 내 프로젝트 이동 네비게이션 카드 ── */
 .project-nav-section {
   margin: 0 0 24px;

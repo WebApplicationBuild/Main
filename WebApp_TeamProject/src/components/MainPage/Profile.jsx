@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "@mui/material/Button";
 import { useAuth } from "../../hooks/useAuth";
 import useProfile from "../../hooks/useProfile";
 import ProfileButton from "./ProfileButton";
@@ -79,102 +78,60 @@ export default function Profile() {
         }
     }
 
-    // ─── 비로그인 상태 UI ────────────────────────────────
     if (!user) {
         return (
             <div className="profile">
-
-                <h2 className="profile__heading">
-                    프로필
-                </h2>
-
-                <div className="profile__guest">
-
-                    <p className="profile__guest-text">
-                        로그인이 필요합니다
-                    </p>
-
-                    {/* 로그인 페이지 이동 버튼 */}
-                    <ProfileButton />
-
+                <div className="profile__guest-wrapper">
+                    <div className="profile__avatar">?</div>
+                    <div className="profile__guest">
+                        <p className="profile__guest-text">로그인이 필요합니다</p>
+                        <ProfileButton />
+                    </div>
                 </div>
             </div>
         );
     }
 
-    // 닉네임 기본값 설정
     const nickname = profile.nickname || "사용자";
+    const skills = [
+        profile.department && profile.department !== '미입력' ? profile.department : null,
+        ...(profile.techStack && profile.techStack !== '미입력'
+            ? profile.techStack.split(',').map((s) => s.trim()).filter(Boolean)
+            : []),
+    ].filter(Boolean);
 
-    // ─── 로그인 상태 UI ─────────────────────────────────
     return (
         <div className="profile">
+            <div className="profile__avatar">{nickname.charAt(0)}</div>
+            <div className="profile__nickname">{nickname}</div>
 
-            <h2 className="profile__heading">
-                프로필
-            </h2>
-
-            <div className="profile__user-info">
-
-                {/* 닉네임 첫 글자를 프로필 이미지처럼 사용 */}
-                <div className="profile__avatar">
-                    {nickname.charAt(0)}
+            {skills.length > 0 && (
+                <div className="profile__tag-list">
+                    {skills.map((s) => (
+                        <span key={s} className="profile__tag">{s}</span>
+                    ))}
                 </div>
+            )}
 
-                {/* 사용자 닉네임 */}
-                <div className="profile__nickname">
-                    {nickname}
-                </div>
+            {profile.mbti && profile.mbti !== '미입력' && (
+                <div className="profile__mbti">MBTI: {profile.mbti}</div>
+            )}
 
-                {/* 프로필 정보 제목 */}
-                <div className="profile__interests-label">
-                    프로필 정보
-                </div>
+            <button type="button" className="profile__edit-button" onClick={handleOpen}>
+                프로필 수정
+            </button>
+            <button type="button" className="profile__logout-button" onClick={logout}>
+                로그아웃
+            </button>
 
-                {/* 사용자 프로필 정보 */}
-                <ul className="profile__tag-list">
-
-                    <li className="profile__tag">
-                        학과: {profile.department || "미입력"}
-                    </li>
-
-                    <li className="profile__tag">
-                        MBTI: {profile.mbti || "미입력"}
-                    </li>
-
-                    <li className="profile__tag">
-                        기술스택: {profile.techStack || "미입력"}
-                    </li>
-
-                </ul>
-
-                {/* 프로필 수정 버튼 */}
-                <Button
-                    variant="contained"
-                    onClick={handleOpen}
-                >
-                    프로필 수정
-                </Button>
-
-                {/* 프로필 수정 Dialog */}
-                <ProfileDialog
-                    open={open}
-                    onClose={handleClose}
-                    profile={profile}
-                    onChange={handleChange}
-                    onSave={handleSave}
-                    loading={loading}
-                />
-
-                {/* 로그아웃 버튼 */}
-                <button
-                    type="button"
-                    className="profile__logout-button"
-                    onClick={logout}
-                >
-                    로그아웃
-                </button>
-
-            </div>
+            <ProfileDialog
+                open={open}
+                onClose={handleClose}
+                profile={profile}
+                onChange={handleChange}
+                onSave={handleSave}
+                loading={loading}
+            />
         </div>
     );
 }

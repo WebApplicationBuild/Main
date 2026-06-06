@@ -7,7 +7,6 @@ import WeeklyScheduleBox from "../components/ProjectManagePage/WeeklyScheduleBox
 import ScheduleInput from "../components/ProjectManagePage/ScheduleInput";
 import ScheduleList from "../components/ProjectManagePage/ScheduleList";
 import VoteList from "../components/ProjectManagePage/VoteList";
-import PageHeader from "../components/PageHeader";
 import ProjectChatBox from "../components/ProjectManagePage/ProjectChatBox";
 
 import "../styles/project/ProjectLayout.css";
@@ -35,14 +34,8 @@ function ProjectPageContent({ projectId }) {
     voteFalse,
   } = useProjectSchedule(projectId);
 
-  const title = currentProject
-    ? `${currentProject.title} 관리 페이지`
-    : "프로젝트 관리 페이지";
-
   return (
     <div className="project-page">
-      <PageHeader title={title} />
-
       <div className="project-page__body">
         {/* 내 프로젝트 이동 네비게이션 카드 */}
         <div className="project-nav-section">

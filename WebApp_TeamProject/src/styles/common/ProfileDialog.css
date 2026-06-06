@@ -1,0 +1,135 @@
+.profile-dialog__backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.profile-dialog {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    width: 340px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+    box-sizing: border-box;
+    text-align: left;
+}
+
+.profile-dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+}
+
+.profile-dialog__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-h);
+    margin: 0;
+}
+
+.profile-dialog__close {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: var(--text-mute);
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+
+.profile-dialog__close:hover {
+    background: var(--surface);
+    color: var(--text-h);
+}
+
+.profile-dialog__field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.profile-dialog__label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-sub);
+}
+
+.profile-dialog__input {
+    padding: 10px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-h);
+    background: var(--surface);
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.profile-dialog__input::placeholder {
+    color: var(--text-mute);
+    font-size: 13px;
+}
+
+.profile-dialog__input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-bg);
+}
+
+.profile-dialog__footer {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.profile-dialog__save {
+    flex: 1;
+    padding: 10px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.profile-dialog__save:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.profile-dialog__save:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.profile-dialog__cancel {
+    flex: 1;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    color: var(--text-sub);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.profile-dialog__cancel:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}

@@ -3,7 +3,6 @@ import NoticeCarousel from "../components/MainPage/NoticeCarousel";
 import Profile from "../components/MainPage/Profile";
 import RecentProjects from "../components/MainPage/RecentProjects";
 import MyProjects from "../components/MainPage/MyProjects";
-import PageHeader from "../components/PageHeader";
 import "../styles/main/MainPage.css";
 
 export default function MainPage() {
@@ -13,24 +12,19 @@ export default function MainPage() {
 
     return (
         <div className="main-page">
-            <PageHeader title="메인 페이지" />
-
-            <main className="main-page__grid">
-                <section className="main-page__cell main-page__cell--notice">
+            <main className="main-page__layout">
+                <div className="main-page__notice">
                     <NoticeCarousel />
-                </section>
-
-                <section className="main-page__cell main-page__cell--profile">
+                </div>
+                <div className="main-page__profile">
                     <Profile />
-                </section>
-
-                <section className="main-page__cell main-page__cell--recent">
+                </div>
+                <div className="main-page__recent">
                     <RecentProjects />
-                </section>
-
-                <section className="main-page__cell main-page__cell--my">
+                </div>
+                <div className="main-page__my">
                     <MyProjects />
-                </section>
+                </div>
             </main>
         </div>
     );

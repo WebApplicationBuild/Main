@@ -16,22 +16,15 @@ export default function NoticeCarousel() {
     const handleNext = () => setIndex((prev) => (prev + 1) % total);
     const handlePrev = () => setIndex((prev) => (prev - 1 + total) % total);
 
-    const current = noticeBanners[index];
+    const cur = noticeBanners[index];
 
     return (
         <div className="notice-carousel">
-            <h2 className="notice-carousel__heading">공지 / 홍보</h2>
+            <div className="notice-carousel__leaf" aria-hidden="true">🌿</div>
 
-            <div
-                className="notice-carousel__slide"
-                style={{ backgroundColor: current.bgColor }}
-            >
-                {/* 실제로는 <img src={current.imageUrl} />로 대체해야함.
-                    지금은 색상 배경 + 텍스트로 UI를 먼저 만듦. */}
-                <span className="notice-carousel__slide-text">
-                    {current.title}
-                </span>
-            </div>
+            <div className="notice-carousel__sub">📢 공지 · {index + 1} / {total}</div>
+            <div className="notice-carousel__title">{cur.title}</div>
+            <div className="notice-carousel__desc">{cur.desc}</div>
 
             <div className="notice-carousel__controls">
                 <button
@@ -39,22 +32,26 @@ export default function NoticeCarousel() {
                     className="notice-carousel__button"
                     onClick={handlePrev}
                     aria-label="이전 공지"
-                >
-                    ◀ 이전
-                </button>
-
-                <span className="notice-carousel__indicator">
-                    {index + 1} / {total}
-                </span>
+                >◀ 이전</button>
 
                 <button
                     type="button"
                     className="notice-carousel__button"
                     onClick={handleNext}
                     aria-label="다음 공지"
-                >
-                    다음 ▶
-                </button>
+                >다음 ▶</button>
+
+                <div className="notice-carousel__dots">
+                    {noticeBanners.map((_, i) => (
+                        <button
+                            key={i}
+                            type="button"
+                            className={`notice-carousel__dot${i === index ? ' notice-carousel__dot--active' : ''}`}
+                            onClick={() => setIndex(i)}
+                            aria-label={`${i + 1}번 공지`}
+                        />
+                    ))}
+                </div>
             </div>
         </div>
     );

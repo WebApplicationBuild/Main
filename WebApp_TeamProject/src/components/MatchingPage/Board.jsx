@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'; // localStorage 사용용
+import React, { useEffect, useState } from 'react';
 import '../../styles/matching/Board.css';
 import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
+import { useToast, useConfirm } from '../../contexts/ToastContext';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
+  const showToast = useToast();
+  const showConfirm = useConfirm();
   const { addMyProject, updateProjectManageData } = useProjectManageData();
   const { user, userInfo } = useContext(AuthContext);
   const [favoritePosts, setFavoritePosts] = useState([]);
@@ -33,14 +36,14 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     e.stopPropagation();
 
     if (!user || !userInfo) {
-      alert("로그인 후 이용해주세요.");
+      showToast("로그인 후 이용해주세요.", "info");
       return;
     }
 
     const currentMemberIds = post.memberIds || [];
 
     if (currentMemberIds.includes(user.uid)) {
-      alert("이미 참여한 프로젝트입니다.");
+      showToast("이미 참여한 프로젝트입니다.", "warning");
       return;
     }
 
@@ -72,28 +75,27 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
       ],
     }));
 
-    alert(`[${post.title}] 프로젝트가 생성되었습니다!`);
+    showToast(`[${post.title}] 프로젝트가 생성되었습니다!`, "success");
   };
   // 팀장만 사용하는 게시글 삭제 함수
-  const handleDeleteClick = (e, post) => {
+  const handleDeleteClick = async (e, post) => {
     e.stopPropagation();
 
     if (!user || !userInfo) {
-      alert("로그인 후 이용해주세요.");
+      showToast("로그인 후 이용해주세요.", "info");
       return;
     }
 
     if (post.ownerId !== user.uid) {
-      alert("팀장만 삭제할 수 있습니다.");
+      showToast("팀장만 삭제할 수 있습니다.", "warning");
       return;
     }
 
-    if (!window.confirm(`[${post.title}] 글을 삭제하시겠습니까?`)) {
-      return;
-    }
+    const confirmed = await showConfirm(`[${post.title}] 글을 삭제하시겠습니까?`);
+    if (!confirmed) return;
 
     onDeletePost(post.id);
-    alert("게시글이 삭제되었습니다.");
+    showToast("게시글이 삭제되었습니다.", "success");
   };
 
   // 즐겨찾기 토글 함수 추가

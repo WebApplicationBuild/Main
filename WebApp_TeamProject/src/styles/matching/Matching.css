@@ -9,29 +9,21 @@
   background-color: var(--surface);
 }
 
-/* 매칭 페이지 헤더 — 공통 .page-header에 sticky + 배경만 추가 */
-.matching-container .page-header {
-  background-color: var(--card);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-}
 
 /* 메인 콘텐츠 영역 (중앙 정렬) */
 .matching-main {
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 24px 24px;
 }
 
 /* 콘텐츠 카드 */
 .matching-content {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1080px;
   background-color: var(--card);
-  padding: 30px;
+  padding: 24px;
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }

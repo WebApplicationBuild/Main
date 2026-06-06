@@ -12,6 +12,7 @@
   box-shadow: var(--shadow-sm);
   padding: 24px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* 박스 제목 — 좌측 정렬 + 하단 구분선 */

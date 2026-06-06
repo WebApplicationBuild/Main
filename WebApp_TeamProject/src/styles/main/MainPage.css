@@ -1,59 +1,40 @@
 /*
- * MainPage 전용 레이아웃 스타일.
- * 수평 padding은 PageHeader가 자체적으로 보유(0 32px).
- * 컨테이너는 수직 padding만 담당.
+ * MainPage 레이아웃:
+ *   notice  | profile
+ *   recent  | my
+ * 같은 행의 셀이 자동으로 동일 높이 (grid 기본 align-items: stretch)
  */
 
 .main-page {
     width: 100%;
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 0 0 24px;
     box-sizing: border-box;
     text-align: left;
 }
 
-/* PageHeader 아래 그리드 간격 */
-.main-page .page-header {
-    margin-bottom: 32px;
-}
-
-/*
- * 그리드 영역 배치
- *   notice  profile
- *   recent  my
- */
-.main-page__grid {
+.main-page__layout {
+    max-width: 1080px;
+    margin: 24px auto;
+    padding: 0 24px;
     display: grid;
-    grid-template-columns: 3fr 1fr;
-    grid-template-rows: auto auto;
+    grid-template-columns: 1fr 270px;
+    grid-template-rows: minmax(300px, auto) auto;
     grid-template-areas:
-        "notice profile"
-        "recent my";
-    gap: 24px;
-    padding: 0 32px;
+        "notice  profile"
+        "recent  my";
+    gap: 20px;
+    box-sizing: border-box;
 }
 
-.main-page__cell--notice  { grid-area: notice; }
-.main-page__cell--profile { grid-area: profile; }
-.main-page__cell--recent  { grid-area: recent; }
-.main-page__cell--my      { grid-area: my; }
+/* 공지 · 프로필 셀 — 자식이 셀 전체 높이를 채우도록 flex 위임 */
+.main-page__notice  { grid-area: notice;  display: flex; flex-direction: column; }
+.main-page__profile { grid-area: profile; display: flex; flex-direction: column; }
 
-.main-page__cell {
-    background-color: var(--card-alt);
-    border-radius: 12px;
-    padding: 20px;
-    min-height: 200px;
-}
+/* 최신 프로젝트 · 내 프로젝트 — 콘텐츠 높이만큼만 */
+.main-page__recent  { grid-area: recent;  align-self: start; }
+.main-page__my      { grid-area: my;      align-self: start; }
 
-/* 내 프로젝트 카드만 강조 테두리 */
-.main-page__cell--my {
-    border: 1.5px solid var(--accent);
-}
-
-/* 좁은 화면: 1열로 전환 */
 @media (max-width: 768px) {
-    .main-page__grid {
+    .main-page__layout {
         grid-template-columns: 1fr;
         grid-template-areas:
             "notice"
@@ -61,9 +42,6 @@
             "recent"
             "my";
         padding: 0 16px;
-    }
-
-    .main-page .page-header {
-        padding: 0 16px;
+        margin: 16px auto;
     }
 }

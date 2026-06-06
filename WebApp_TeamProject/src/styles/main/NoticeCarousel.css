@@ -1,72 +1,89 @@
-/*
- * BEM 네이밍(block__element--modifier)으로 클래스 충돌 방지.
- * 팀 규칙에 CSS Modules가 없으므로, 컴포넌트별 prefix를 붙여 안전하게 격리.
- */
-
+/* 배너 카드 — mockup 기준 다크 그린 */
 .notice-carousel {
+    flex: 1;
+    background: var(--teamo-forest);
+    border-radius: 16px;
+    padding: 36px 40px;
+    position: relative;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 100%;
 }
 
-.notice-carousel__heading {
-    margin: 0 0 12px 0;
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--text-h);
-    text-align: left;
+.notice-carousel__leaf {
+    position: absolute;
+    right: -16px;
+    bottom: -24px;
+    font-size: 120px;
+    opacity: 0.06;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
 }
 
-.notice-carousel__slide {
-    flex: 1;
-    min-height: 200px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* 슬라이드 전환 시 부드러운 색상 보간 */
-    transition: background-color 0.3s ease;
+.notice-carousel__sub {
+    font-size: 12px;
+    color: #A8C9B0;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 0.3px;
 }
 
-.notice-carousel__slide-text {
-    color: white;
+.notice-carousel__title {
     font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    padding: 0 20px;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.notice-carousel__desc {
+    font-size: 13px;
+    color: #A8C9B0;
 }
 
 .notice-carousel__controls {
     display: flex;
-    justify-content: space-between;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 22px;
     align-items: center;
-    margin-top: 12px;
 }
 
 .notice-carousel__button {
-    padding: 8px 16px;
-    background-color: var(--card);
-    color: var(--text-h);
-    border: 1px solid var(--border-strong);
-    border-radius: var(--radius-xs);
-    font-size: 14px;
-    font-weight: 500;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: #fff;
+    border-radius: 8px;
+    padding: 7px 18px;
+    font-size: 13px;
     cursor: pointer;
-    transition: background-color 0.15s;
+    transition: background 0.15s;
 }
 
 .notice-carousel__button:hover {
-    background-color: var(--surface);
+    background: rgba(255, 255, 255, 0.25);
 }
 
-.notice-carousel__button:active {
-    background-color: var(--card-alt);
+.notice-carousel__dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 4px;
 }
 
-.notice-carousel__indicator {
-    font-size: 14px;
-    color: var(--text);
-    /* 숫자가 흔들리지 않게 고정폭 숫자 사용 */
-    font-variant-numeric: tabular-nums;
+.notice-carousel__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.notice-carousel__dot--active {
+    background: #fff;
+    width: 18px;
+    border-radius: 3px;
 }
