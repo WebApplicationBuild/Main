@@ -25,15 +25,18 @@ function useSignupForm() {
 
     // 상태 변경 (현재 입력값만 변경하고 나머지는 유지)
     function handleChange(e) {
-        setForm({
-        ...form,
-        [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
     }
 
     // 회원가입 처리 함수
     async function handleSignup(e) {
         e.preventDefault(); // 새로고침 방지
+        if (loading) return;
 
         if (!form.email.trim()) {
             setError("이메일을 입력하세요.");

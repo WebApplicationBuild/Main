@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 // Firebase 로그인 상태 감지 함수, 로그아웃 함수
 import { onAuthStateChanged, signOut } from "firebase/auth";
 // Firebase 인증 객체
@@ -26,6 +26,13 @@ export function AuthProvider({ children }) {
     const [authLoading, setAuthLoading] = useState(true);
 
     const [userInfo, setUserInfo] = useState(null);
+
+    const fetchUserInfo = useCallback(async (uid) => {
+        const userRef = doc(db, "users", uid);
+        const userSnap = await getDoc(userRef);
+
+        return userSnap.exists() ? userSnap.data() : null;
+    }, []);
     /*
     useEffect
     → 컴포넌트 처음 실행 시 로그인 상태 감지 시작
@@ -43,21 +50,20 @@ export function AuthProvider({ children }) {
             // 현재 로그인 사용자 저장
             setUser(currentUser);
 
-            if (currentUser) {
-                const userRef = doc(db, "users", currentUser.uid);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                    setUserInfo(userSnap.data());
+            try {
+                if (currentUser) {
+                    const nextUserInfo = await fetchUserInfo(currentUser.uid);
+                    setUserInfo(nextUserInfo);
                 } else {
                     setUserInfo(null);
                 }
-            } else {
+            } catch (err) {
+                console.error("사용자 정보를 불러오지 못했습니다:", err);
                 setUserInfo(null);
+            } finally {
+                // 로그인 상태 확인 완료
+                setAuthLoading(false);
             }
-
-            // 로그인 상태 확인 완료
-            setAuthLoading(false);
         });
         /*
         cleanup 함수
@@ -65,12 +71,30 @@ export function AuthProvider({ children }) {
         메모리 누수 방지
         */
         return () => unsubscribe();
-    }, []);
+    }, [fetchUserInfo]);
 
     // 로그아웃 함수 Firebase 로그아웃 실행
-    const logout = async () => {
+    const logout = useCallback(async () => {
         await signOut(auth);
-    };
+    }, []);
+
+    const updateUserInfo = useCallback((nextUserInfo) => {
+        setUserInfo((prevUserInfo) => ({
+            ...prevUserInfo,
+            ...nextUserInfo,
+        }));
+    }, []);
+
+    const value = useMemo(
+        () => ({
+            user,
+            userInfo,
+            authLoading,
+            logout,
+            updateUserInfo,
+        }),
+        [authLoading, logout, updateUserInfo, user, userInfo]
+    );
 
     /*
     Context.Provider
@@ -78,12 +102,8 @@ export function AuthProvider({ children }) {
     전체 앱에 공유
     */
     return (
-        <AuthContext.Provider value={{ user, userInfo, authLoading, logout }}>
+        <AuthContext.Provider value={value}>
             {children}
         </AuthContext.Provider>
     );
-}
-
-export function useAuth() {
-    return useContext(AuthContext);
 }

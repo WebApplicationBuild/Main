@@ -28,7 +28,7 @@ import "../../styles/main/Profile.css";
 export default function Profile() {
 
     // 현재 로그인 사용자 정보 + 로그아웃 함수
-    const { user, logout } = useAuth();
+    const { user, logout, updateUserInfo } = useAuth();
 
     // 프로필 수정 모달(Dialog) 열림 상태
     const [open, setOpen] = useState(false);
@@ -51,9 +51,10 @@ export default function Profile() {
     const {
         profile,
         loading,
+        error,
         handleChange,
         saveProfile,
-    } = useProfile(user);
+    } = useProfile(user, updateUserInfo);
 
     // 프로필 수정 Dialog 열기
     function handleOpen() {
@@ -160,6 +161,7 @@ export default function Profile() {
                     open={open}
                     onClose={handleClose}
                     profile={profile}
+                    error={error}
                     onChange={handleChange}
                     onSave={handleSave}
                     loading={loading}
