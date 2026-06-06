@@ -14,33 +14,21 @@ function useMatchingPageData() {
 
   const {
     matchingPostsData: posts,
-    setMatchingPostsData: setPosts,
     matchingActiveCategories: activeCategories,
-    setMatchingActiveCategories: setActiveCategories,
     matchingSearchTerm: searchTerm,
-    setMatchingSearchTerm: setSearchTerm,
+    updateMatchingSearchTerm,
+    addMatchingPost,
+    deleteMatchingPost,
+    joinMatchingProject,
+    toggleMatchingCategory,
   } = useProjectData();
   
   function joinProject(postId, userId) {
-    setPosts((prevPosts) =>
-      prevPosts.map((post) => {
-        if (post.id !== postId) {
-          return post;
-        }
-
-        return {
-          ...post,
-          memberIds: [...(post.memberIds || []), userId],
-          appliedMembers: (post.appliedMembers || 0) + 1,
-        };
-      })
-    );
+    joinMatchingProject(postId, userId);
   }
   // 팀장만 삭제 가능
   function deletePost(postId) {
-    setPosts((prevPosts) =>
-      prevPosts.filter((post) => post.id !== postId)
-    );
+    deleteMatchingPost(postId);
   }
 
   // 우선순위: 직접 클릭한 게시글(selectedPostId) -> URL postId -> 없음(null)
@@ -76,14 +64,12 @@ function useMatchingPageData() {
 
   const addPost = (newPost) => {
     // 최신 글이 상단에 보이도록 prepend
-    setPosts((prev) => [newPost, ...prev]);
+    addMatchingPost(newPost);
     setIsWritingMode(false);
   };
 
   const handleCategoryClick = (cat) => {
-    setActiveCategories((prev) =>
-      prev.includes(cat) ? prev.filter((item) => item !== cat) : [...prev, cat]
-    );
+    toggleMatchingCategory(cat);
   };
 
   const togglePostSelection = (post) => {
@@ -137,7 +123,7 @@ function useMatchingPageData() {
     selectedPost,
     activeCategories,
     searchTerm,
-    setSearchTerm,
+    setSearchTerm: updateMatchingSearchTerm,
     addPost,
     handleCategoryClick,
     filteredAndSortedPosts,
