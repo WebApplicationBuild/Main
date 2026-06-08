@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { matchingPosts } from "../../api/mockData";
+import { useProjectData } from "../../store/MatchingDataProvider";
 import "../../styles/main/RecentProjects.css";
 
 // D-Day 및 스타일 정보 계산 함수 (매칭 페이지와 동일)
@@ -30,9 +30,10 @@ const getDDayInfo = (deadline) => {
  */
 export default function RecentProjects() {
     const navigate = useNavigate();
+    const { matchingPostsData } = useProjectData();
 
-    // matchingPosts를 작성일(createdAt) 최신순으로 정렬한 뒤 최대 8개 가져오기
-    const projectsToShow = [...matchingPosts]
+    // matchingPostsData(목업 + 실제 작성된 글)를 작성일(createdAt) 최신순으로 정렬한 뒤 최대 8개 가져오기
+    const projectsToShow = [...matchingPostsData]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 8);
 
