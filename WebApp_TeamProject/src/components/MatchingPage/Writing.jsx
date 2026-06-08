@@ -11,7 +11,7 @@ import { useToast } from "../../contexts/ToastContext";
 function Writing({ onSave, onCancel }) {
   const showToast = useToast();
   const { user, userInfo } = useContext(AuthContext);
-  const { updateProjectManageData } = useProjectManageData(); 
+  const { addMyProject, updateProjectManageData } = useProjectManageData();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -56,6 +56,17 @@ function Writing({ onSave, onCancel }) {
     };
 
     onSave(newPost);
+
+    // 글 작성자는 곧 팀장이므로 '진행중 프로젝트'에도 함께 추가한다 (Board의 참여 처리와 동일한 형태)
+    addMyProject({
+      id: newPostId,
+      title,
+      status: '진행 중',
+      members: 1,
+      ownerId: user.uid,
+      ownerName: userInfo.nickname,
+      memberIds: [user.uid],
+    });
 
     updateProjectManageData(newPostId, () => ({
       members: [
