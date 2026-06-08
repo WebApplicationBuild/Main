@@ -7,7 +7,7 @@ import "../styles/main/MainPage.css";
 
 export default function MainPage() {
     useEffect(() => {
-        document.title = "TeaMo";
+        document.title = "TeaMo | 홈";
     }, []);
 
     return (
