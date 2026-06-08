@@ -28,6 +28,7 @@ export function ProjectManageDataProvider({ children }) {
         () =>
             myProjectsData.filter((project) => {
                 if (!user) return false;
+                // memberIds가 없는 목업 데이터는 모든 로그인 사용자에게 노출
                 if (!project.memberIds) return true;
 
                 return project.memberIds.includes(user.uid);
@@ -41,6 +42,7 @@ export function ProjectManageDataProvider({ children }) {
                 (prevProject) => prevProject.id === project.id
             );
 
+            // 같은 id가 이미 있으면(예: 재참여) 새로 추가하지 않고 기존 항목에 덮어써 중복을 방지
             if (existingProject) {
                 return prevProjects.map((prevProject) =>
                     prevProject.id === project.id
@@ -53,6 +55,7 @@ export function ProjectManageDataProvider({ children }) {
         });
     }, []);
 
+    // 매칭 글이 삭제될 때 '진행중 프로젝트' 목록에서도 같은 id로 제거하기 위한 함수
     const removeMyProject = useCallback((projectId) => {
         setMyProjectsData((prevProjects) =>
             prevProjects.filter((project) => project.id !== projectId)

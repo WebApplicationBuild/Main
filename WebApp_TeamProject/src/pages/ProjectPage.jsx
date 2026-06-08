@@ -101,6 +101,8 @@ function ProjectPageContent({ projectId }) {
 function ProjectPage() {
   const { projectId } = useParams();
   return (
+    // key를 projectId에 묶어 다른 프로젝트로 이동할 때 컴포넌트를 통째로 새로 마운트한다.
+    // (그래야 useProjectSchedule 등 내부 state가 이전 프로젝트의 값을 들고 있지 않음)
     <ProjectPageContent
       key={projectId ?? "project-overview"}
       projectId={projectId}

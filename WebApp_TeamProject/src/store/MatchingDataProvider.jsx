@@ -28,6 +28,7 @@ export function MatchingDataProvider({ children }) {
 
                 const memberIds = post.memberIds || [];
 
+                // 이미 참여한 멤버가 다시 누르면 appliedMembers가 중복 증가하지 않도록 무시
                 if (!userId || memberIds.includes(userId)) {
                     return post;
                 }

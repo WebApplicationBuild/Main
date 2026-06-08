@@ -15,7 +15,7 @@ export default function Profile() {
         error,
         handleChange,
         saveProfile,
-    } = useProfile(user, userInfo, updateUserInfo);
+    } = useProfile(user, userInfo, updateUserInfo); // AuthContext에 이미 로드된 userInfo를 그대로 넘겨 페이지 이동 시 재조회로 인한 깜빡임 방지
 
     function handleOpen()  { setOpen(true);  }
     function handleClose() { setOpen(false); }

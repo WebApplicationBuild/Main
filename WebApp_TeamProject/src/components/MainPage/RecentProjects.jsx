@@ -1,25 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useProjectData } from "../../store/MatchingDataProvider";
+import { getDDayInfo } from "../../utils/dday";
 import "../../styles/main/RecentProjects.css";
-
-// D-Day 및 스타일 정보 계산 함수 (매칭 페이지와 동일)
-const getDDayInfo = (deadline) => {
-    if (!deadline) return { text: '상시모집', color: '#228be6', isClosed: false };
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const targetDate = new Date(deadline);
-    targetDate.setHours(0, 0, 0, 0);
-    
-    const diffTime = targetDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays < 0) return { text: '마감', color: '#868e96', isClosed: true };
-    if (diffDays === 0) return { text: 'D-Day', color: '#e03131', isClosed: false };
-    if (diffDays <= 3) return { text: `D-${diffDays}`, color: '#e03131', isClosed: false };
-    if (diffDays <= 7) return { text: `D-${diffDays}`, color: '#fd7e14', isClosed: false };
-    return { text: `D-${diffDays}`, color: '#228be6', isClosed: false };
-};
 
 /*
    최신 프로젝트 목록.
@@ -51,6 +33,8 @@ export default function RecentProjects() {
             <ul className="recent-projects__list">
                 {projectsToShow.map((project) => {
                     const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
+                    // 마감 전: ddayColor(헥스) 뒤에 알파값을 붙여 옅은 배경/테두리를 만든다
+                    // (18 ≈ 9% 불투명도 배경, 40 ≈ 25% 불투명도 테두리). 마감 후에는 공용 회색 톤 사용.
                     const ddayStyle = isClosed
                         ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
                         : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };

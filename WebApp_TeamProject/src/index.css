@@ -54,6 +54,7 @@
 
   font: 18px/145% var(--sans);
   letter-spacing: 0.18px;
+  /* 다크모드 색상 변수가 아직 없어 light로 고정 (안 그러면 입력창 등 폼 컨트롤이 브라우저 기본 다크 스타일로 바뀌어 글씨가 안 보임) */
   color-scheme: light;
   color: var(--text);
   background: var(--bg);
