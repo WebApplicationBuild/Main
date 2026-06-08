@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useProjectData } from '../store/MatchingDataProvider';
+import { useProjectManageData } from '../store/ProjectManageDataProvider';
 //import { matchingPosts } from '../api/mockData';
 
 function useMatchingPageData() {
@@ -23,13 +24,17 @@ function useMatchingPageData() {
     joinMatchingProject,
     toggleMatchingCategory,
   } = useProjectData();
-  
+
+  const { removeMyProject } = useProjectManageData();
+
   function joinProject(postId, userId) {
     joinMatchingProject(postId, userId);
   }
   // 팀장만 삭제 가능
   function deletePost(postId) {
     deleteMatchingPost(postId);
+    // 매칭 글이 사라지면 '진행중 프로젝트' 목록에서도 함께 제거한다
+    removeMyProject(postId);
   }
 
   // selectedPostId만으로 선택 상태를 판단 (postIdFromUrl로 계속 폴백하면

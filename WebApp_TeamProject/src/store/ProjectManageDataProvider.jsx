@@ -53,6 +53,12 @@ export function ProjectManageDataProvider({ children }) {
         });
     }, []);
 
+    const removeMyProject = useCallback((projectId) => {
+        setMyProjectsData((prevProjects) =>
+            prevProjects.filter((project) => project.id !== projectId)
+        );
+    }, []);
+
     const getProjectManageData = useCallback(
         (projectId) => {
             const numericProjectId = normalizeProjectId(projectId);
@@ -91,11 +97,13 @@ export function ProjectManageDataProvider({ children }) {
         () => ({
             myProjectsData: filteredMyProjectsData,
             addMyProject,
+            removeMyProject,
             getProjectManageData,
             updateProjectManageData,
         }),
         [
             addMyProject,
+            removeMyProject,
             filteredMyProjectsData,
             getProjectManageData,
             updateProjectManageData,
