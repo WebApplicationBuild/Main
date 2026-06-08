@@ -6,7 +6,7 @@ import ProfileDialog from "../ProfileDialog/ProfileDialog";
 import "../../styles/main/Profile.css";
 
 export default function Profile() {
-    const { user, logout, updateUserInfo } = useAuth();
+    const { user, userInfo, logout, updateUserInfo } = useAuth();
     const [open, setOpen] = useState(false);
 
     const {
@@ -15,7 +15,7 @@ export default function Profile() {
         error,
         handleChange,
         saveProfile,
-    } = useProfile(user, updateUserInfo);
+    } = useProfile(user, userInfo, updateUserInfo);
 
     function handleOpen()  { setOpen(true);  }
     function handleClose() { setOpen(false); }
