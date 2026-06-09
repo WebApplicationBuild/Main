@@ -1,13 +1,12 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { initialMembers, initialSchedules } from "../api/manageMock";
 import { AuthContext } from "./AuthContext";
 
 const ProjectManageDataContext = createContext(null);
 
 function createDefaultProjectManageData() {
     return {
-        members: [...initialMembers],
-        schedules: [...initialSchedules],
+        members: [],
+        schedules: [],
         voteList: [],
     };
 }
