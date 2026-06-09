@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 import { useToast, useConfirm } from '../../contexts/ToastContext';
+import { getUserDisplayName } from '../../utils/userDisplayName';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
@@ -35,7 +36,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const handleMatchClick = (e, post) => {
     e.stopPropagation();
 
-    if (!user || !userInfo) {
+    if (!user) {
       showToast("로그인 후 이용해주세요.", "info");
       return;
     }
@@ -48,6 +49,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     }
 
     const updatedMemberIds = [...currentMemberIds, user.uid];
+    const userDisplayName = getUserDisplayName(user, userInfo);
 
     onJoinProject(post.id, user.uid);
 
@@ -69,7 +71,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
         ...(currentData.members || []),
         {
           id: user.uid,
-          name: userInfo.nickname,
+          name: userDisplayName,
           role: "팀원",
         },
       ],
@@ -81,7 +83,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const handleDeleteClick = async (e, post) => {
     e.stopPropagation();
 
-    if (!user || !userInfo) {
+    if (!user) {
       showToast("로그인 후 이용해주세요.", "info");
       return;
     }
