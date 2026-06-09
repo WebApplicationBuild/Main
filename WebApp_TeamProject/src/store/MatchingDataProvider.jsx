@@ -12,6 +12,7 @@ export function MatchingDataProvider({ children }) {
     const [matchingActiveCategories, setMatchingActiveCategories] = useState([]);
     const [matchingSearchTerm, setMatchingSearchTerm] = useState("");
 
+    // 프로필 닉네임이 저장/수정되면 사용자가 작성한 게시글의 표시 이름도 함께 갱신한다.
     useEffect(() => {
         if (!user) return;
 
@@ -44,6 +45,7 @@ export function MatchingDataProvider({ children }) {
     }, [user, userInfo]);
 
     const addMatchingPost = useCallback((newPost) => {
+        // 새 글은 최신 프로젝트와 매칭 목록 양쪽에서 바로 보이도록 맨 앞에 추가한다.
         setMatchingPostsData((prevPosts) => [newPost, ...prevPosts]);
     }, []);
 
@@ -54,6 +56,7 @@ export function MatchingDataProvider({ children }) {
     }, []);
 
     const joinMatchingProject = useCallback((postId, userId) => {
+        // 같은 사용자가 중복 참여하지 않도록 memberIds를 기준으로 검사한다.
         setMatchingPostsData((prevPosts) =>
             prevPosts.map((post) => {
                 if (post.id !== postId) {

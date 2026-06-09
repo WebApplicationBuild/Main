@@ -40,6 +40,7 @@ function Writing({ onSave, onCancel }) {
     const newPostId = Date.now();
     const userDisplayName = getUserDisplayName(user, userInfo);
 
+    // 매칭 목록과 메인 최신 프로젝트에서 함께 사용할 게시글 데이터
     const newPost = {
       id: newPostId,
       title,
@@ -60,6 +61,7 @@ function Writing({ onSave, onCancel }) {
 
     onSave(newPost);
 
+    // 작성자는 프로젝트 관리 화면에서 팀장으로 보이도록 초기 상세 데이터를 만든다.
     updateProjectManageData(newPostId, () => ({
       members: [
         {
