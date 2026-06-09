@@ -14,8 +14,9 @@ export default function RecentProjects() {
     const navigate = useNavigate();
     const { matchingPostsData } = useProjectData();
 
-    // matchingPostsData(목업 + 실제 작성된 글)를 작성일(createdAt) 최신순으로 정렬한 뒤 최대 8개 가져오기
+    // 기한 마감된 프로젝트 제외 후 최신순 정렬, 최대 8개
     const projectsToShow = [...matchingPostsData]
+        .filter((p) => !getDDayInfo(p.deadline).isClosed)
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 8);
 
@@ -39,6 +40,11 @@ export default function RecentProjects() {
                         ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
                         : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
 
+                    const statusText = isClosed ? '기한마감'
+                        : (project.requiredMembers > 0 && project.appliedMembers >= project.requiredMembers) ? '인원마감'
+                        : '모집중';
+                    const statusClass = isClosed ? 'closed' : statusText === '인원마감' ? 'full' : 'open';
+
                     return (
                         <li
                             key={project.id}
@@ -58,6 +64,18 @@ export default function RecentProjects() {
                                 {(Array.isArray(project.category) ? project.category : [project.category]).map((cat) => (
                                     <span key={cat} className="recent-projects__tag">#{cat}</span>
                                 ))}
+                            </div>
+
+                            <div className="recent-projects__hover-detail">
+                                <div className="recent-projects__hover-head">
+                                    <span className="recent-projects__hover-title">{project.title}</span>
+                                    <span className={`recent-projects__hover-status status--${statusClass}`}>{statusText}</span>
+                                </div>
+                                <p className="recent-projects__hover-content">{project.content}</p>
+                                <div className="recent-projects__hover-footer">
+                                    <span>작성자: {project.author}</span>
+                                    <span>마감: {project.deadline || '상시모집'}</span>
+                                </div>
                             </div>
                         </li>
                     );
