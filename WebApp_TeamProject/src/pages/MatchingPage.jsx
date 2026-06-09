@@ -1,14 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
-import { AuthContext } from "../store/AuthContext";
 import '../styles/matching/Matching.css';
 
 function Matching() {
-  const { user, userInfo } = useContext(AuthContext);
-
   const {
     isWritingMode,
     setIsWritingMode,
@@ -28,6 +25,7 @@ function Matching() {
     <div className="matching-container">
       <main className="matching-main">
         <div className="matching-content">
+          {/* 검색어는 훅의 전역 매칭 상태에 저장되어 목록 필터링에 바로 반영된다. */}
           <div className="search-section">
             <input
               type="text"
@@ -38,6 +36,7 @@ function Matching() {
             />
           </div>
 
+          {/* 카테고리 선택과 글쓰기 진입 버튼을 게시판 상단 컨트롤로 묶는다. */}
           <div className="category-wrapper">
             <Category
               activeCategories={activeCategories}
@@ -60,6 +59,7 @@ function Matching() {
         </div>
       </main>
 
+      {/* 글쓰기 모드는 페이지 이동 없이 모달로 열어 작성 흐름을 유지한다. */}
       {isWritingMode && (
         <div className="modal-overlay">
           <div className="modal-content">

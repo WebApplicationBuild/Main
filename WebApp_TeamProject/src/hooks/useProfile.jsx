@@ -20,6 +20,7 @@ function useProfile(user, onProfileUpdate) {
             if (!user) return;
 
             try {
+                // Firestore users 컬렉션에 저장된 프로필 문서를 로그인 사용자 기준으로 조회한다.
                 const userRef = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userRef);
 
@@ -67,6 +68,7 @@ function useProfile(user, onProfileUpdate) {
 
             const userRef = doc(db, "users", user.uid);
 
+            // merge 옵션으로 기존 사용자 문서의 email/createdAt 등 다른 필드는 보존한다.
             await setDoc(userRef, nextProfile, { merge: true });
             setProfile(nextProfile);
             onProfileUpdate?.(nextProfile);

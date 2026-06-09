@@ -5,6 +5,7 @@ import { getUserDisplayName } from "../utils/userDisplayName";
 const ProjectManageDataContext = createContext(null);
 
 function createDefaultProjectManageData() {
+    // 목 데이터 없이 시작하고, 글쓰기/매칭 참여 시 필요한 데이터만 채운다.
     return {
         members: [],
         schedules: [],
@@ -23,6 +24,7 @@ export function ProjectManageDataProvider({ children }) {
     const [projectManageData, setProjectManageData] = useState({});
     const [myProjectsData, setMyProjectsData] = useState([]);
 
+    // 프로필이 뒤늦게 생성되어도 기존 프로젝트 팀원 목록의 내 이름을 최신값으로 맞춘다.
     useEffect(() => {
         if (!user) return;
 
@@ -61,6 +63,7 @@ export function ProjectManageDataProvider({ children }) {
 
     const filteredMyProjectsData = useMemo(
         () =>
+            // 로그인한 사용자가 memberIds에 포함된 프로젝트만 "내 프로젝트"로 보여준다.
             myProjectsData.filter((project) => {
                 if (!user) return false;
                 if (!project.memberIds) return true;
@@ -92,6 +95,7 @@ export function ProjectManageDataProvider({ children }) {
         (projectId) => {
             const numericProjectId = normalizeProjectId(projectId);
 
+            // 잘못된 URL 파라미터가 들어와도 화면이 깨지지 않도록 빈 기본값을 반환한다.
             if (numericProjectId === null) {
                 return createDefaultProjectManageData();
             }

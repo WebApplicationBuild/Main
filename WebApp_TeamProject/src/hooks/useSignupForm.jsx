@@ -96,7 +96,7 @@ function useSignupForm() {
         }
     }
 
-    // 빈환값
+    // 반환값
     return {
         emailRef,
         form,

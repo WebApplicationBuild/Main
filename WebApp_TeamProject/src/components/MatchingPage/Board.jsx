@@ -51,6 +51,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     const updatedMemberIds = [...currentMemberIds, user.uid];
     const userDisplayName = getUserDisplayName(user, userInfo);
 
+    // 매칭 게시글의 참여 인원 상태를 먼저 갱신한다.
     onJoinProject(post.id, user.uid);
 
     const newProject = {
@@ -65,6 +66,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
 
     addMyProject(newProject);
 
+    // 프로젝트 관리 화면에서 바로 팀원 명단을 볼 수 있도록 상세 데이터도 함께 만든다.
     updateProjectManageData(post.id, (currentData) => ({
       ...currentData,
       members: [

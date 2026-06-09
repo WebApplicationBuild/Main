@@ -12,6 +12,7 @@ function ProjectChatBox({ projectId }) {
 
     const chatStorageKey = `chat_project_${projectId}`;
 
+    // 현재 프로젝트 채팅만 불러오기 위해 projectId별 localStorage 키를 사용한다.
     useEffect(() => {
         const savedChatList =
             JSON.parse(localStorage.getItem(chatStorageKey)) || [];
@@ -29,6 +30,7 @@ function ProjectChatBox({ projectId }) {
             return;
         }
 
+        // 프로필이 비어 있는 사용자도 대체 표시 이름으로 메시지를 남길 수 있게 한다.
         const newMessage = {
             id: Date.now(),
             authorId: user.uid,
