@@ -1,6 +1,5 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
 import { initialMembers, initialSchedules } from "../api/manageMock";
-import { myProjects } from "../api/mockData";
 import { AuthContext } from "./AuthContext";
 
 const ProjectManageDataContext = createContext(null);
@@ -22,7 +21,7 @@ export function ProjectManageDataProvider({ children }) {
     const { user } = useContext(AuthContext);
 
     const [projectManageData, setProjectManageData] = useState({});
-    const [myProjectsData, setMyProjectsData] = useState(myProjects);
+    const [myProjectsData, setMyProjectsData] = useState([]);
 
     const filteredMyProjectsData = useMemo(
         () =>
