@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { matchingPosts } from "../../api/mockData";
+import { useProjectData } from "../../store/MatchingDataProvider";
 import "../../styles/main/RecentProjects.css";
 
 // D-Day 및 스타일 정보 계산 함수 (매칭 페이지와 동일)
@@ -24,15 +24,16 @@ const getDDayInfo = (deadline) => {
 /*
    최신 프로젝트 목록.
   
-   - 매칭 페이지의 게시글(matchingPosts) 중 가장 최근 8개 글을 노출시킨다.
+   - 매칭 페이지에 사용자가 작성한 게시글 중 가장 최근 8개 글을 노출시킨다.
    - 상단(헤더) 클릭 시 MatchingPage(/matching)로 이동.
    - 개별 카드 클릭 시 매칭 페이지의 해당 게시글 위치로 이동.
  */
 export default function RecentProjects() {
     const navigate = useNavigate();
+    const { matchingPostsData } = useProjectData();
 
-    // matchingPosts를 작성일(createdAt) 최신순으로 정렬한 뒤 최대 8개 가져오기
-    const projectsToShow = [...matchingPosts]
+    // 작성일(createdAt) 최신순으로 정렬한 뒤 최대 8개 가져오기
+    const projectsToShow = [...matchingPostsData]
         .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         .slice(0, 8);
 
@@ -47,37 +48,43 @@ export default function RecentProjects() {
                 >전체 보기 →</button>
             </div>
 
-            <ul className="recent-projects__list">
-                {projectsToShow.map((project) => {
-                    const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
-                    const ddayStyle = isClosed
-                        ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
-                        : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
+            {projectsToShow.length === 0 ? (
+                <div className="recent-projects__empty">
+                    아직 등록된 프로젝트가 없습니다.
+                </div>
+            ) : (
+                <ul className="recent-projects__list">
+                    {projectsToShow.map((project) => {
+                        const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
+                        const ddayStyle = isClosed
+                            ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
+                            : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
 
-                    return (
-                        <li
-                            key={project.id}
-                            className={`recent-projects__item${isClosed ? ' recent-projects__item--closed' : ''}`}
-                            onClick={() => navigate(`/matching?postId=${project.id}`)}
-                        >
-                            <div className="recent-projects__card-head">
-                                <span className="recent-projects__item-title">{project.title}</span>
-                                <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
-                            </div>
-                            <div className="recent-projects__item-meta">
-                                <span>{project.author}</span>
-                                <span className="recent-projects__dot">·</span>
-                                <span>{project.appliedMembers}/{project.requiredMembers}명</span>
-                            </div>
-                            <div className="recent-projects__tag-row">
-                                {(Array.isArray(project.category) ? project.category : [project.category]).map((cat) => (
-                                    <span key={cat} className="recent-projects__tag">#{cat}</span>
-                                ))}
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
+                        return (
+                            <li
+                                key={project.id}
+                                className={`recent-projects__item${isClosed ? ' recent-projects__item--closed' : ''}`}
+                                onClick={() => navigate(`/matching?postId=${project.id}`)}
+                            >
+                                <div className="recent-projects__card-head">
+                                    <span className="recent-projects__item-title">{project.title}</span>
+                                    <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
+                                </div>
+                                <div className="recent-projects__item-meta">
+                                    <span>{project.author}</span>
+                                    <span className="recent-projects__dot">·</span>
+                                    <span>{project.appliedMembers}/{project.requiredMembers}명</span>
+                                </div>
+                                <div className="recent-projects__tag-row">
+                                    {(Array.isArray(project.category) ? project.category : [project.category]).map((cat) => (
+                                        <span key={cat} className="recent-projects__tag">#{cat}</span>
+                                    ))}
+                                </div>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </div>
     );
 }

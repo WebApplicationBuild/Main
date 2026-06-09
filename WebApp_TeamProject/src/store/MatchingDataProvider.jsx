@@ -1,11 +1,10 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { matchingPosts } from "../api/mockData";
 
 const ProjectDataContext = createContext(null);
 
 export function MatchingDataProvider({ children }) {
     // Client state is only for UI flow. Enforce real authorization in Firebase/server rules.
-    const [matchingPostsData, setMatchingPostsData] = useState(matchingPosts);
+    const [matchingPostsData, setMatchingPostsData] = useState([]);
     const [matchingActiveCategories, setMatchingActiveCategories] = useState([]);
     const [matchingSearchTerm, setMatchingSearchTerm] = useState("");
 
