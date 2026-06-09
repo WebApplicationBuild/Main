@@ -1,13 +1,13 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { initialMembers, initialSchedules } from "../api/manageMock";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { getUserDisplayName } from "../utils/userDisplayName";
 
 const ProjectManageDataContext = createContext(null);
 
 function createDefaultProjectManageData() {
     return {
-        members: [...initialMembers],
-        schedules: [...initialSchedules],
+        members: [],
+        schedules: [],
         voteList: [],
     };
 }
@@ -18,10 +18,46 @@ function normalizeProjectId(projectId) {
 }
 
 export function ProjectManageDataProvider({ children }) {
-    const { user } = useContext(AuthContext);
+    const { user, userInfo } = useContext(AuthContext);
 
     const [projectManageData, setProjectManageData] = useState({});
     const [myProjectsData, setMyProjectsData] = useState([]);
+
+    useEffect(() => {
+        if (!user) return;
+
+        const userDisplayName = getUserDisplayName(user, userInfo);
+
+        setProjectManageData((prevData) => {
+            let hasChanged = false;
+
+            const nextData = Object.fromEntries(
+                Object.entries(prevData).map(([projectId, data]) => {
+                    const nextMembers = (data.members || []).map((member) => {
+                        if (member.id !== user.uid || member.name === userDisplayName) {
+                            return member;
+                        }
+
+                        hasChanged = true;
+                        return {
+                            ...member,
+                            name: userDisplayName,
+                        };
+                    });
+
+                    return [
+                        projectId,
+                        {
+                            ...data,
+                            members: nextMembers,
+                        },
+                    ];
+                })
+            );
+
+            return hasChanged ? nextData : prevData;
+        });
+    }, [user, userInfo]);
 
     const filteredMyProjectsData = useMemo(
         () =>

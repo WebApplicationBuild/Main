@@ -1,12 +1,47 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { getUserDisplayName } from "../utils/userDisplayName";
 
 const ProjectDataContext = createContext(null);
 
 export function MatchingDataProvider({ children }) {
+    const { user, userInfo } = useContext(AuthContext);
+
     // Client state is only for UI flow. Enforce real authorization in Firebase/server rules.
     const [matchingPostsData, setMatchingPostsData] = useState([]);
     const [matchingActiveCategories, setMatchingActiveCategories] = useState([]);
     const [matchingSearchTerm, setMatchingSearchTerm] = useState("");
+
+    useEffect(() => {
+        if (!user) return;
+
+        const userDisplayName = getUserDisplayName(user, userInfo);
+
+        setMatchingPostsData((prevPosts) => {
+            let hasChanged = false;
+
+            const nextPosts = prevPosts.map((post) => {
+                let postChanged = false;
+                const nextPost = { ...post };
+
+                if (post.authorId === user.uid && post.author !== userDisplayName) {
+                    nextPost.author = userDisplayName;
+                    postChanged = true;
+                    hasChanged = true;
+                }
+
+                if (post.ownerId === user.uid && post.ownerName !== userDisplayName) {
+                    nextPost.ownerName = userDisplayName;
+                    postChanged = true;
+                    hasChanged = true;
+                }
+
+                return postChanged ? nextPost : post;
+            });
+
+            return hasChanged ? nextPosts : prevPosts;
+        });
+    }, [user, userInfo]);
 
     const addMatchingPost = useCallback((newPost) => {
         setMatchingPostsData((prevPosts) => [newPost, ...prevPosts]);
