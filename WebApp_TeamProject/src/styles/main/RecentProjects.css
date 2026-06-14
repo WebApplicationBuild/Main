@@ -36,16 +36,6 @@
     align-items: start;
 }
 
-.recent-projects__empty {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text-sub);
-    font-size: 14px;
-    padding: 28px 16px;
-    text-align: center;
-}
-
 .recent-projects__item {
     background: var(--card);
     border: 1px solid var(--border);

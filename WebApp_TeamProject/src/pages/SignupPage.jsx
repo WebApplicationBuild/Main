@@ -73,7 +73,6 @@ function SignupPage() {
                     disabled={loading}
                     className="signup-submit-btn"
                 >
-                    {/* Firebase 회원가입 요청 중에는 중복 제출을 막고 로딩 상태를 보여준다. */}
                     {loading ? (
                         <span className="signup-loading">
                             <CircularProgress

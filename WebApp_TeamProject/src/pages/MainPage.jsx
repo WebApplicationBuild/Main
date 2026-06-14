@@ -12,7 +12,6 @@ export default function MainPage() {
 
     return (
         <div className="main-page">
-            {/* 메인 페이지는 공지, 프로필, 최신 프로젝트, 내 프로젝트 영역을 한 화면에 배치한다. */}
             <main className="main-page__layout">
                 <div className="main-page__notice">
                     <NoticeCarousel />
