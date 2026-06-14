@@ -78,6 +78,7 @@ export function AuthProvider({ children }) {
         await signOut(auth);
     }, []);
 
+    // 부분 정보만 와도 기존 userInfo의 나머지 필드가 사라지지 않도록 병합
     const updateUserInfo = useCallback((nextUserInfo) => {
         setUserInfo((prevUserInfo) => ({
             ...prevUserInfo,

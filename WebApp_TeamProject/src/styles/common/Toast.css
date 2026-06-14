@@ -6,6 +6,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* 컨테이너 자체는 클릭을 통과시키고, 토스트 카드(.toast)에서만 다시 받도록 해
+       토스트 영역 바깥의 페이지 요소 클릭을 막지 않는다 */
     pointer-events: none;
 }
 

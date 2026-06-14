@@ -36,16 +36,6 @@
     align-items: start;
 }
 
-.recent-projects__empty {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    color: var(--text-sub);
-    font-size: 14px;
-    padding: 28px 16px;
-    text-align: center;
-}
-
 .recent-projects__item {
     background: var(--card);
     border: 1px solid var(--border);
@@ -56,6 +46,7 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    position: relative;
 }
 
 .recent-projects__item:hover {
@@ -66,6 +57,75 @@
     opacity: 0.6;
     background: #F5F5F2;
     border-color: #E0DED8;
+}
+
+.recent-projects__card-face {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-height: 0;
+}
+
+.recent-projects__card-face--front {
+    transition: opacity 0.15s ease;
+}
+
+.recent-projects__card-face--back {
+    position: absolute;
+    inset: 0;
+    background: var(--card);
+    border-radius: 11px;
+    padding: 16px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    overflow: hidden;
+}
+
+.recent-projects__item:hover .recent-projects__card-face--front {
+    opacity: 0;
+}
+
+.recent-projects__item:hover .recent-projects__card-face--back {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.recent-projects__card-face--back .recent-projects__card-head {
+    flex: 1;
+    min-height: 0;
+}
+
+.recent-projects__detail-content {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-h);
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-y: auto;
+}
+
+.recent-projects__detail-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.recent-projects__detail-content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.recent-projects__detail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-sub);
 }
 
 .recent-projects__card-head {

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useProjectData } from '../store/MatchingDataProvider';
+import { useProjectManageData } from '../store/ProjectManageDataProvider';
 
 function useMatchingPageData() {
   const [searchParams] = useSearchParams();
@@ -9,7 +10,8 @@ function useMatchingPageData() {
 
   // MatchingPage 화면 상태를 훅으로 분리해 UI 컴포넌트는 렌더링에만 집중하도록 구성
   const [isWritingMode, setIsWritingMode] = useState(false);
-  const [selectedPostId, setSelectedPostId] = useState(null);
+  // 진입 시 URL에 postId가 있으면 해당 게시글을 선택 상태의 초기값으로 사용
+  const [selectedPostId, setSelectedPostId] = useState(() => postIdFromUrl || null);
 
   const {
     matchingPostsData: posts,
@@ -21,22 +23,24 @@ function useMatchingPageData() {
     joinMatchingProject,
     toggleMatchingCategory,
   } = useProjectData();
-  
+
+  const { removeMyProject } = useProjectManageData();
+
   function joinProject(postId, userId) {
     joinMatchingProject(postId, userId);
   }
   // 팀장만 삭제 가능
   function deletePost(postId) {
     deleteMatchingPost(postId);
+    // 매칭 글이 사라지면 '진행중 프로젝트' 목록에서도 함께 제거한다
+    removeMyProject(postId);
   }
 
-  // 우선순위: 직접 클릭한 게시글(selectedPostId) -> URL postId -> 없음(null)
+  // selectedPostId만으로 선택 상태를 판단 (postIdFromUrl로 계속 폴백하면
+  // 닫기 버튼으로 selectedPostId를 null로 바꿔도 다시 열려버리는 문제가 생김)
   const selectedPost = useMemo(
-    () =>
-      posts.find((post) => post.id === selectedPostId) ||
-      posts.find((post) => post.id === postIdFromUrl) ||
-      null,
-    [posts, postIdFromUrl, selectedPostId]
+    () => posts.find((post) => post.id === selectedPostId) || null,
+    [posts, selectedPostId]
   );
 
   useEffect(() => {

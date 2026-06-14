@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from "../api/firebase";
 import { useToast } from "../contexts/ToastContext";
 
-function useProfile(user, onProfileUpdate) {
+function useProfile(user, userInfo, onProfileUpdate) {
     const showToast = useToast();
     const [profile, setProfile] = useState({
         nickname: "",
@@ -15,33 +15,19 @@ function useProfile(user, onProfileUpdate) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    // AuthProvider가 로그인 시점에 이미 받아온 userInfo를 그대로 반영한다.
+    // 여기서 다시 Firestore를 조회하면 페이지 이동 때마다 빈 값 -> 실제 값으로
+    // 한 박자 늦게 바뀌는 깜빡임이 생긴다.
     useEffect(() => {
-        async function fetchProfile() {
-            if (!user) return;
+        if (!userInfo) return;
 
-            try {
-                // Firestore users 컬렉션에 저장된 프로필 문서를 로그인 사용자 기준으로 조회한다.
-                const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-
-                if (userSnap.exists()) {
-                    const data = userSnap.data();
-
-                    setProfile({
-                        nickname: data.nickname || "",
-                        department: data.department || "",
-                        mbti: data.mbti || "",
-                        techStack: data.techStack || "",
-                    });
-                }
-            } catch (err) {
-                console.error("프로필 정보를 불러오지 못했습니다:", err);
-                setError("프로필 정보를 불러오지 못했습니다.");
-            }
-        }
-
-        fetchProfile();
-    }, [user]);
+        setProfile({
+            nickname: userInfo.nickname || "",
+            department: userInfo.department || "",
+            mbti: userInfo.mbti || "",
+            techStack: userInfo.techStack || "",
+        });
+    }, [userInfo]);
 
     function handleChange(e) {
         const { name, value } = e.target;
@@ -68,7 +54,6 @@ function useProfile(user, onProfileUpdate) {
 
             const userRef = doc(db, "users", user.uid);
 
-            // merge 옵션으로 기존 사용자 문서의 email/createdAt 등 다른 필드는 보존한다.
             await setDoc(userRef, nextProfile, { merge: true });
             setProfile(nextProfile);
             onProfileUpdate?.(nextProfile);

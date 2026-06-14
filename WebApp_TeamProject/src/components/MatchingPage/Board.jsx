@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import { useProjectManageData } from '../../store/ProjectManageDataProvider';
 import { useToast, useConfirm } from '../../contexts/ToastContext';
-import { getUserDisplayName } from '../../utils/userDisplayName';
+import { getDDayInfo } from '../../utils/dday';
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
@@ -36,7 +36,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const handleMatchClick = (e, post) => {
     e.stopPropagation();
 
-    if (!user) {
+    if (!user || !userInfo) {
       showToast("로그인 후 이용해주세요.", "info");
       return;
     }
@@ -49,9 +49,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
     }
 
     const updatedMemberIds = [...currentMemberIds, user.uid];
-    const userDisplayName = getUserDisplayName(user, userInfo);
 
-    // 매칭 게시글의 참여 인원 상태를 먼저 갱신한다.
     onJoinProject(post.id, user.uid);
 
     const newProject = {
@@ -66,14 +64,13 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
 
     addMyProject(newProject);
 
-    // 프로젝트 관리 화면에서 바로 팀원 명단을 볼 수 있도록 상세 데이터도 함께 만든다.
     updateProjectManageData(post.id, (currentData) => ({
       ...currentData,
       members: [
         ...(currentData.members || []),
         {
           id: user.uid,
-          name: userDisplayName,
+          name: userInfo.nickname,
           role: "팀원",
         },
       ],
@@ -85,7 +82,7 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const handleDeleteClick = async (e, post) => {
     e.stopPropagation();
 
-    if (!user) {
+    if (!user || !userInfo) {
       showToast("로그인 후 이용해주세요.", "info");
       return;
     }
@@ -120,30 +117,6 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
       favoriteStorageKey,
       JSON.stringify(updatedFavorites)
     );
-  };
-
-  // D-Day 및 스타일 정보 계산 함수
-  const getDDayInfo = (deadline) => {
-    if (!deadline) return { text: '상시모집', color: '#228be6', isClosed: false };
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // 시간 단위를 제외하고 날짜만 비교
-    
-    const targetDate = new Date(deadline);
-    targetDate.setHours(0, 0, 0, 0);
-    
-    const diffTime = targetDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    
-    // 이미 마감된 경우 (회색)
-    if (diffDays < 0) return { text: '마감', color: '#868e96', isClosed: true };
-    // 오늘 마감 (빨간색 강조)
-    if (diffDays === 0) return { text: 'D-Day', color: '#e03131', isClosed: false };
-    // 마감 3일 이내 (빨간색 강조)
-    if (diffDays <= 3) return { text: `D-${diffDays}`, color: '#e03131', isClosed: false };
-    // 마감 7일 이내 (주황색 강조)
-    if (diffDays <= 7) return { text: `D-${diffDays}`, color: '#fd7e14', isClosed: false };
-    // 그 외 넉넉한 기간 (파란색)
-    return { text: `D-${diffDays}`, color: '#228be6', isClosed: false };
   };
 
   // 모집 현황을 판별하여 텍스트와 색상 클래스를 반환하는 함수
