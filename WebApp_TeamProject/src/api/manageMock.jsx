@@ -33,7 +33,7 @@ export const projectManageMockData = {
         members: [
             { id: 1, name: "장준혁", role: "★팀장★" },
             { id: 2, name: "김민성", role: "팀원1" },
-            { id: 3, name: "채성민", role: "팀원2" },
+            { id: 3, name: "황대성", role: "팀원2" },
         ],
         schedules: [
             { id: 1, title: "사이트 구조 회의", day: "화요일" },
