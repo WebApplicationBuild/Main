@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState } from "react
 import { initialMembers, initialSchedules, projectManageMockData } from "../api/manageMock";
 import { myProjects } from "../api/mockData";
 import { AuthContext } from "./AuthContext";
+import { getUserDisplayName } from "../utils/userDisplayName";
 
 const ProjectManageDataContext = createContext(null);
 
@@ -22,13 +23,51 @@ function normalizeProjectId(projectId) {
 }
 
 export function ProjectManageDataProvider({ children }) {
-    const { user } = useContext(AuthContext);
+    const { user, userInfo } = useContext(AuthContext);
 
     const [projectManageData, setProjectManageData] = useState({});
-    const [myProjectsData, setMyProjectsData] = useState(myProjects);
+    const [myProjectsData, setMyProjectsData] = useState([]);
+
+    // 프로필이 뒤늦게 생성되어도 기존 프로젝트 팀원 목록의 내 이름을 최신값으로 맞춘다.
+    useEffect(() => {
+        if (!user) return;
+
+        const userDisplayName = getUserDisplayName(user, userInfo);
+
+        setProjectManageData((prevData) => {
+            let hasChanged = false;
+
+            const nextData = Object.fromEntries(
+                Object.entries(prevData).map(([projectId, data]) => {
+                    const nextMembers = (data.members || []).map((member) => {
+                        if (member.id !== user.uid || member.name === userDisplayName) {
+                            return member;
+                        }
+
+                        hasChanged = true;
+                        return {
+                            ...member,
+                            name: userDisplayName,
+                        };
+                    });
+
+                    return [
+                        projectId,
+                        {
+                            ...data,
+                            members: nextMembers,
+                        },
+                    ];
+                })
+            );
+
+            return hasChanged ? nextData : prevData;
+        });
+    }, [user, userInfo]);
 
     const filteredMyProjectsData = useMemo(
         () =>
+            // 로그인한 사용자가 memberIds에 포함된 프로젝트만 "내 프로젝트"로 보여준다.
             myProjectsData.filter((project) => {
                 if (!user) return false;
                 // memberIds가 없는 목업 데이터는 모든 로그인 사용자에게 노출
@@ -69,6 +108,7 @@ export function ProjectManageDataProvider({ children }) {
         (projectId) => {
             const numericProjectId = normalizeProjectId(projectId);
 
+            // 잘못된 URL 파라미터가 들어와도 화면이 깨지지 않도록 빈 기본값을 반환한다.
             if (numericProjectId === null) {
                 return createDefaultProjectManageData(numericProjectId);
             }

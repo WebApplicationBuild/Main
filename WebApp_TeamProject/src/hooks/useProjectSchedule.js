@@ -52,6 +52,7 @@ function useProjectSchedule(projectId) {
   }
 
   function moveToVote(id) {
+    // 일정 삭제 여부를 팀 투표로 결정하기 위해 일정 목록에서 투표 목록으로 이동한다.
     const target =
       schedules.find(
         (schedule) => schedule.id === id
@@ -84,6 +85,7 @@ function useProjectSchedule(projectId) {
   }
 
   function voteTrue(id) {
+    // 찬성 3표가 모이면 일정 목록으로 복구한다.
     const updatedList = voteList.map((item) =>
       item.id === id
         ? {
@@ -140,6 +142,7 @@ function useProjectSchedule(projectId) {
   }
 
   function voteFalse(id) {
+    // 반대 3표가 모이면 투표 목록에서 완전히 제거한다.
     const updatedList = voteList.map((item) =>
       item.id === id
         ? {

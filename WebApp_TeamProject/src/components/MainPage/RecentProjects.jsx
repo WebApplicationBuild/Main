@@ -31,53 +31,58 @@ export default function RecentProjects() {
                     onClick={() => navigate("/matching")}
                 >전체 보기 →</button>
             </div>
+            {projectsToShow.length === 0 ? (
+                <div className="recent-projects__empty">
+                    아직 등록된 프로젝트가 없습니다.
+                </div>
+            ) : (
+                <ul className="recent-projects__list">
+                    {projectsToShow.map((project) => {
+                        const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
+                        const ddayStyle = isClosed
+                            ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
+                            : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
+                        const categories = Array.isArray(project.category) ? project.category : [project.category];
 
-            <ul className="recent-projects__list">
-                {projectsToShow.map((project) => {
-                    const { text: ddayText, color: ddayColor, isClosed } = getDDayInfo(project.deadline);
-                    const ddayStyle = isClosed
-                        ? { background: 'var(--closed-bg)', color: 'var(--closed-fg)', border: '1px solid var(--closed-bg)' }
-                        : { background: `${ddayColor}18`, color: ddayColor, border: `1px solid ${ddayColor}40` };
-                    const categories = Array.isArray(project.category) ? project.category : [project.category];
+                        return (
+                            <li
+                                key={project.id}
+                                className={`recent-projects__item${isClosed ? ' recent-projects__item--closed' : ''}`}
+                                onClick={() => navigate(`/matching?postId=${project.id}`)}
+                            >
+                                <div className="recent-projects__card-face recent-projects__card-face--front">
+                                    <div className="recent-projects__card-head">
+                                        <span className="recent-projects__item-title">{project.title}</span>
+                                        <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
+                                    </div>
+                                    <div className="recent-projects__item-meta">
+                                        <span>{project.author}</span>
+                                        <span className="recent-projects__dot">·</span>
+                                        <span>{project.appliedMembers}/{project.requiredMembers}명</span>
+                                    </div>
+                                    <div className="recent-projects__tag-row">
+                                        {categories.map((cat) => (
+                                            <span key={cat} className="recent-projects__tag">#{cat}</span>
+                                        ))}
+                                    </div>
+                                </div>
 
-                    return (
-                        <li
-                            key={project.id}
-                            className={`recent-projects__item${isClosed ? ' recent-projects__item--closed' : ''}`}
-                            onClick={() => navigate(`/matching?postId=${project.id}`)}
-                        >
-                            <div className="recent-projects__card-face recent-projects__card-face--front">
-                                <div className="recent-projects__card-head">
-                                    <span className="recent-projects__item-title">{project.title}</span>
-                                    <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
+                                <div className="recent-projects__card-face recent-projects__card-face--back">
+                                    <div className="recent-projects__card-head">
+                                        <p className="recent-projects__detail-content">{project.content}</p>
+                                        <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
+                                    </div>
+                                    <div className="recent-projects__tag-row">
+                                        {categories.map((cat) => (
+                                            <span key={cat} className="recent-projects__tag">#{cat}</span>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="recent-projects__item-meta">
-                                    <span>{project.author}</span>
-                                    <span className="recent-projects__dot">·</span>
-                                    <span>{project.appliedMembers}/{project.requiredMembers}명</span>
-                                </div>
-                                <div className="recent-projects__tag-row">
-                                    {categories.map((cat) => (
-                                        <span key={cat} className="recent-projects__tag">#{cat}</span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="recent-projects__card-face recent-projects__card-face--back">
-                                <div className="recent-projects__card-head">
-                                    <p className="recent-projects__detail-content">{project.content}</p>
-                                    <span className="recent-projects__dday" style={ddayStyle}>{ddayText}</span>
-                                </div>
-                                <div className="recent-projects__tag-row">
-                                    {categories.map((cat) => (
-                                        <span key={cat} className="recent-projects__tag">#{cat}</span>
-                                    ))}
-                                </div>
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
+                            </li>
+                        );
+                    })}
+                </ul>
+            )}
         </div>
     );
 }

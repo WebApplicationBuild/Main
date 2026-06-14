@@ -11,6 +11,7 @@ export default function ProjectManagePage() {
 
     return (
         <div>
+            {/* 현재 라우팅에서는 ProjectPage가 실제 관리 화면을 담당하고, 이 파일은 예전 확인용 페이지다. */}
             <h1>이 곳은 프로젝트관리페이지입니다.</h1>
             <p>현재 프로젝트 ID: <strong>{projectId}</strong></p>
             <p><Link to="/">← 메인으로</Link></p>

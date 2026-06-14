@@ -20,10 +20,7 @@ function ProjectPageContent({ projectId }) {
   const { myProjectsData } = useProjectManageData();
   const navigate = useNavigate();
 
-  const currentProject = myProjectsData.find(
-    (project) => project.id === Number(projectId)
-  );
-
+  // 프로젝트 상세 데이터와 일정/투표 조작 함수는 projectId 기준으로 훅에서 가져온다.
   const {
     members,
     schedules,
@@ -62,6 +59,7 @@ function ProjectPageContent({ projectId }) {
           </div>
         </div>
 
+        {/* projectId가 없으면 목록만 보여주고, 선택된 프로젝트가 있으면 상세 관리 UI를 표시한다. */}
         {projectId ? (
           <>
             <div className="main-layout">
@@ -104,6 +102,7 @@ function ProjectPage() {
     // key를 projectId에 묶어 다른 프로젝트로 이동할 때 컴포넌트를 통째로 새로 마운트한다.
     // (그래야 useProjectSchedule 등 내부 state가 이전 프로젝트의 값을 들고 있지 않음)
     <ProjectPageContent
+      // URL 파라미터가 바뀔 때 내부 입력 상태가 이전 프로젝트에 남지 않도록 새로 마운트한다.
       key={projectId ?? "project-overview"}
       projectId={projectId}
     />

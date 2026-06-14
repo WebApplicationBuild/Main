@@ -5,6 +5,7 @@ import '../../styles/matching/Writing.css';
 import CategoryOptions from './CategoryOptions';
 import { useProjectManageData } from "../../store/ProjectManageDataProvider";
 import { useToast } from "../../contexts/ToastContext";
+import { getUserDisplayName } from "../../utils/userDisplayName";
 
 
 // 새 게시글 작성 폼 컴포넌트
@@ -29,6 +30,7 @@ function Writing({ onSave, onCancel }) {
 
   // 유효성 검사 후 게시글 객체를 부모로 전달
   const handleSubmit = () => {
+    if (!user)                         { showToast('로그인 후 이용해주세요.', 'info');         return; }
     if (!title)                        { showToast('제목을 입력해주세요.', 'warning');       return; }
     if (selectedCategories.length === 0) { showToast('카테고리를 선택해주세요.', 'warning');  return; }
     if (!requiredMembers)              { showToast('모집 인원을 입력해주세요.', 'warning');   return; }
@@ -36,7 +38,9 @@ function Writing({ onSave, onCancel }) {
     if (!content)                      { showToast('내용을 입력해주세요.', 'warning');        return; }
 
     const newPostId = Date.now();
+    const userDisplayName = getUserDisplayName(user, userInfo);
 
+    // 매칭 목록과 메인 최신 프로젝트에서 함께 사용할 게시글 데이터
     const newPost = {
       id: newPostId,
       title,
@@ -47,10 +51,10 @@ function Writing({ onSave, onCancel }) {
       createdAt: new Date().toISOString().split('T')[0], // yyyy-mm-dd
 
       authorId: user.uid,
-      author: userInfo.nickname,
+      author: userDisplayName,
 
       ownerId: user.uid,
-      ownerName: userInfo.nickname,
+      ownerName: userDisplayName,
       memberIds: [user.uid],
       appliedMembers: 1,
     };
@@ -72,7 +76,7 @@ function Writing({ onSave, onCancel }) {
       members: [
         {
           id: user.uid,
-          name: userInfo.nickname,
+          name: userDisplayName,
           role: "★팀장★",
         },
       ],
