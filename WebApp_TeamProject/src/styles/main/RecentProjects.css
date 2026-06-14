@@ -59,6 +59,75 @@
     border-color: #E0DED8;
 }
 
+.recent-projects__card-face {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    min-height: 0;
+}
+
+.recent-projects__card-face--front {
+    transition: opacity 0.15s ease;
+}
+
+.recent-projects__card-face--back {
+    position: absolute;
+    inset: 0;
+    background: var(--card);
+    border-radius: 11px;
+    padding: 16px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease;
+    overflow: hidden;
+}
+
+.recent-projects__item:hover .recent-projects__card-face--front {
+    opacity: 0;
+}
+
+.recent-projects__item:hover .recent-projects__card-face--back {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.recent-projects__card-face--back .recent-projects__card-head {
+    flex: 1;
+    min-height: 0;
+}
+
+.recent-projects__detail-content {
+    flex: 1;
+    min-height: 0;
+    margin: 0;
+    font-size: 13px;
+    color: var(--text-h);
+    line-height: 1.75;
+    white-space: pre-wrap;
+    word-break: break-word;
+    overflow-y: auto;
+}
+
+.recent-projects__detail-content::-webkit-scrollbar {
+    width: 4px;
+}
+
+.recent-projects__detail-content::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+.recent-projects__detail-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-sub);
+}
+
 .recent-projects__card-head {
     display: flex;
     justify-content: space-between;
@@ -107,89 +176,6 @@
     font-size: 11px;
     padding: 3px 8px;
     border-radius: 5px;
-}
-
-/* 호버 툴팁 */
-.recent-projects__hover-detail {
-    position: absolute;
-    bottom: calc(100% + 10px);
-    left: 0;
-    right: 0;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease;
-    z-index: 20;
-}
-
-.recent-projects__item:hover .recent-projects__hover-detail {
-    opacity: 1;
-}
-
-.recent-projects__hover-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 8px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border);
-}
-
-.recent-projects__hover-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-h);
-    line-height: 1.45;
-    flex: 1;
-}
-
-.recent-projects__hover-status {
-    font-size: 11px;
-    font-weight: 600;
-    padding: 3px 9px;
-    border-radius: 5px;
-    white-space: nowrap;
-    flex-shrink: 0;
-}
-
-.status--open   { background: #e6f4ea; color: #2d7a3a; }
-.status--full   { background: #fff3cd; color: #856404; }
-.status--closed { background: #f0f0f0; color: #6c757d; }
-
-.recent-projects__hover-content {
-    font-size: 13px;
-    color: var(--text-h);
-    line-height: 1.75;
-    margin: 0;
-    white-space: pre-wrap;
-    word-break: break-word;
-    max-height: 140px;
-    overflow-y: auto;
-}
-
-.recent-projects__hover-content::-webkit-scrollbar {
-    width: 4px;
-}
-
-.recent-projects__hover-content::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 4px;
-}
-
-.recent-projects__hover-footer {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    color: var(--text-sub);
-    border-top: 1px solid var(--border);
-    padding-top: 10px;
 }
 
 @media (max-width: 640px) {
