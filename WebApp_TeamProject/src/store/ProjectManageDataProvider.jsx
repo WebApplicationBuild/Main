@@ -1,14 +1,17 @@
 import { createContext, useCallback, useContext, useMemo, useState } from "react";
-import { initialMembers, initialSchedules } from "../api/manageMock";
+import { initialMembers, initialSchedules, projectManageMockData } from "../api/manageMock";
 import { myProjects } from "../api/mockData";
 import { AuthContext } from "./AuthContext";
 
 const ProjectManageDataContext = createContext(null);
 
-function createDefaultProjectManageData() {
+// 프로젝트별 더미 데이터가 있으면 그 데이터를, 없으면 공통 기본 데이터를 사용
+function createDefaultProjectManageData(projectId) {
+    const projectMockData = projectManageMockData[projectId];
+
     return {
-        members: [...initialMembers],
-        schedules: [...initialSchedules],
+        members: [...(projectMockData?.members ?? initialMembers)],
+        schedules: [...(projectMockData?.schedules ?? initialSchedules)],
         voteList: [],
     };
 }
@@ -67,10 +70,10 @@ export function ProjectManageDataProvider({ children }) {
             const numericProjectId = normalizeProjectId(projectId);
 
             if (numericProjectId === null) {
-                return createDefaultProjectManageData();
+                return createDefaultProjectManageData(numericProjectId);
             }
 
-            return projectManageData[numericProjectId] || createDefaultProjectManageData();
+            return projectManageData[numericProjectId] || createDefaultProjectManageData(numericProjectId);
         },
         [projectManageData]
     );
@@ -82,7 +85,7 @@ export function ProjectManageDataProvider({ children }) {
 
         setProjectManageData((prev) => {
             const currentData =
-                prev[numericProjectId] || createDefaultProjectManageData();
+                prev[numericProjectId] || createDefaultProjectManageData(numericProjectId);
             const nextData =
                 typeof updater === "function" ? updater(currentData) : updater;
 
