@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";    // Firebase 회원가입 기능
 import { auth } from "../api/firebase"; // Firebase 인증 객체
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../api/firebase";
-import { useToast } from "../contexts/ToastContext";
+import { useToast } from "../contexts/toastHooks";
 
 function useSignupForm() {
     const showToast = useToast();
@@ -26,36 +26,50 @@ function useSignupForm() {
     }, []);
 
     // 상태 변경 (현재 입력값만 변경하고 나머지는 유지)
-    function handleChange(e) {
+    const isEmailEmpty = useMemo(() => !form.email.trim(), [form.email]);
+    const isPasswordEmpty = useMemo(
+        () => !form.password.trim(),
+        [form.password]
+    );
+    const isPasswordTooShort = useMemo(
+        () => form.password.length < 6,
+        [form.password]
+    );
+    const isPasswordMismatch = useMemo(
+        () => form.password !== form.passwordCheck,
+        [form.password, form.passwordCheck]
+    );
+
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target;
 
         setForm((prev) => ({
             ...prev,
             [name]: value,
         }));
-    }
+    }, []);
 
     // 회원가입 처리 함수
-    async function handleSignup(e) {
+    const handleSignup = useCallback(async (e) => {
         e.preventDefault(); // 새로고침 방지
         if (loading) return;
 
-        if (!form.email.trim()) {
+        if (isEmailEmpty) {
             setError("이메일을 입력하세요.");
             return;
         }
 
-        if (!form.password.trim()) {
+        if (isPasswordEmpty) {
             setError("비밀번호를 입력하세요.");
             return;
         }
 
-        if (form.password.length < 6) {
+        if (isPasswordTooShort) {
             setError("비밀번호는 6자 이상이어야 합니다.");
             return;
         }
 
-        if (form.password !== form.passwordCheck) {
+        if (isPasswordMismatch) {
             setError("비밀번호가 일치하지 않습니다.");
             return;
         }
@@ -94,17 +108,27 @@ function useSignupForm() {
             } finally { // 성공/실패 상관없이 로딩 종료
                 setLoading(false);
         }
-    }
+    }, [
+        form.email,
+        form.password,
+        isEmailEmpty,
+        isPasswordEmpty,
+        isPasswordMismatch,
+        isPasswordTooShort,
+        loading,
+        navigate,
+        showToast,
+    ]);
 
     // 빈환값
-    return {
+    return useMemo(() => ({
         emailRef,
         form,
         error,
         loading,
         handleChange,
         handleSignup,
-    };
+    }), [error, form, handleChange, handleSignup, loading]);
 }
 
 export default useSignupForm;

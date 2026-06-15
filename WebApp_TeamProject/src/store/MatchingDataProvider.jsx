@@ -1,7 +1,6 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { matchingPosts } from "../api/mockData";
-
-const ProjectDataContext = createContext(null);
+import { ProjectDataContext } from "./matchingDataContext";
 
 export function MatchingDataProvider({ children }) {
     // Client state is only for UI flow. Enforce real authorization in Firebase/server rules.
@@ -82,14 +81,4 @@ export function MatchingDataProvider({ children }) {
             {children}
         </ProjectDataContext.Provider>
     );
-}
-
-export function useProjectData() {
-    const context = useContext(ProjectDataContext);
-
-    if (!context) {
-        throw new Error("useProjectData must be used within MatchingDataProvider.");
-    }
-
-    return context;
 }

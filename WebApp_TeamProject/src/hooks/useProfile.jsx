@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { db } from "../api/firebase";
-import { useToast } from "../contexts/ToastContext";
+import { useToast } from "../contexts/toastHooks";
 
 function useProfile(user, userInfo, onProfileUpdate) {
     const showToast = useToast();

@@ -1,9 +1,7 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { useCallback, useState } from 'react';
 import Toast from '../components/common/Toast';
 import ConfirmDialog from '../components/common/ConfirmDialog';
-
-const ToastCtx = createContext(null);
-const ConfirmCtx = createContext(null);
+import { ConfirmCtx, ToastCtx } from './toastContexts';
 
 export function ToastProvider({ children }) {
     const [toasts, setToasts] = useState([]);
@@ -46,6 +44,3 @@ export function ToastProvider({ children }) {
         </ToastCtx.Provider>
     );
 }
-
-export function useToast()   { return useContext(ToastCtx); }
-export function useConfirm() { return useContext(ConfirmCtx); }

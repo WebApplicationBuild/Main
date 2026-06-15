@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 import { createSchedule } from "../api/scheduleApi";
-import { useProjectManageData } from "../store/ProjectManageDataProvider";
+import { useProjectManageData } from "../store/projectManageDataContext";
 
 function useProjectSchedule(projectId) {
   const numericProjectId = Number(projectId);

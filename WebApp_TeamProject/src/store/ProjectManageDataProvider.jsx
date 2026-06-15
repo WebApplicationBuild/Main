@@ -1,9 +1,8 @@
-import { createContext, useCallback, useContext, useMemo, useState } from "react";
+import { useCallback, useContext, useMemo, useState } from "react";
 import { initialMembers, initialSchedules, projectManageMockData } from "../api/manageMock";
 import { myProjects } from "../api/mockData";
 import { AuthContext } from "./AuthContext";
-
-const ProjectManageDataContext = createContext(null);
+import { ProjectManageDataContext } from "./projectManageDataContext";
 
 // 프로젝트별 더미 데이터가 있으면 그 데이터를, 없으면 공통 기본 데이터를 사용
 function createDefaultProjectManageData(projectId) {
@@ -15,7 +14,6 @@ function createDefaultProjectManageData(projectId) {
         voteList: [],
     };
 }
-
 function normalizeProjectId(projectId) {
     const numericProjectId = Number(projectId);
     return Number.isFinite(numericProjectId) ? numericProjectId : null;
@@ -121,16 +119,4 @@ export function ProjectManageDataProvider({ children }) {
             {children}
         </ProjectManageDataContext.Provider>
     );
-}
-
-export function useProjectManageData() {
-    const context = useContext(ProjectManageDataContext);
-
-    if (!context) {
-        throw new Error(
-            "useProjectManageData must be used within ProjectManageDataProvider."
-        );
-    }
-
-    return context;
 }

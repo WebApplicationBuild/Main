@@ -1,10 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import '../../styles/matching/Board.css';
 import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
-import { useProjectManageData } from '../../store/ProjectManageDataProvider';
-import { useToast, useConfirm } from '../../contexts/ToastContext';
+import { useProjectManageData } from '../../store/projectManageDataContext';
+import { useToast, useConfirm } from '../../contexts/toastHooks';
 import { getDDayInfo } from '../../utils/dday';
+
+function favoritePostsReducer(state, action) {
+  switch (action.type) {
+    case "load":
+      return action.favoritePosts;
+    case "toggle":
+      return state.includes(action.postId)
+        ? state.filter((id) => id !== action.postId)
+        : [...state, action.postId];
+    default:
+      return state;
+  }
+}
+
+function getSavedFavoritePosts(storageKey) {
+  return JSON.parse(localStorage.getItem(storageKey)) || [];
+}
 
 // 게시글 목록과 상세보기를 렌더링하는 컴포넌트
 function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories, onJoinProject, onDeletePost}) {
@@ -12,7 +29,10 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const showConfirm = useConfirm();
   const { addMyProject, updateProjectManageData } = useProjectManageData();
   const { user, userInfo } = useContext(AuthContext);
-  const [favoritePosts, setFavoritePosts] = useState([]);
+  const [favoritePosts, dispatchFavoritePosts] = useReducer(
+    favoritePostsReducer,
+    []
+  );
 
   // localStorage용 사용자별 즐겨찾기
   const favoriteStorageKey = user
@@ -22,14 +42,14 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   // localStorage에서 즐겨찾기 불러오기
   useEffect(() => {
     if (!user) {
-      setFavoritePosts([]);
+      dispatchFavoritePosts({ type: "load", favoritePosts: [] });
       return;
     }
 
-    const savedFavorites =
-      JSON.parse(localStorage.getItem(favoriteStorageKey)) || [];
-
-    setFavoritePosts(savedFavorites);
+    dispatchFavoritePosts({
+      type: "load",
+      favoritePosts: getSavedFavoritePosts(favoriteStorageKey),
+    });
   }, [user, favoriteStorageKey]);
 
   // '매칭' 버튼 클릭 시 실행될 핸들러 함수
@@ -103,20 +123,16 @@ function Board({ posts, selectedPost, onPostClick, searchTerm, activeCategories,
   const handleFavoriteClick = (e, postId) => {
     e.stopPropagation();
 
-    let updatedFavorites;
-
-    if (favoritePosts.includes(postId)) {
-      updatedFavorites = favoritePosts.filter((id) => id !== postId);
-    } else {
-      updatedFavorites = [...favoritePosts, postId];
-    }
-
-    setFavoritePosts(updatedFavorites);
+    const updatedFavorites = favoritePosts.includes(postId)
+      ? favoritePosts.filter((id) => id !== postId)
+      : [...favoritePosts, postId];
 
     localStorage.setItem(
       favoriteStorageKey,
       JSON.stringify(updatedFavorites)
     );
+
+    dispatchFavoritePosts({ type: "toggle", postId });
   };
 
   // 모집 현황을 판별하여 텍스트와 색상 클래스를 반환하는 함수
