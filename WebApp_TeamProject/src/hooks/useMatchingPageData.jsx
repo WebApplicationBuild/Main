@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useProjectData } from '../store/MatchingDataProvider';
-import { useProjectManageData } from '../store/ProjectManageDataProvider';
+import { useProjectData } from '../store/matchingDataContext';
+import { useProjectManageData } from '../store/projectManageDataContext';
 
 function useMatchingPageData() {
   const [searchParams] = useSearchParams();

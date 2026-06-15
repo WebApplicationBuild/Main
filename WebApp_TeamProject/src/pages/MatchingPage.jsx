@@ -1,14 +1,10 @@
-import React, { useContext } from 'react';
 import Category from '../components/MatchingPage/Category';
 import Writing from '../components/MatchingPage/Writing';
 import Board from '../components/MatchingPage/Board';
 import useMatchingPageData from '../hooks/useMatchingPageData';
-import { AuthContext } from "../store/AuthContext";
 import '../styles/matching/Matching.css';
 
 function Matching() {
-  const { user, userInfo } = useContext(AuthContext);
-
   const {
     isWritingMode,
     setIsWritingMode,

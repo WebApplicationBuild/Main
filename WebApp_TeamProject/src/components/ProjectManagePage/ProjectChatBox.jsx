@@ -1,21 +1,36 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { AuthContext } from "../../store/AuthContext";
-import { useToast } from "../../contexts/ToastContext";
+import { useToast } from "../../contexts/toastHooks";
 import "../../styles/project/ProjectChatBox.css";
+
+function chatListReducer(state, action) {
+    switch (action.type) {
+        case "load":
+            return action.chatList;
+        case "add":
+            return [...state, action.message];
+        default:
+            return state;
+    }
+}
+
+function getSavedChatList(storageKey) {
+    return JSON.parse(localStorage.getItem(storageKey)) || [];
+}
 
 function ProjectChatBox({ projectId }) {
     const showToast = useToast();
     const { user, userInfo } = useContext(AuthContext);
     const [message, setMessage] = useState("");
-    const [chatList, setChatList] = useState([]);
+    const [chatList, dispatchChatList] = useReducer(chatListReducer, []);
 
     const chatStorageKey = `chat_project_${projectId}`;
 
     useEffect(() => {
-        const savedChatList =
-            JSON.parse(localStorage.getItem(chatStorageKey)) || [];
-
-        setChatList(savedChatList);
+        dispatchChatList({
+            type: "load",
+            chatList: getSavedChatList(chatStorageKey),
+        });
     }, [chatStorageKey]);
 
     function handleSendMessage() {
@@ -38,13 +53,12 @@ function ProjectChatBox({ projectId }) {
 
         const updatedChatList = [...chatList, newMessage];
 
-        setChatList(updatedChatList);
-
         localStorage.setItem(
             chatStorageKey,
             JSON.stringify(updatedChatList)
         );
 
+        dispatchChatList({ type: "add", message: newMessage });
         setMessage("");
     }
 

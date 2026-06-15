@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import { useProjectManageData } from "../../store/ProjectManageDataProvider";
+import { useProjectManageData } from "../../store/projectManageDataContext";
 import "../../styles/main/MyProjects.css";
 
 /*

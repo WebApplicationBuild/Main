@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useProjectManageData } from "../store/ProjectManageDataProvider";
+import { useProjectManageData } from "../store/projectManageDataContext";
 
 import useProjectSchedule from "../hooks/useProjectSchedule";
 import TeamMemberList from "../components/ProjectManagePage/TeamMemberList";
@@ -19,10 +19,6 @@ import "../styles/project/VoteBox.css";
 function ProjectPageContent({ projectId }) {
   const { myProjectsData } = useProjectManageData();
   const navigate = useNavigate();
-
-  const currentProject = myProjectsData.find(
-    (project) => project.id === Number(projectId)
-  );
 
   const {
     members,

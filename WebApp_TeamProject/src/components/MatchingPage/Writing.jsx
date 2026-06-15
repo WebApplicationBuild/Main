@@ -3,8 +3,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../store/AuthContext";
 import '../../styles/matching/Writing.css';
 import CategoryOptions from './CategoryOptions';
-import { useProjectManageData } from "../../store/ProjectManageDataProvider";
-import { useToast } from "../../contexts/ToastContext";
+import { useProjectManageData } from "../../store/projectManageDataContext";
+import { useToast } from "../../contexts/toastHooks";
 
 
 // 새 게시글 작성 폼 컴포넌트

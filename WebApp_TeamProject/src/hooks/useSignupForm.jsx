@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword, signOut } from "firebase/auth";    // F
 import { auth } from "../api/firebase"; // Firebase 인증 객체
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../api/firebase";
-import { useToast } from "../contexts/ToastContext";
+import { useToast } from "../contexts/toastHooks";
 
 function useSignupForm() {
     const showToast = useToast();
