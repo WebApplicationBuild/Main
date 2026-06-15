@@ -2,6 +2,7 @@
 회원가입 기능을 실행하는 버튼 컴포넌트
 */
 import Button from "@mui/material/Button";
+import { memo } from "react";
 
 function SignupButton({ onClick }) {
     return (
@@ -16,4 +17,4 @@ function SignupButton({ onClick }) {
     );
 }
 
-export default SignupButton;
+export default memo(SignupButton);

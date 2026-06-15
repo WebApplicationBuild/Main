@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth"; //Firebase 로그인 기능
 import { auth } from "../api/firebase"; // Firebase 인증 객체
@@ -16,7 +16,13 @@ function useLoginForm() {
     const [isLoading, setIsLoading] = useState(false);
 
     // 입력값 변경 함수
-    function handleChange(e) {
+    const isEmailEmpty = useMemo(() => form.email.trim() === "", [form.email]);
+    const isPasswordEmpty = useMemo(
+        () => form.password.trim() === "",
+        [form.password]
+    );
+
+    const handleChange = useCallback((e) => {
         const { name, value } = e.target; // 현재 입력창 정보 가져오기
         
         // 입력값 저장 (상태 업데이트)
@@ -24,7 +30,7 @@ function useLoginForm() {
         ...prev,
         [name]: value,
         }));
-    }
+    }, []);
 
     useEffect(() => {   // 화면 처음 열릴 때
         emailInputRef.current?.focus(); // 이메일 input에 자동 focus
@@ -33,18 +39,18 @@ function useLoginForm() {
 
     // 로그인 처리 함수
     // async -> 비동기 작업 (로그인 요청이 끝날 때까지 기다리는 함수) -> 로그인 시간이 걸리기 때문
-    async function handleLogin(e) { 
+    const handleLogin = useCallback(async (e) => {
         e.preventDefault(); // 새로고침 방지
         if (isLoading) return;
 
         setError("");
 
-        if (form.email.trim() === "") {
+        if (isEmailEmpty) {
             setError("이메일을 입력하세요.");
             return;
         }
 
-        if (form.password.trim() === "") {
+        if (isPasswordEmpty) {
             setError("비밀번호를 입력하세요.");
             return;
         }
@@ -55,20 +61,20 @@ function useLoginForm() {
             await signInWithEmailAndPassword(auth, form.email, form.password);  // Firebase 서버에 로그인 요청
 
             navigate("/");  // 로그인 성공
-        } catch (err) { // 로그인 실패
+        } catch { // 로그인 실패
             setError("이메일 또는 비밀번호가 올바르지 않습니다.");
         } finally { // 성공/실패 상관없이 로딩 종료.
             setIsLoading(false);
         }
-    }
+    }, [form.email, form.password, isEmailEmpty, isLoading, isPasswordEmpty, navigate]);
 
     // 회원가입 이동 함수
-    function handleSignup() { 
+    const handleSignup = useCallback(() => {
         navigate("/signup");
-    }
+    }, [navigate]);
 
     // 반환되는 값
-    return {
+    return useMemo(() => ({
         form,
         error,
         emailInputRef,
@@ -76,7 +82,7 @@ function useLoginForm() {
         handleChange,
         handleLogin,
         handleSignup,
-    };
+    }), [error, form, handleChange, handleLogin, handleSignup, isLoading]);
 }
 
 export default useLoginForm;

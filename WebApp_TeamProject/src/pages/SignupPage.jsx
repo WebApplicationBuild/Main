@@ -1,4 +1,5 @@
 import "../styles/auth/SignupPage.css";
+import { useMemo } from "react";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Link } from "react-router-dom";
@@ -17,6 +18,26 @@ function SignupPage() {
         handleChange,
         handleSignup,
     } = useSignupForm();
+
+    const signupButtonContent = useMemo(() => {
+        if (!loading) {
+            return "회원가입";
+        }
+
+        return (
+            <span className="signup-loading">
+                <CircularProgress
+                    size={18}
+                    color="inherit"
+                    className="signup-loading-spinner"
+                />
+
+                <span className="signup-loading-text">
+                    회원가입 중...
+                </span>
+            </span>
+        );
+    }, [loading]);
 
     return (
         <main className="signup-page">
@@ -73,21 +94,7 @@ function SignupPage() {
                     disabled={loading}
                     className="signup-submit-btn"
                 >
-                    {loading ? (
-                        <span className="signup-loading">
-                            <CircularProgress
-                                size={18}
-                                color="inherit"
-                                className="signup-loading-spinner"
-                            />
-
-                            <span className="signup-loading-text">
-                                회원가입 중...
-                            </span>
-                        </span>
-                    ) : (
-                        "회원가입"
-                    )}
+                    {signupButtonContent}
                 </Button>
             </div>
 
