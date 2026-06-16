@@ -1,4 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
+import { useToast, useConfirm } from "../contexts/toastHooks";
 import { useProjectManageData } from "../store/projectManageDataContext";
 
 import useProjectSchedule from "../hooks/useProjectSchedule";
@@ -17,8 +19,18 @@ import "../styles/project/ScheduleList.css";
 import "../styles/project/VoteBox.css";
 
 function ProjectPageContent({ projectId }) {
-  const { myProjectsData } = useProjectManageData();
+  const { user } = useAuth();
+  const showToast = useToast();
+  const showConfirm = useConfirm();
+  const { myProjectsData, deleteMyProject } = useProjectManageData();
   const navigate = useNavigate();
+  const numericProjectId = Number(projectId);
+  const currentProject = myProjectsData.find(
+    (project) => project.id === numericProjectId
+  );
+  const isProjectOwner = Boolean(
+    currentProject?.ownerId && user?.uid && currentProject.ownerId === user.uid
+  );
 
   const {
     members,
@@ -29,6 +41,25 @@ function ProjectPageContent({ projectId }) {
     voteTrue,
     voteFalse,
   } = useProjectSchedule(projectId);
+
+  const handleDeleteProject = async () => {
+    if (!currentProject) return;
+
+    if (!isProjectOwner) {
+      showToast("팀장만 프로젝트를 삭제할 수 있습니다.", "warning");
+      return;
+    }
+
+    const confirmed = await showConfirm(
+      `[${currentProject.title}] 프로젝트를 삭제하시겠습니까?`
+    );
+
+    if (!confirmed) return;
+
+    deleteMyProject(currentProject.id);
+    showToast("프로젝트가 삭제되었습니다.", "success");
+    navigate("/projectManage");
+  };
 
   return (
     <div className="project-page">
@@ -58,8 +89,27 @@ function ProjectPageContent({ projectId }) {
           </div>
         </div>
 
-        {projectId ? (
+        {projectId && currentProject ? (
           <>
+            <div className="project-detail-header">
+              <div>
+                <h2 className="project-detail-title">{currentProject.title}</h2>
+                <p className="project-detail-meta">
+                  {currentProject.status} · 팀원 {currentProject.members}명
+                </p>
+              </div>
+
+              {isProjectOwner && (
+                <button
+                  type="button"
+                  className="project-delete-button"
+                  onClick={handleDeleteProject}
+                >
+                  프로젝트 삭제
+                </button>
+              )}
+            </div>
+
             <div className="main-layout">
               <div className="left-section">
                 <TeamMemberList members={members} />
