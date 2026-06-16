@@ -63,6 +63,22 @@ export function ProjectManageDataProvider({ children }) {
         );
     }, []);
 
+    const deleteMyProject = useCallback((projectId) => {
+        const numericProjectId = normalizeProjectId(projectId);
+
+        if (numericProjectId === null) return;
+
+        setMyProjectsData((prevProjects) =>
+            prevProjects.filter((project) => project.id !== numericProjectId)
+        );
+
+        setProjectManageData((prevData) => {
+            const nextData = { ...prevData };
+            delete nextData[numericProjectId];
+            return nextData;
+        });
+    }, []);
+
     const getProjectManageData = useCallback(
         (projectId) => {
             const numericProjectId = normalizeProjectId(projectId);
@@ -102,12 +118,14 @@ export function ProjectManageDataProvider({ children }) {
             myProjectsData: filteredMyProjectsData,
             addMyProject,
             removeMyProject,
+            deleteMyProject,
             getProjectManageData,
             updateProjectManageData,
         }),
         [
             addMyProject,
             removeMyProject,
+            deleteMyProject,
             filteredMyProjectsData,
             getProjectManageData,
             updateProjectManageData,

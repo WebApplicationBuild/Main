@@ -88,3 +88,42 @@
   font-size: 0.9rem;
   margin: 0;
 }
+
+.project-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+  padding: 16px 20px;
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.project-detail-title {
+  margin: 0;
+  color: var(--text-h);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.project-detail-meta {
+  margin: 6px 0 0;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.project-delete-button {
+  flex-shrink: 0;
+  color: #b42318;
+  background-color: #fff5f5;
+  border: 1px solid #f3b5b5;
+}
+
+.project-delete-button:hover {
+  color: #8f1a12;
+  background-color: #ffe7e7;
+  border-color: #e48a8a;
+}
