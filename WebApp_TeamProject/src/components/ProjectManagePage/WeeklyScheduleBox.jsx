@@ -30,7 +30,7 @@ function WeeklyScheduleBox({ schedules }) {
     <div className="box weekly-box"> {/* 주간 일정 박스 영역 부분 */}
 
       <h2>
-        주차별로 다가오는 일정 알려주는 표
+        다가오는 일정
       </h2>
       {/* 주간 일정 제목 출력 부분 */}
 
